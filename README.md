@@ -1,4 +1,3 @@
-# Screenshots
 # 🛍️ Dealeo – Full-Stack E-commerce Platform
 
 **Dealeo** is a complete e-commerce platform built with **React**, **Vite**, **Redux**, **Express.js**, and **MongoDB**. It consists of three separate applications:
@@ -38,6 +37,7 @@
 
 ### 1️⃣ Clone the repository
 
+# Screenshots
 ![Screenshot 1](https://i.ibb.co/PSFwWmT/Screenshot-2025-02-24-202142.png)
 ![Screenshot 2](https://i.ibb.co/5x1MvWNg/Screenshot-2025-02-24-202519.png)
 ![Screenshot 3](https://i.ibb.co/20pkCD64/Screenshot-2025-02-24-202554.png)
