@@ -1,0 +1,6 @@
+PORT = 5000
+DB_URL = Your MangoDB URL
+SECRET = ariyan
+cloud_name = Your Cloudinary name
+api_key = Your Cloudinary key
+api_secret = Your Cloudinary secret key
