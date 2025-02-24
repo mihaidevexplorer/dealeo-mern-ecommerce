@@ -36,6 +36,44 @@
 ## 📌 Getting Started
 
 ### 1️⃣ Clone the repository
+```bash
+git clone <repo-url>
+
+2️⃣ Install dependencies
+
+ Frontend
+cd frontend
+npm install
+
+Backend
+cd ../backend
+npm install
+
+Dashboard
+cd ../dashboard
+npm install
+
+3️⃣ Set up environment variables (.env) for backend and Stripe integration
+
+PORT = 5000
+DB_URL = Your MangoDB URL
+SECRET = ariyan
+cloud_name = Your Cloudinary name
+api_key = Your Cloudinary key
+api_secret = Your Cloudinary secret key
+
+4️⃣ Run the applications
+ Frontend
+cd frontend
+npm run dev
+
+ Backend
+cd ../backend
+npm run server
+
+ Dashboard
+cd ../dashboard
+npm run dev
 
 # Screenshots
 ![Screenshot 1](https://i.ibb.co/PSFwWmT/Screenshot-2025-02-24-202142.png)
