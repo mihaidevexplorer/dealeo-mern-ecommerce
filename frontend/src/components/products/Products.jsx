@@ -80,25 +80,4 @@ const Products = ({title,products}) => {
     );
 };
 
-
-Products.propTypes = {
-    title: PropTypes.string.isRequired,
-    products: PropTypes.arrayOf(
-        PropTypes.arrayOf(
-            PropTypes.shape({
-                slug: PropTypes.string.isRequired,
-                images: PropTypes.arrayOf(PropTypes.string).isRequired,
-                name: PropTypes.string.isRequired,
-                price: PropTypes.number.isRequired
-            })
-        )
-    ).isRequired
-};
-
-ButtonGroup.propTypes = {
-    next: PropTypes.func.isRequired,
-    previous: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired
-};
-
 export default Products;
