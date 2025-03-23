@@ -1,4 +1,5 @@
 //src/components/RatingTemp.jsx
+import PropTypes from 'prop-types';
 import { FaStar } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
 
@@ -76,5 +77,10 @@ const RatingTemp = ({rating}) => {
 
     
 };
+
+RatingTemp.propTypes = {
+    rating: PropTypes.number.isRequired,
+  };
+
 
 export default RatingTemp;
