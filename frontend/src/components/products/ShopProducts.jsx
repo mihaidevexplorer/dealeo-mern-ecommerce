@@ -1,4 +1,5 @@
 //src/components/products/ShopProducts.jsx
+import PropTypes from 'prop-types';
 import { useEffect } from "react";
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
@@ -41,13 +42,16 @@ const ShopProducts = ({ styles, products }) => {
   useEffect(() => {
     if (successMessage) {
       toast.success(successMessage);
-      dispatch(messageClear());
+      
+       setTimeout(() => {
+        dispatch(messageClear());
+    }, 3000);  
     }
     if (errorMessage) {
       toast.error(errorMessage);
       dispatch(messageClear());
     }
-  }, [successMessage, errorMessage]);
+  }, [successMessage, errorMessage, dispatch]);
 
   return (
     <div className={`w-[90%] mx-auto grid gap-6 ${
@@ -107,6 +111,21 @@ const ShopProducts = ({ styles, products }) => {
       ))}
     </div>
   );
+};
+
+ShopProducts.propTypes = {
+  styles: PropTypes.string.isRequired,
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      images: PropTypes.arrayOf(PropTypes.string).isRequired,
+      price: PropTypes.number.isRequired,
+      discount: PropTypes.number,
+      rating: PropTypes.number,
+      slug: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ShopProducts;
