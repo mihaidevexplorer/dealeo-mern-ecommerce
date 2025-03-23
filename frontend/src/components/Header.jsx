@@ -49,7 +49,7 @@ const Header = () => {
             dispatch(get_card_products(userInfo.id))
             dispatch(get_wishlist_products(userInfo.id))
         }  
-    },[userInfo])
+    },[userInfo, dispatch])
 
     return (
         <div className='w-full bg-white'>
@@ -129,7 +129,7 @@ const Header = () => {
                 <div className='flex justify-between md-lg:justify-center items-center flex-wrap pl-8'>
                     <ul className='flex justify-start items-start gap-8 text-sm font-bold uppercase md-lg:hidden'>
                         <li>
-                            <Link className={`p-2 block ${pathname === '/' ?  'text-[#e5673c]' : 'text-gray-600' } `} >Home</Link>
+                            <Link  to='/' className={`p-2 block ${pathname === '/' ?  'text-[#e5673c]' : 'text-gray-600' } `} >Home</Link>
                         </li>
 
                         <li>
@@ -229,7 +229,7 @@ const Header = () => {
 
     <ul className='flex flex-col justify-start items-start text-sm font-bold uppercase'>
                         <li>
-                            <Link className={`py-2 block ${pathname === '/' ?  'text-[#e5673c]' : 'text-gray-600' } `} >Home</Link>
+                            <Link to='/' className={`py-2 block ${pathname === '/' ?  'text-[#e5673c]' : 'text-gray-600' } `} >Home</Link>
                         </li>
 
                         <li>
