@@ -1,4 +1,5 @@
 //src/components/CheckoutForm.js
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { PaymentElement,LinkAuthenticationElement,useStripe,useElements } from '@stripe/react-stripe-js' 
 
@@ -50,6 +51,10 @@ const CheckoutForm = ({orderId}) => {
                {message && <div>{message}</div>}
         </form>
     );
+};
+
+CheckoutForm.propTypes = {
+    orderId: PropTypes.string.isRequired,
 };
 
 export default CheckoutForm;
