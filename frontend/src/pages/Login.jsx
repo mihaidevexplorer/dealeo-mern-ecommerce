@@ -45,7 +45,7 @@ const Login = () => {
         if (userInfo) {
             navigate('/')
         }
-    },[successMessage,errorMessage])
+    },[successMessage,errorMessage, dispatch,navigate, userInfo])
 
 
     return (
@@ -98,7 +98,7 @@ const Login = () => {
     </div>    
 
     <div className='text-center text-slate-600 pt-1'>
-        <p>Don't Have An Account ? <Link className='text-blue-500' to='/register'> Register</Link> </p>
+    <p>Don&apos;t Have An Account? <Link className='text-blue-500' to='/register'>Register</Link></p>
     </div> 
 
      <a target='_blank' href="http://localhost:3001/login">
