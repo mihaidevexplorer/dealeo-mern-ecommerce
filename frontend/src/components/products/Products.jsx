@@ -1,4 +1,5 @@
 //src/components/products/Products.jsx
+import PropTypes from 'prop-types';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css' 
@@ -45,6 +46,12 @@ const Products = ({title,products}) => {
     }
 
 
+ButtonGroup.propTypes = {
+    next: PropTypes.func.isRequired,
+    previous: PropTypes.func.isRequired,
+};
+
+
     return (
         <div className='flex gap-8 flex-col-reverse'>
             <Carousel
@@ -54,7 +61,7 @@ const Products = ({title,products}) => {
                     responsive={responsive}
                     transitionDuration={500}
                     renderButtonGroupOutside={true}
-                    customButtonGroup={<ButtonGroup/>}
+                    customButtonGroup={<ButtonGroup next={() => {}} previous={() => {}} />}
                 >
        {
         products.map((p,i)=> {
@@ -79,5 +86,20 @@ const Products = ({title,products}) => {
         </div>
     );
 };
+
+Products.propTypes = {
+    title: PropTypes.string.isRequired,
+    products: PropTypes.arrayOf(
+        PropTypes.arrayOf(
+            PropTypes.shape({
+                slug: PropTypes.string.isRequired,
+                images: PropTypes.arrayOf(PropTypes.string).isRequired,
+                name: PropTypes.string.isRequired,
+                price: PropTypes.number.isRequired
+            })
+        )
+    ).isRequired
+};
+
 
 export default Products;
