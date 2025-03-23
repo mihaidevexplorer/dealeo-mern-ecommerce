@@ -1,4 +1,5 @@
 //src/components/Stripe.jsx
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js' 
 import { Elements } from '@stripe/react-stripe-js' 
@@ -37,5 +38,10 @@ const Stripe = ({ price, orderId }) => {
         </div>
     );
 }; 
+
+Stripe.propTypes = {
+    price: PropTypes.number.isRequired,
+    orderId: PropTypes.string.isRequired,
+  };
 
 export default Stripe;
