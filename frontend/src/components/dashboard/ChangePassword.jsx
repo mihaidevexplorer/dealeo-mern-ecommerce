@@ -1,6 +1,4 @@
 //src/components/dashboard/ChangePassword.jsx
-//import React from 'react';
-
 const ChangePassword = () => {
     return (
         <div className='p-4 bg-white'>
