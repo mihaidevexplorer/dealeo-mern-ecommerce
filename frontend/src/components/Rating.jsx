@@ -1,4 +1,5 @@
 //src/components/Rating.jsx
+import PropTypes from 'prop-types';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { CiStar } from 'react-icons/ci';
 
@@ -29,5 +30,9 @@ const Rating = ({ratings}) => {
         </>
     );
 };
+
+Rating.propTypes = {
+    ratings: PropTypes.number.isRequired,
+  };
 
 export default Rating;
