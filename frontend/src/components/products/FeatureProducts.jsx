@@ -1,4 +1,5 @@
 //src/components/products/FeatureProducts.jsx
+import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
@@ -23,7 +24,7 @@ const FeatureProducts = ({ products }) => {
             toast.error(errorMessage);
             dispatch(messageClear());
         }
-    }, [successMessage, errorMessage]);
+    }, [successMessage, errorMessage, dispatch]);
 
     const add_card = (id) => {
         if (userInfo) {
@@ -99,5 +100,19 @@ const FeatureProducts = ({ products }) => {
         </div>
     );
 };
+
+FeatureProducts.propTypes = {
+    products: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        price: PropTypes.number.isRequired,
+        discount: PropTypes.number,
+        rating: PropTypes.number,
+        slug: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  };
 
 export default FeatureProducts;
