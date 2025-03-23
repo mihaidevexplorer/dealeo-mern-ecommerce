@@ -15,7 +15,7 @@ const Home = () => {
     const {products,latest_product,topRated_product,discount_product} = useSelector(state => state.home)
     useEffect(() => { 
         dispatch(get_products())
-    },[])
+    },[dispatch])
 
 
     return (
