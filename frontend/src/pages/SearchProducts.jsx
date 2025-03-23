@@ -18,16 +18,18 @@ import { price_range_product,query_products } from '../store/reducers/homeReduce
 const SearchProducts = () => {
 
     let [searchParams, setSearchParams] = useSearchParams()
+    console.long(setSearchParams)
     const category = searchParams.get('category')
     const searchValue = searchParams.get('value')
      
 
     const dispatch = useDispatch()
     const {products,categorys,priceRange,latest_product,totalProduct,parPage} = useSelector(state => state.home)
+    console.long(categorys)
 
     useEffect(() => { 
         dispatch(price_range_product())
-    },[])
+    },[dispatch, state.values])
     useEffect(() => { 
         setState({
             values: [priceRange.low, priceRange.high]
@@ -57,7 +59,7 @@ const SearchProducts = () => {
                 searchValue
             })
          )
-    },[state.values[0],state.values[1],category,rating,sortPrice,searchValue,pageNumber])
+    },[state.values,category,rating,sortPrice,searchValue,pageNumber, dispatch])
 
     const resetRating = () => {
         setRating('')
