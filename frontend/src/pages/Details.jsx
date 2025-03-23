@@ -39,24 +39,29 @@ const Details = () => {
 
     useEffect(() => {
         dispatch(product_details(slug))
-    },[slug])
+    },[slug, dispatch])
 
     useEffect(() => { 
         if (successMessage) {
             toast.success(successMessage)
-            dispatch(messageClear())  
+            setTimeout(() => {
+                dispatch(messageClear());
+            }, 3000);
         } 
         if (errorMessage) {
             toast.error(errorMessage)
             dispatch(messageClear())  
         } 
         
-    },[successMessage,errorMessage])
+    },[successMessage,errorMessage, dispatch])
 
     const images = [1,2,3,4,5,6]
+    console.log(images)
     const [image, setImage] = useState('')
     const discount = 10
+    console.log(discount)
     const stock = 3
+    console.log(stock)
     const [state, setState] = useState('reviews')
 
     const responsive = {
@@ -352,11 +357,14 @@ const Details = () => {
                     </div>
 
     <div className='text-gray-900 text-base leading-relaxed space-y-4 font-roboto'>
-        {
-            state === 'reviews' ? <Reviews product={product} /> : <p className='text-justify'>
-    {product.description}
-            </p>
-        }
+    {
+  state === 'reviews' && product?._id ? (
+    <Reviews product={product} />
+  ) : (
+    <p className='text-justify'>{product.description}</p>
+  )
+}
+
     </div> 
          </div> 
          </div>
@@ -370,7 +378,7 @@ const Details = () => {
         {
             moreProducts.map((p,i) => {
                 return (
-        <Link className='block group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative'>
+        <div key={i} className='block group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 relative'>
             <div className='relative h-[270px]'>
             <img className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105' src={ p.images[0]} alt="" /> 
             {
@@ -407,7 +415,7 @@ const Details = () => {
                 </div>
             </div>
             
-        </Link>
+        </div>
                 )
             })
         }
