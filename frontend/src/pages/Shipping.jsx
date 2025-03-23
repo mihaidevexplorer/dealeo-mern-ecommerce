@@ -165,7 +165,7 @@ const Shipping = () => {
                    </div>
 
                    {
-                       p.products.map((pt,i) => <div className='w-full flex flex-wrap'>
+                       p.products.map((pt,i) => <div key={i} className='w-full flex flex-wrap'>
                        <div className='flex sm:w-full gap-2 w-7/12'>
                            <div className='flex gap-2 justify-start items-center'>
                        <img className='w-[80px] h-[80px]' src={pt.productInfo.images[0]} alt="" />
