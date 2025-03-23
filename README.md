@@ -67,7 +67,7 @@
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone <repo-url>
+git clone <ttps://github.com/mihaidevexplorer/dealeo-mern-ecommerce.git>
 
 2️⃣ Install dependencies
 
