@@ -1,4 +1,5 @@
 //src/components/Reviews.jsx
+import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Rating from './Rating';
 import RatingTemp from './RatingTemp';
@@ -11,10 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { customer_review, get_reviews, messageClear, product_details } from '../store/reducers/homeReducer';
 import toast from 'react-hot-toast';
 
+
 const Reviews = ({product}) => {
 
     const dispatch = useDispatch()
-    const [parPage, setParPage] = useState(10)
+    const [parPage]= useState(10)
     const [pageNumber, setPageNumber] = useState(1)
     
     const {userInfo } = useSelector(state => state.auth)
@@ -47,7 +49,7 @@ const Reviews = ({product}) => {
             setRe('')
             dispatch(messageClear())
         }  
-    },[successMessage])
+    },[successMessage, dispatch, pageNumber, product])
 
     useEffect(() => {
         if (product._id) {
@@ -56,8 +58,7 @@ const Reviews = ({product}) => {
                 pageNumber
             }))
         }
-    },[pageNumber,product])
-
+    },[pageNumber,product, dispatch])
 
     return (
 <div className='mt-8'>
@@ -198,5 +199,14 @@ const Reviews = ({product}) => {
 </div>
     );
 };
+
+Reviews.propTypes = {
+    product: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      rating: PropTypes.number.isRequired,
+      slug: PropTypes.string.isRequired,
+    }).isRequired,
+    
+  };
 
 export default Reviews;
