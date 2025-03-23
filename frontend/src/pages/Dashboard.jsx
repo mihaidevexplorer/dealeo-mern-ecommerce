@@ -25,6 +25,7 @@ const Dashboard = () => {
     const logout = async () => {
         try {
             const {data} = await api.get('/customer/logout')
+            console.log(data)
             localStorage.removeItem('customerToken')
             dispatch(user_reset())
             dispatch(reset_count())
