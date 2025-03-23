@@ -18,20 +18,22 @@ import { price_range_product,query_products } from '../store/reducers/homeReduce
 const CategoryShop = () => {
 
     let [searchParams, setSearchParams] = useSearchParams()
+    console.log(setSearchParams)
     const category = searchParams.get('category')
     console.log(category)
-
     const dispatch = useDispatch()
     const {products,categorys,priceRange,latest_product,totalProduct,parPage} = useSelector(state => state.home)
+    console.log(categorys)
+  
 
     useEffect(() => { 
         dispatch(price_range_product())
-    },[])
+    },[dispatch])
     useEffect(() => { 
         setState({
             values: [priceRange.low, priceRange.high]
         })
-    },[priceRange])
+    },[priceRange, dispatch])
 
     const [filter, setFilter] = useState(true) 
 
@@ -55,7 +57,8 @@ const CategoryShop = () => {
                 pageNumber
             })
          )
-    },[state.values[0],state.values[1],category,rating,sortPrice,pageNumber])
+    },[state.values, category, rating, sortPrice, pageNumber, dispatch])
+    console.log("state.values:", state.values);
 
     const resetRating = () => {
         setRating('')
@@ -105,22 +108,25 @@ const CategoryShop = () => {
         <div className='py-2 flex flex-col gap-5'>
             <h2 className='text-3xl font-bold mb-3 text-gray-900'>Price</h2>
              
-             <Range
-                step={5}
-                min={priceRange.low}
-                max={priceRange.high}
-                values={(state.values)}
-                onChange={(values) => setState({values})}
-                renderTrack={({props,children}) => (
-                    <div {...props} className='w-full h-[6px] bg-gray-300 rounded-full cursor-pointer'>
-                        {children}
-                    </div>
-                )}
-                renderThumb={({ props }) => (
-                    <div className='w-[15px] h-[15px] bg-[#ff7f50] rounded-full' {...props} />
-    
-                )} 
-             />  
+    <Range
+    step={5}
+    min={priceRange.low}
+    max={priceRange.high}
+    values={state.values}
+    onChange={(values) => setState({ values })}
+    renderTrack={({ props, children }) => {
+        return (
+            <div {...props} key="track" className="w-full h-[6px] bg-gray-300 rounded-full cursor-pointer">
+                {children}
+            </div>
+        );
+    }}
+    renderThumb={({ props, index }) => {
+        return (
+            <div {...props} key={`thumb-${index}`} className="w-[15px] h-[15px] bg-[#ff7f50] rounded-full" />
+        );
+    }}
+/>
          <div>
          <span className='text-gray-900 font-bold text-lg'>${Math.floor(state.values[0])} - ${Math.floor(state.values[1])}</span>  
            </div>
@@ -189,6 +195,7 @@ const CategoryShop = () => {
             <div className='pl-8 md:pl-0'>
                 <div className='py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border'>
                     <h2 className='text-lg font-medium text-gray-900'> ({totalProduct}) Products </h2>
+                    
         <div className='flex justify-center items-center gap-3'>
             <select onChange={(e)=>setSortPrice(e.target.value)} className='p-1 border outline-0 text-gray-900 font-semibold' name="" id="">
                 <option value="">Sort By</option>
