@@ -45,7 +45,7 @@ const Register = () => {
         if (userInfo) {
             navigate('/')
         }
-    },[successMessage,errorMessage])
+    },[successMessage,errorMessage, dispatch, navigate, userInfo])
 
 
     return (
