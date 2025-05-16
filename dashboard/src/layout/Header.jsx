@@ -1,4 +1,5 @@
 //src/layout/Header.jsx
+import PropTypes from 'prop-types';
 import { FaList } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
@@ -49,4 +50,11 @@ const Header = ({ showSidebar, setShowSidebar }) => {
   );
 };
 
+// Adăugare validare prop-types
+Header.propTypes = {
+  showSidebar: PropTypes.bool.isRequired,
+  setShowSidebar: PropTypes.func.isRequired
+};
+
 export default Header;
+
