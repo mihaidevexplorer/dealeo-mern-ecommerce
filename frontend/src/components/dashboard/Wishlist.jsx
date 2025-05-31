@@ -17,14 +17,14 @@ const Wishlist = () => {
 
     useEffect(() => {
         dispatch(get_wishlist_products(userInfo.id));
-    }, []);
+    }, [dispatch, userInfo]);
 
     useEffect(() => {
         if (successMessage) {
             toast.success(successMessage);
             dispatch(messageClear());
         }
-    }, [successMessage]);
+    }, [successMessage, dispatch]);
 
     const add_card = (id) => {
             if (userInfo) {
@@ -71,7 +71,7 @@ const Wishlist = () => {
                                     className='p-2 bg-green-500 text-white rounded-full hover:bg-green-600'>
                                     <FaEye size={16} />
                                 </Link>
-                                <button onClick={() => add_card (p.productId)} className='p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600'>
+                                <button onClick={() => add_card(p.productId)} className='p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600'>
                                     <RiShoppingCartLine size={16} />
                                 </button>
                             </div>
@@ -83,9 +83,8 @@ const Wishlist = () => {
                             <div className='flex flex-col sm:flex-row items-center justify-center mt-1 sm:mt-2 gap-1 sm:gap-2'>
                                 <span className='text-base sm:text-lg font-semibold text-gray-900'>${p.price}</span>
                                 <div className='flex items-center'>
-                                <Rating ratings={p.rating} size={12} sm:size={14} />
-                            </div>
-                                
+                                    <Rating ratings={p.rating} size={12} />
+                                </div>
                             </div>
                         </div>
                     </div>
