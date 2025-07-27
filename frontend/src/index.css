@@ -1,0 +1,102 @@
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add this to your index.css file */
+
+/* ===========================================
+   BANNER SWIPER STYLES
+   =========================================== */
+
+/* Banner Navigation Buttons */
+.banner-swiper .swiper-button-next,
+.banner-swiper .swiper-button-prev {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.banner-swiper .swiper-button-next:hover,
+.banner-swiper .swiper-button-prev:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.banner-swiper .swiper-button-next:after,
+.banner-swiper .swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Banner Pagination Dots */
+.banner-swiper .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 1;
+    width: 12px;
+    height: 12px;
+    transition: all 0.3s ease;
+}
+
+.banner-swiper .swiper-pagination-bullet-active {
+    background: #fff;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ===========================================
+   CATEGORIES SWIPER STYLES
+   =========================================== */
+
+/* Custom Navigation Buttons - Mobile Hide */
+@media (max-width: 768px) {
+    .categories-swiper-button-next,
+    .categories-swiper-button-prev {
+        display: none;
+    }
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   =========================================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+    /* Banner responsive */
+    .banner-swiper .swiper-button-next,
+    .banner-swiper .swiper-button-prev {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .banner-swiper .swiper-button-next:after,
+    .banner-swiper .swiper-button-prev:after {
+        font-size: 16px;
+    }
+    
+    /* Hide custom navigation on mobile */
+    .categories-swiper-button-next,
+    .categories-swiper-button-prev {
+        display: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    /* Hide navigation on mobile for both swipers */
+    .banner-swiper .swiper-button-next,
+    .banner-swiper .swiper-button-prev,
+    .categories-swiper-button-next,
+    .categories-swiper-button-prev {
+        display: none;
+    }
+}
+
+

@@ -1,0 +1,311 @@
+//src/pages/SearchProducts.tsx
+import { useState, useEffect, type ChangeEvent } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { IoIosArrowForward } from "react-icons/io";
+import { Range } from 'react-range';
+import { AiFillStar } from 'react-icons/ai';
+import { CiStar } from 'react-icons/ci';
+import { BsFillGridFill } from 'react-icons/bs';
+import { FaThList } from 'react-icons/fa';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Products from '../components/products/Products';
+import ShopProducts from '../components/products/ShopProducts';
+import Pagination from '../components/Pagination';
+import { usePriceRangeProducts, useQueryProducts, useGetCategories, useHomeState } from '../hooks/useHome';
+
+// Type definitions
+type ViewStyle = 'grid' | 'list';
+type SortOption = '' | 'low-to-high' | 'high-to-low';
+type RatingFilter = '' | '1' | '2' | '3' | '4' | '5';
+
+interface PriceRangeState {
+  values: number[];
+}
+
+const SearchProducts: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get('category') || '';
+  const searchValue = searchParams.get('value') || '';
+
+  // Zustand store state
+  const {
+    products,
+    priceRange,
+    latestProducts,
+    totalProduct,
+    parPage
+  } = useHomeState();
+
+  // Local state
+  const [filter, setFilter] = useState<boolean>(true);
+  const [state, setState] = useState<PriceRangeState>({
+    values: [priceRange.low, priceRange.high]
+  });
+  const [rating, setRating] = useState<RatingFilter>('');
+  const [styles, setStyles] = useState<ViewStyle>('grid');
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [sortPrice, setSortPrice] = useState<SortOption>('');
+
+  // React Query hooks
+  useGetCategories();
+  usePriceRangeProducts();
+  const { isLoading } = useQueryProducts({
+    low: state.values[0] || undefined,
+    high: state.values[1] || undefined,
+    category: category || undefined,
+    rating: rating || undefined,
+    sortPrice: sortPrice || undefined,
+    pageNumber,
+    searchValue: searchValue || undefined
+  });
+
+  // Update price range when data loads
+  useEffect(() => {
+    if (priceRange.low !== undefined && priceRange.high !== undefined) {
+      setState({
+        values: [priceRange.low, priceRange.high]
+      });
+    }
+  }, [priceRange]);
+
+  // Reset page number when filters change
+  useEffect(() => {
+    setPageNumber(1);
+  }, [state.values, category, rating, sortPrice, searchValue]);
+
+  // Handle price range change
+  const handlePriceRangeChange = (values: number[]): void => {
+    setState({ values });
+  };
+
+  // Handle sort change
+  const handleSortChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+    setSortPrice(e.target.value as SortOption);
+  };
+
+  // Handle rating selection
+  const handleRatingSelect = (ratingValue: RatingFilter): void => {
+    setRating(ratingValue);
+  };
+
+  // Reset rating filter
+  const resetRating = (): void => {
+    setRating('');
+  };
+
+  // Handle view style change
+  const handleStyleChange = (style: ViewStyle): void => {
+    setStyles(style);
+  };
+
+  // Handle pagination
+  const handlePageChange = (page: number): void => {
+    setPageNumber(page);
+  };
+
+  // Toggle filter visibility on mobile
+  const toggleFilter = (): void => {
+    setFilter(!filter);
+  };
+
+  // Render star rating component
+  const renderStarRating = (ratingValue: number, onClick: () => void): JSX.Element => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <span key={i}>
+          {i <= ratingValue ? <AiFillStar /> : <CiStar />}
+        </span>
+      );
+    }
+    
+    return (
+      <div 
+        onClick={onClick}
+        className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors'
+      >
+        {stars}
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <Header />
+      
+      {/* Hero Section */}
+      <section className='bg-[url("http://localhost:3001/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+        <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
+          <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
+            <div className='flex flex-col justify-center gap-1 items-center h-full w-full text-white'>
+              <h2 className='text-3xl font-bold'>
+                {category ? `${category} Products` : searchValue ? `Search: "${searchValue}"` : 'All Products'}
+              </h2>
+              <div className='flex justify-center items-center gap-2 text-2xl w-full'>
+                <Link to='/' className='hover:underline'>Home</Link>
+                <span className='pt-1'>
+                  <IoIosArrowForward className='h-10 w-10'/>
+                </span>
+                <span>Products</span>
+              </div>
+            </div> 
+          </div> 
+        </div> 
+      </section>
+
+      {/* Main Content */}
+      <section className='py-16'>
+        <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
+          
+          {/* Mobile Filter Toggle */}
+          <div className={`md:block hidden ${!filter ? 'mb-6' : 'mb-0'}`}>
+            <button 
+              onClick={toggleFilter} 
+              className='text-center w-full py-2 px-3 bg-orange-500 text-white hover:bg-orange-600 transition-colors rounded'
+            >
+              {filter ? 'Show Filters' : 'Hide Filters'}
+            </button> 
+          </div>
+
+          <div className='w-full flex flex-wrap'>
+            
+            {/* Sidebar Filters */}
+            <div className={`w-3/12 md-lg:w-4/12 md:w-full pr-8 ${filter ? 'md:h-0 md:overflow-hidden md:mb-6' : 'md:h-auto md:overflow-auto md:mb-0'}`}>
+              
+              {/* Price Range Filter */}
+              <div className='py-2 flex flex-col gap-5'>
+                <h2 className='text-3xl font-bold mb-3 text-gray-900'>Price</h2>
+                
+                <Range
+                  step={5}
+                  min={priceRange.low}
+                  max={priceRange.high}
+                  values={state.values}
+                  onChange={handlePriceRangeChange}
+                  renderTrack={({ props, children }) => (
+                    <div 
+                      {...props} 
+                      className='w-full h-[6px] bg-gray-300 rounded-full cursor-pointer'
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderThumb={({ props }) => (
+                    <div 
+                      className='w-[15px] h-[15px] bg-[#ff7f50] rounded-full cursor-pointer hover:bg-[#ff6347] transition-colors' 
+                      {...props} 
+                    />
+                  )} 
+                />  
+                
+                <div>
+                  <span className='text-slate-800 font-bold text-lg'>
+                    ${Math.floor(state.values[0])} - ${Math.floor(state.values[1])}
+                  </span>  
+                </div>
+              </div>
+
+              {/* Rating Filter */}
+              <div className='py-3 flex flex-col gap-4'>
+                <h2 className='text-3xl font-bold mb-3 text-gray-900'>Rating</h2>
+                <div className='flex flex-col gap-3'>
+                  {[5, 4, 3, 2, 1].map((ratingValue) => (
+                    <div key={ratingValue}>
+                      {renderStarRating(ratingValue, () => handleRatingSelect(ratingValue.toString() as RatingFilter))}
+                    </div>
+                  ))}
+                  
+                  {/* Reset Rating Option */}
+                  <div 
+                    onClick={resetRating}
+                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors'
+                  >
+                    <span><CiStar /></span>
+                    <span><CiStar /></span>
+                    <span><CiStar /></span>
+                    <span><CiStar /></span>
+                    <span><CiStar /></span>
+                    <span className='ml-2 text-sm text-gray-600'>Clear Rating</span>
+                  </div> 
+                </div> 
+              </div>
+            
+              {/* Latest Products - Hidden on Mobile */}
+              <div className='py-5 flex flex-col gap-4 md:hidden'>
+                <Products title='Latest Products' products={[latestProducts]} />
+              </div> 
+            </div>
+
+            {/* Main Content Area */}
+            <div className='w-9/12 md-lg:w-8/12 md:w-full'>
+              <div className='pl-8 md:pl-0'>
+                
+                {/* Products Header */}
+                <div className='py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border shadow-sm'>
+                  <h2 className='text-lg font-medium text-gray-900'>
+                    ({totalProduct}) Products
+                    {isLoading && <span className='ml-2 text-sm text-gray-500'>Loading...</span>}
+                  </h2>
+                  
+                  <div className='flex justify-center items-center gap-3'>
+                    {/* Sort Dropdown */}
+                    <select 
+                      onChange={handleSortChange}
+                      value={sortPrice}
+                      className='p-1 border outline-0 text-gray-600 font-semibold rounded focus:border-green-500'
+                      name="sort"
+                      id="sort"
+                    >
+                      <option value="">Sort By</option>
+                      <option value="low-to-high">Low to High Price</option>
+                      <option value="high-to-low">High to Low Price</option>
+                    </select>
+                    
+                    {/* View Style Toggle */}
+                    <div className='flex justify-center items-start gap-4 md-lg:hidden'>
+                      <div 
+                        onClick={() => handleStyleChange('grid')} 
+                        className={`p-2 ${styles === 'grid' ? 'bg-slate-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
+                      >
+                        <BsFillGridFill />  
+                      </div>
+                      <div 
+                        onClick={() => handleStyleChange('list')} 
+                        className={`p-2 ${styles === 'list' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-slate-300 cursor-pointer rounded-sm transition-colors`}
+                      >
+                        <FaThList />  
+                      </div> 
+                    </div> 
+                  </div> 
+                </div> 
+
+                {/* Products Grid/List */}
+                <div className='pb-8'>
+                  <ShopProducts products={products} styles={styles} />  
+                </div>
+
+                {/* Pagination */}
+                <div>
+                  {totalProduct > parPage && (
+                    <Pagination 
+                      pageNumber={pageNumber} 
+                      setPageNumber={handlePageChange} 
+                      totalItem={totalProduct} 
+                      parPage={parPage} 
+                      showItem={Math.floor(totalProduct / parPage)} 
+                    />
+                  )}
+                </div>
+              </div> 
+            </div>  
+          </div>
+        </div> 
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default SearchProducts;

@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "target": "ES2020",
+      "useDefineForClassFields": true,
+      "lib": ["ES2020", "DOM", "DOM.Iterable"],
+      "module": "ESNext",
+      "skipLibCheck": true,
+      
+      /* Bundler mode */
+      "moduleResolution": "bundler",
+      "allowImportingTsExtensions": true,
+      "resolveJsonModule": true,
+      "isolatedModules": true,
+      "noEmit": true,
+      "jsx": "react-jsx",
+      
+      /* Coexistența JS/TS */
+      "allowJs": true,
+      "esModuleInterop": true,
+      
+      /* Pentru migrare graduală, începe cu aceste setări mai permisive */
+      "strict": false,
+      "noImplicitAny": false,
+      
+      /* Alias-uri pentru importuri */
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    },
+    "include": ["src"],
+    "references": [{ "path": "./tsconfig.node.json" }]
+  }
