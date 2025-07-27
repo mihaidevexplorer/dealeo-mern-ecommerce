@@ -45,15 +45,15 @@ git clone https://github.com/mihaidevexplorer/dealeo-mern-ecommerce.git
 Frontend:
 
 bash
-Copiază
-Editează
+Copy
+Edit
 cd frontend
 npm install
 Backend:
 
 bash
-Copiază
-Editează
+Copy
+Edit
 cd ../backend
 npm install
 Dashboard:
@@ -67,8 +67,8 @@ npm install
 Create a .env file in the backend folder with the following variables:
 
 env
-Copiază
-Editează
+Copy
+Edit
 PORT=5000
 DB_URL=Your MongoDB URL
 SECRET=ariyan
@@ -79,21 +79,21 @@ api_secret=Your Cloudinary secret key
 Frontend:
 
 bash
-Copiază
-Editează
+Copy
+Edit
 cd frontend
 npm run dev
 Backend:
 
 bash
-Copiază
-Editează
+Copy
+Edit
 cd ../backend
 npm run dev
 Dashboard:
 
 bash
-Copiază
-Editează
+Copy
+Edit
 cd ../dashboard
 npm run dev
