@@ -39,6 +39,35 @@
 ## 📌 Getting Started
 
 ### 1️⃣ Clone the repository
+
+# Screenshots
+
+[img]https://i.ibb.co/SXXV5bZS/Screenshot-2025-11-08-191607.png[/img]
+[img]https://i.ibb.co/svx1C9bs/Screenshot-2025-11-08-191650.png[/img]
+[img]https://i.ibb.co/7t1Yn4Dc/Screenshot-2025-11-08-191721.png[/img]
+[img]https://i.ibb.co/PvCcFGSM/Screenshot-2025-11-08-191745.png[/img]
+[img]https://i.ibb.co/8D5pzzqH/Screenshot-2025-11-08-191818.png[/img]
+[img]https://i.ibb.co/99VwttsY/Screenshot-2025-11-08-191856.png[/img]
+[img]https://i.ibb.co/dwSBR1j6/Screenshot-2025-11-08-191923.png[/img]
+[img]https://i.ibb.co/x9S2P5n/Screenshot-2025-11-08-191952.png[/img]
+[img]https://i.ibb.co/svzGYtcT/Screenshot-2025-11-08-192040.png[/img]
+[img]https://i.ibb.co/XxCpF0th/Screenshot-2025-11-08-194152.png[/img]
+[img]https://i.ibb.co/k6B9WY6r/Screenshot-2025-11-08-194229.png[/img]
+[img]https://i.ibb.co/93db81n5/Screenshot-2025-11-08-194304.png[/img]
+[img]https://i.ibb.co/1GK6Q58w/Screenshot-2025-11-08-194337.png[/img]
+[img]https://i.ibb.co/0yp9B8J9/Screenshot-2025-11-08-194354.png[/img]
+[img]https://i.ibb.co/TD8whSJT/Screenshot-2025-11-08-194506.png[/img]
+[img]https://i.ibb.co/YF52FRwP/Screenshot-2025-11-08-194754.png[/img]
+[img]https://i.ibb.co/9HrRh23m/Screenshot-2025-11-08-194831.png[/img]
+[img]https://i.ibb.co/dwzdBSrQ/Screenshot-2025-11-08-194907.png[/img]
+[img]https://i.ibb.co/chtGy0n9/Screenshot-2025-11-08-194943.png[/img]
+[img]https://i.ibb.co/ZRx4XWrK/Screenshot-2025-11-08-195033.png[/img]
+[img]https://i.ibb.co/TBhRNwJL/Screenshot-2025-11-08-195106.png[/img]
+[img]https://i.ibb.co/99Cqt5wS/Screenshot-2025-11-08-195331.png[/img]
+[img]https://i.ibb.co/4RB8fDj5/Screenshot-2025-11-08-195426.png[/img]
+[img]https://i.ibb.co/GfrsbfCx/Screenshot-2025-11-08-195507.png[/img]
+[img]https://i.ibb.co/8LXMXFZ3/Screenshot-2025-11-08-195612.png[/img]
+
 ```bash
 git clone https://github.com/mihaidevexplorer/dealeo-mern-ecommerce.git
 2️⃣ Install dependencies
@@ -98,41 +127,3 @@ Edit
 cd ../dashboard
 npm run dev
 
-
-
-
-
-
-
-
-
-
-
-
-# Screenshots
-
-[img]https://i.ibb.co/SXXV5bZS/Screenshot-2025-11-08-191607.png[/img]
-[img]https://i.ibb.co/svx1C9bs/Screenshot-2025-11-08-191650.png[/img]
-[img]https://i.ibb.co/7t1Yn4Dc/Screenshot-2025-11-08-191721.png[/img]
-[img]https://i.ibb.co/PvCcFGSM/Screenshot-2025-11-08-191745.png[/img]
-[img]https://i.ibb.co/8D5pzzqH/Screenshot-2025-11-08-191818.png[/img]
-[img]https://i.ibb.co/99VwttsY/Screenshot-2025-11-08-191856.png[/img]
-[img]https://i.ibb.co/dwSBR1j6/Screenshot-2025-11-08-191923.png[/img]
-[img]https://i.ibb.co/x9S2P5n/Screenshot-2025-11-08-191952.png[/img]
-[img]https://i.ibb.co/svzGYtcT/Screenshot-2025-11-08-192040.png[/img]
-[img]https://i.ibb.co/XxCpF0th/Screenshot-2025-11-08-194152.png[/img]
-[img]https://i.ibb.co/k6B9WY6r/Screenshot-2025-11-08-194229.png[/img]
-[img]https://i.ibb.co/93db81n5/Screenshot-2025-11-08-194304.png[/img]
-[img]https://i.ibb.co/1GK6Q58w/Screenshot-2025-11-08-194337.png[/img]
-[img]https://i.ibb.co/0yp9B8J9/Screenshot-2025-11-08-194354.png[/img]
-[img]https://i.ibb.co/TD8whSJT/Screenshot-2025-11-08-194506.png[/img]
-[img]https://i.ibb.co/YF52FRwP/Screenshot-2025-11-08-194754.png[/img]
-[img]https://i.ibb.co/9HrRh23m/Screenshot-2025-11-08-194831.png[/img]
-[img]https://i.ibb.co/dwzdBSrQ/Screenshot-2025-11-08-194907.png[/img]
-[img]https://i.ibb.co/chtGy0n9/Screenshot-2025-11-08-194943.png[/img]
-[img]https://i.ibb.co/ZRx4XWrK/Screenshot-2025-11-08-195033.png[/img]
-[img]https://i.ibb.co/TBhRNwJL/Screenshot-2025-11-08-195106.png[/img]
-[img]https://i.ibb.co/99Cqt5wS/Screenshot-2025-11-08-195331.png[/img]
-[img]https://i.ibb.co/4RB8fDj5/Screenshot-2025-11-08-195426.png[/img]
-[img]https://i.ibb.co/GfrsbfCx/Screenshot-2025-11-08-195507.png[/img]
-[img]https://i.ibb.co/8LXMXFZ3/Screenshot-2025-11-08-195612.png[/img]
