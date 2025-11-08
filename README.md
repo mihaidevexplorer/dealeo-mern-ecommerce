@@ -40,8 +40,6 @@
 
 ### 1️⃣ Clone the repository
 
-# Screenshots
-
 [img]https://i.ibb.co/SXXV5bZS/Screenshot-2025-11-08-191607.png[/img]
 [img]https://i.ibb.co/svx1C9bs/Screenshot-2025-11-08-191650.png[/img]
 [img]https://i.ibb.co/7t1Yn4Dc/Screenshot-2025-11-08-191721.png[/img]
