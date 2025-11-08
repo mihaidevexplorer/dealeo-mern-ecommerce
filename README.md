@@ -100,7 +100,6 @@ npm run dev
 
 
 
-## Screenshots
 
 [![Screenshot 1](https://i.ibb.co/SXXV5bZS/Screenshot-2025-11-08-191607.png)](https://i.ibb.co/SXXV5bZS/Screenshot-2025-11-08-191607.png)
 [![Screenshot 2](https://i.ibb.co/svx1C9bs/Screenshot-2025-11-08-191650.png)](https://i.ibb.co/svx1C9bs/Screenshot-2025-11-08-191650.png)
