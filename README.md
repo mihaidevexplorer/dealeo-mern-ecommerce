@@ -36,10 +36,6 @@
 
 ---
 
-## 📌 Getting Started
-
-### 1️⃣ Clone the repository
-
 # Screenshots
 
 ![Screenshot 1](https://i.ibb.co/R4vGjKD0/image.png)
@@ -50,7 +46,9 @@
 ![Screenshot 6](https://i.ibb.co/Lz03YdbD/image.png)
 ![Screenshot 7](https://i.ibb.co/bgxFDDPr/image.png)
 
+## 📌 Getting Started
 
+### 1️⃣ Clone the repository
 
 ```bash
 git clone https://github.com/mihaidevexplorer/dealeo-mern-ecommerce.git
