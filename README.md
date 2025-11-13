@@ -38,13 +38,7 @@
 
 # Screenshots
 
-![Screenshot 1](https://i.ibb.co/R4vGjKD0/image.png)
-![Screenshot 2](https://i.ibb.co/KcC5n3J8/image.png)
-![Screenshot 3](https://i.ibb.co/jZsRZ5My/image.png)
-![Screenshot 4](https://i.ibb.co/9m7VGkcN/image.png)
-![Screenshot 5](https://i.ibb.co/v4Vx1FdB/image.png)
-![Screenshot 6](https://i.ibb.co/Lz03YdbD/image.png)
-![Screenshot 7](https://i.ibb.co/bgxFDDPr/image.png)
+<div align="center"> <table> <tr> <td><img src="https://i.ibb.co/R4vGjKD0/image.png" width="300"/></td> <td><img src="https://i.ibb.co/KcC5n3J8/image.png" width="300"/></td> <td><img src="https://i.ibb.co/jZsRZ5My/image.png" width="300"/></td> </tr> <tr> <td><img src="https://i.ibb.co/9m7VGkcN/image.png" width="300"/></td> <td><img src="https://i.ibb.co/v4Vx1FdB/image.png" width="300"/></td> <td><img src="https://i.ibb.co/Lz03YdbD/image.png" width="300"/></td> </tr> <tr> <td colspan="3" align="center"><img src="https://i.ibb.co/bgxFDDPr/image.png" width="300"/></td> </tr> </table> </div>
 
 ## 📌 Getting Started
 
