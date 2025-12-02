@@ -184,7 +184,7 @@ const Header: React.FC = () => {
                 <div className={`w-[300px] z-[9999] transition-all duration-200 fixed ${showShidebar ? '-left-[300px]' : 'left-0 top-0'} overflow-y-auto bg-white h-screen py-6 px-8 shadow-2xl`}>
                     <div className='mb-6'>
                         <Link to='/'>
-                            <img src="http://localhost:3001/images/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
+                            <img src/images/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
                         </Link>
                     </div>
                     
