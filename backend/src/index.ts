@@ -30,11 +30,24 @@ const app: Express = express();
 const server = http.createServer(app);
 
 // Middleware
-app.use(express.static('public'));
-app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
-    credentials: true
-}));
+const allowedOrigins =
+  process.env.NODE_ENV === 'production'
+    ? [
+        'https://dealeo-frontend.vercel.app',
+        'https://dealeo-dashboard.vercel.app',
+      ]
+    : [
+        'http://localhost:3000',
+        'http://localhost:3001',
+      ];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
