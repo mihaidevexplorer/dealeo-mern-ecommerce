@@ -3,7 +3,7 @@ import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { dbConnect } from '@/utils/db';
+import { dbConnect } from './utils/db';
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import http from 'http';
 import dotenv from 'dotenv';
