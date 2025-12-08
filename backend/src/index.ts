@@ -10,17 +10,18 @@ import dotenv from 'dotenv';
 import { UserInfo, Customer, Seller, Admin, Message } from './types';
 
 // Import toate route-urile ca ES modules
-import homeRoutes from '@/routes/home/homeRoutes';
-import authRoutes from '@/routes/authRoutes';
-import orderRoutes from '@/routes/order/orderRoutes';
-import cardRoutes from '@/routes/home/cardRoutes';
-import categoryRoutes from '@/routes/dashboard/categoryRoutes';
-import productRoutes from '@/routes/dashboard/productRoutes';
-import sellerRoutes from '@/routes/dashboard/sellerRoutes';
-import customerAuthRoutes from '@/routes/home/customerAuthRoutes';
-import chatRoutes from '@/routes/chatRoutes';
-import paymentRoutes from '@/routes/paymentRoutes';
-import dashboardRoutes from '@/routes/dashboard/dashboardRoutes';
+import homeRoutes from './routes/home/homeRoutes';
+import authRoutes from './routes/authRoutes';
+import orderRoutes from './routes/order/orderRoutes';
+import cardRoutes from './routes/home/cardRoutes';
+import categoryRoutes from './routes/dashboard/categoryRoutes';
+import productRoutes from './routes/dashboard/productRoutes';
+import sellerRoutes from './routes/dashboard/sellerRoutes';
+import customerAuthRoutes from './routes/home/customerAuthRoutes';
+import chatRoutes from './routes/chatRoutes';
+import paymentRoutes from './routes/paymentRoutes';
+import dashboardRoutes from './routes/dashboard/dashboardRoutes';
+
 
 // Configurarea variabilelor de mediu
 dotenv.config();
