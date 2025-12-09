@@ -68,25 +68,21 @@ const Stripe: React.FC<StripeProps> = ({ price, orderId }) => {
     clientSecret,
   };
 
-  const create_payment = async (): Promise<void> => {
-    setIsLoading(true);
-    try {
-      const { data } = await axios.post<PaymentIntentResponse>(
-        'http://localhost:5000/api/order/create-payment',
-        { price },
-        { withCredentials: true }
-      );
-      setClientSecret(data.clientSecret);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log(error.response?.data);
-      } else {
-        console.log(error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const create_payment = async (): Promise<void> => {
+  setIsLoading(true);
+  try {
+    const { data } = await api.post<PaymentIntentResponse>(
+      '/order/create-payment',
+      { price },
+      { withCredentials: true }
+    );
+    setClientSecret(data.clientSecret);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className='mt-6 p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg'>
