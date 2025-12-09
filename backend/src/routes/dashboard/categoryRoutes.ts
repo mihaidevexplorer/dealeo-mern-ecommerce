@@ -1,8 +1,9 @@
 // src/routes/dashboard/categoryRoutes.ts
 
 import { Router } from 'express';
-import categoryController from '@/controllers/dasboard/categoryController';
-import { authMiddleware } from '@/middleware/authMiddleware';
+import categoryController from '../../controllers/dasboard/categoryController';
+import { authMiddleware } from '../../middleware/authMiddleware';
+
 
 // Inițializarea router-ului
 const router = Router();
