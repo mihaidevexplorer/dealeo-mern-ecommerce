@@ -6,7 +6,8 @@ import error from '../assets/error.png';
 import success from '../assets/success.png';
 import { Link } from 'react-router-dom';
 import { FadeLoader } from 'react-spinners';
-import axios from 'axios';
+import api from '../api/api';
+
 
 const load = async (): Promise<Stripe | null> => {
     return await loadStripe('pk_test_51Q8QW6RoWms6BcWGoEL8utd5m6uQsqeyhaB1sIIrwneJiYDsIrCeBVx0cJCQqc5ZEKT2Na7HFFA0yj6UWEUGZfdN00DbPnH5zh');
@@ -54,21 +55,18 @@ const ConfirmOrder: React.FC = () => {
     }, []);
 
     const update_payment = async (): Promise<void> => {
-        const orderId = localStorage.getItem('orderId');
-        if (orderId) {
-            try {
-                await axios.get(`http://localhost:5000/api/order/confirm/${orderId}`);
-                localStorage.removeItem('orderId');
-                setLoader(false);
-            } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    console.log(error.response?.data);
-                } else {
-                    console.log('An unexpected error occurred');
-                }
-            }
-        }
+  const orderId = localStorage.getItem('orderId');
+  if (orderId) {
+    try {
+      await api.get(`/order/confirm/${orderId}`);
+      localStorage.removeItem('orderId');
+      setLoader(false);
+    } catch (error) {
+      console.log(error);
     }
+  }
+};
+
 
     useEffect(() => {
         if (message === 'succeeded') {
