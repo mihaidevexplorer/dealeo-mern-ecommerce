@@ -17,7 +17,10 @@ interface ReceivedMessage extends ChatMessage {
     senderName?: string;
 }
 
-const socket = io('http://localhost:5000');
+const socket = io('https://dealeo-backend.onrender.com', {
+  withCredentials: true,
+});
+
 
 const Chat = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
