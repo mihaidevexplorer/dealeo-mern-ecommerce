@@ -67,15 +67,15 @@ export const useSocket = (user: User | null) => {
   } = useChatStore();
 
   const connectSocket = useCallback(() => {
-    if (!user || socketRef.current?.connected) return;
+  if (!user || socketRef.current?.connected) return;
 
-    socketRef.current = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
-      transports: ['websocket'],
-      upgrade: true,
-    });
+  socketRef.current = io('https://dealeo-backend.onrender.com', {
+    transports: ['websocket'],
+    upgrade: true,
+    withCredentials: true,
+  });
 
-    const socket = socketRef.current;
-
+  const socket = socketRef.current;
     // Connection events
     socket.on('connect', () => {
       console.log('Connected to socket server');
