@@ -88,7 +88,7 @@ const Header: React.FC = () => {
                                     <span><IoMdArrowDropdown /></span>
                                     <ul className='absolute invisible transition-all top-12 rounded-md duration-200 text-white p-2 w-[120px] flex flex-col gap-2 group-hover:visible group-hover:top-8 bg-gray-800 shadow-lg z-10'>
                                         <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                                            <img/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
+                                            <img src="/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
                                             Română
                                         </li>
                                         <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
