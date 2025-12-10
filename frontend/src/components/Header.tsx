@@ -84,15 +84,15 @@ const Header: React.FC = () => {
                                 </div>
 
                                 <div className='flex group cursor-pointer text-white text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-white/30 after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-white/30 before:w-[1px] before:-left-[20px]'>
-                                    <img src="http://localhost:3001/images/english-uk.png" alt="" className="w-5 h-5 rounded-sm" />
+                                    <img src="/images/english-uk.png" alt="" className="w-5 h-5 rounded-sm" />
                                     <span><IoMdArrowDropdown /></span>
                                     <ul className='absolute invisible transition-all top-12 rounded-md duration-200 text-white p-2 w-[120px] flex flex-col gap-2 group-hover:visible group-hover:top-8 bg-gray-800 shadow-lg z-10'>
                                         <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                                            <img src="http://localhost:3001/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
+                                            <img/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
                                             Română
                                         </li>
                                         <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                                            <img src="http://localhost:3001/images/english-uk.png" alt="English" className="w-5 h-5 rounded-sm" />
+                                            <img src="/images/english-uk.png" alt="English" className="w-5 h-5 rounded-sm" />
                                             English
                                         </li>
                                     </ul>
@@ -121,7 +121,7 @@ const Header: React.FC = () => {
                         <div className='md-lg:w-full w-3/12 md-lg:pt-4'>
                             <div className='flex items-center justify-between'>
                                 <Link to='/' className='block'>
-                                    <img src="http://localhost:3001/images/logo.png" alt="Logo" className="h-12 w-auto object-contain" />
+                                    <img src="/images/logo.png" alt="Logo" className="h-12 w-auto object-contain" />
                                 </Link>
                                 <div className='justify-center items-center w-[35px] h-[35px] bg-orange-500 text-white rounded cursor-pointer lg:hidden md-lg:flex xl:hidden hidden hover:bg-orange-600 transition-colors' onClick={() => setShowShidebar(false)}>
                                     <span className='flex items-center justify-center'><FaList/></span>
@@ -184,21 +184,21 @@ const Header: React.FC = () => {
                 <div className={`w-[300px] z-[9999] transition-all duration-200 fixed ${showShidebar ? '-left-[300px]' : 'left-0 top-0'} overflow-y-auto bg-white h-screen py-6 px-8 shadow-2xl`}>
                     <div className='mb-6'>
                         <Link to='/'>
-                            <img src="http://localhost:3001/images/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
+                            <img src="/images/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
                         </Link>
                     </div>
                     
                     <div className='flex justify-start items-center gap-6 mb-8'>
                         <div className='flex group cursor-pointer text-gray-800 text-sm justify-center items-center gap-1 relative'>
-                            <img src="http://localhost:3001/images/english-uk.png" alt="English UK" className="w-5 h-5 rounded-sm" />
+                            <img src="/images/english-uk.png" alt="English UK" className="w-5 h-5 rounded-sm" />
                             <span><IoMdArrowDropdown /></span>
                             <ul className='absolute invisible transition-all top-12 rounded-md duration-200 text-white p-2 w-[120px] flex flex-col gap-2 group-hover:visible group-hover:top-8 bg-gray-800 shadow-lg z-10'>
                                 <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                                    <img src="http://localhost:3001/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
+                                    <img src="/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
                                     Română
                                 </li>
                                 <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                                    <img src="http://localhost:3001/images/english-uk.png" alt="English UK" className="w-5 h-5 rounded-sm" />
+                                    <img src="/images/english-uk.png" alt="English UK" className="w-5 h-5 rounded-sm" />
                                     English
                                 </li>
                             </ul>
