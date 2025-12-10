@@ -222,7 +222,7 @@ const Register: React.FC = () => {
                 {/* Seller Links */}
                 <a 
                   target='_blank' 
-                  href="http://localhost:3001/login"
+                  href="/login"
                   rel="noopener noreferrer"
                 >
                   <div className='px-8 w-full py-2 bg-[#02e3e0] shadow hover:shadow-cyan-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3 transition-shadow'>
@@ -232,7 +232,7 @@ const Register: React.FC = () => {
 
                 <a 
                   target='_blank' 
-                  href="http://localhost:3001/register"
+                  href="/register"
                   rel="noopener noreferrer"
                 >
                   <div className='px-8 w-full py-2 bg-[#ad2cc4] shadow hover:shadow-purple-500/50 text-white rounded-md flex justify-center items-center gap-2 mb-3 transition-shadow'>
