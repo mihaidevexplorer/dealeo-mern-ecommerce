@@ -8,7 +8,7 @@ export const overrideStyle = {
     alignItems : 'center'
 }
 
-// folosește variabila de mediu!!!
+
 export const socket = io(import.meta.env.VITE_API_URL, {
     transports: ['websocket'],
     withCredentials: true        
