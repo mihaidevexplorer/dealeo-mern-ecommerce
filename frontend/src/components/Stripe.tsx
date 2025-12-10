@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import type { StripeElementsOptions } from '@stripe/stripe-js';
-import axios from 'axios';
+import api from '../api/api';
 import CheckoutForm from './CheckoutForm';
 
 // Load Stripe
