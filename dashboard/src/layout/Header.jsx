@@ -38,7 +38,7 @@ const Header = ({ showSidebar, setShowSidebar }) => {
               className="w-full h-full rounded-full object-cover border-2 border-indigo-500 shadow-md"
               src={
                 userInfo.role === "admin"
-                  ? "http://localhost:3000/images/admin.jpg"
+                  ? "/images/admin.jpg"
                   : userInfo.image
               }
               alt="User Avatar"
