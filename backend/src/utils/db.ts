@@ -1,16 +1,22 @@
 // src/utiles/db.ts
-
 import mongoose from 'mongoose';
 
 export const dbConnect = async (): Promise<void> => {
-    try {
-        await mongoose.connect(process.env.DB_URL as string);
-        console.log("Database connected..");
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log(error.message);
-        } else {
-            console.log('Unknown error occurred during database connection');
-        }
-    }
+  const uri = process.env.DB_URL;
+
+  console.log("DB_URL exists?", !!uri); // DEBUG
+
+  if (!uri) {
+    throw new Error("DB_URL is not defined in environment variables.");
+  }
+
+  try {
+    console.log("Connecting to MongoDB...");
+    await mongoose.connect(uri);
+    console.log("Database connected.");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    // VERY IMPORTANT: throw the error, don't swallow it
+    throw error;
+  }
 };
