@@ -59,7 +59,7 @@ const Payment = () => {
                                 )}
                                 <div className='flex flex-col items-center gap-3'>
                                     <div className='w-20 h-20 bg-white rounded-lg shadow-sm flex items-center justify-center'>
-                                        <img src="http://localhost:3001/images/paymentstripe/stripe.png" alt="Stripe" className='w-16 h-16 object-contain' />
+                                        <img src="/images/paymentstripe/stripe.png" alt="Stripe" className='w-16 h-16 object-contain' />
                                     </div>
                                     <div>
                                         <span className='text-gray-800 font-semibold block'>Stripe</span>
@@ -86,7 +86,7 @@ const Payment = () => {
                                 )}
                                 <div className='flex flex-col items-center gap-3'>
                                     <div className='w-20 h-20 bg-white rounded-lg shadow-sm flex items-center justify-center'>
-                                        <img src="http://localhost:3001/images/paymentstripe/cod.jpg" alt="COD" className='w-16 h-16 object-contain' />
+                                        <img src="/images/paymentstripe/cod.jpg" alt="COD" className='w-16 h-16 object-contain' />
                                     </div>
                                     <div>
                                         <span className='text-gray-800 font-semibold block'>Cash on Delivery</span>
