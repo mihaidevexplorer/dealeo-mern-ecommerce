@@ -54,10 +54,11 @@ app.use(cookieParser());
 
 // Configurare Socket.IO
 const io = new SocketIOServer(server, {
-    cors: {
-        origin: '*',
-        credentials: true
-    }
+  cors: {
+    origin: allowedOrigins,     // nu mai folosim '*'
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
 });
 
 // Variabile pentru management utilizatori
