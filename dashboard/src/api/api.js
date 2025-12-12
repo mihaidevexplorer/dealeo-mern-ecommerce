@@ -1,10 +1,17 @@
-import axios, { type AxiosInstance } from "axios";
+// src/api/api.ts
+import axios from "axios";
+import type { AxiosInstance } from "axios";
+
+const API_URL = import.meta.env.VITE_API_URL;
+
+if (!API_URL) throw new Error("VITE_API_URL is missing");
 
 const api: AxiosInstance = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api`,
+  baseURL: `${API_URL}/api`,
   withCredentials: true,
 });
 
 export default api;
+
 
 
