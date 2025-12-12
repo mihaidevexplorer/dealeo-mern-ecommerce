@@ -1,14 +1,16 @@
 // src/api/api.ts
 import axios from "axios";
-import type { AxiosInstance } from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+//const local = "http://localhost:5000";
 
-if (!API_URL) throw new Error("VITE_API_URL is missing");
 
-const api: AxiosInstance = axios.create({
-  baseURL: `${API_URL}/api`,
-  withCredentials: true,
+const production = "https://dealeo-backend.onrender.com";
+
+const api_url = import.meta.env.PROD ? production : local;
+
+const api = axios.create({
+  baseURL: `${api_url}/api`,
+  withCredentials: true,         
 });
 
 export default api;
