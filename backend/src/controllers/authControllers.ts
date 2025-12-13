@@ -1,5 +1,4 @@
 // src\controllers\authControllers.ts
-
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import formidable from 'formidable';
@@ -459,8 +458,8 @@ class AuthControllers {
       const cookieOptions: CookieOptions = {
         expires: new Date(Date.now()),
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+        secure: true,
+        sameSite: 'none'
       };
 
       res.cookie('accessToken', '', cookieOptions);
