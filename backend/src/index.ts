@@ -29,6 +29,7 @@ dotenv.config();
 // Inițializare Express
 const app: Express = express();
 const server = http.createServer(app);
+app.set('trust proxy', 1);
 
 // Middleware
 const allowedOrigins =
