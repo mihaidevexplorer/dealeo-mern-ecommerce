@@ -1,4 +1,4 @@
-// src/controllers/authControllers.ts
+// src\controllers\authControllers.ts
 
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
@@ -9,6 +9,7 @@ import sellerModel from '../models/sellerModel';
 import sellerCustomerModel from '../models/chat/sellerCustomerModel';
 import { responseReturn } from '../utils/response';
 import { createToken } from '../utils/tokenCreate';
+
 
 // Interfaces
 interface LoginBody {
@@ -82,18 +83,6 @@ interface CookieOptions {
   sameSite?: 'strict' | 'lax' | 'none';
 }
 
-// Helper pentru opțiunile de cookie (login / register)
-const getCookieOptions = (): CookieOptions => {
-  const isProd = process.env.NODE_ENV === 'production';
-
-  return {
-    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 zile
-    httpOnly: true,
-    secure: isProd,                           // pe Render → true
-    sameSite: isProd ? 'none' : 'lax',        // în producție trebuie 'none' pentru cross-site
-  };
-};
-
 class AuthControllers {
   admin_login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body as LoginBody;
@@ -112,8 +101,7 @@ class AuthControllers {
     }
 
     try {
-      const admin = await adminModel
-        .findOne({ email: email.toLowerCase().trim() })
+      const admin = await adminModel.findOne({ email: email.toLowerCase().trim() })
         .select('+password') as AdminDocument | null;
 
       if (!admin) {
@@ -130,17 +118,23 @@ class AuthControllers {
 
       const tokenPayload: TokenPayload = {
         id: admin.id,
-        role: admin.role,
+        role: admin.role
       };
 
       const token = await createToken(tokenPayload);
 
-      const cookieOptions = getCookieOptions();
+      const cookieOptions: CookieOptions = {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
+      };
+
       res.cookie('accessToken', token, cookieOptions);
 
       const response: AuthResponse = {
         token,
-        message: 'Login successful',
+        message: 'Login successful'
       };
 
       responseReturn(res, 200, response);
@@ -148,7 +142,7 @@ class AuthControllers {
       console.error('Admin login error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Internal server error during login' });
     }
-  };
+  }
 
   seller_login = async (req: Request, res: Response): Promise<void> => {
     const { email, password } = req.body as LoginBody;
@@ -167,8 +161,7 @@ class AuthControllers {
     }
 
     try {
-      const seller = await sellerModel
-        .findOne({ email: email.toLowerCase().trim() })
+      const seller = await sellerModel.findOne({ email: email.toLowerCase().trim() })
         .select('+password') as SellerDocument | null;
 
       if (!seller) {
@@ -185,17 +178,23 @@ class AuthControllers {
 
       const tokenPayload: TokenPayload = {
         id: seller.id,
-        role: seller.role,
+        role: seller.role
       };
 
       const token = await createToken(tokenPayload);
 
-      const cookieOptions = getCookieOptions();
+      const cookieOptions: CookieOptions = {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      };
+
       res.cookie('accessToken', token, cookieOptions);
 
       const response: AuthResponse = {
         token,
-        message: 'Login successful',
+        message: 'Login successful'
       };
 
       responseReturn(res, 200, response);
@@ -203,7 +202,7 @@ class AuthControllers {
       console.error('Seller login error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Internal server error during login' });
     }
-  };
+  }
 
   seller_register = async (req: Request, res: Response): Promise<void> => {
     const { email, name, password } = req.body as RegisterBody;
@@ -233,8 +232,8 @@ class AuthControllers {
     }
 
     try {
-      const existingSeller = await sellerModel.findOne({
-        email: email.toLowerCase().trim(),
+      const existingSeller = await sellerModel.findOne({ 
+        email: email.toLowerCase().trim() 
       }) as SellerDocument | null;
 
       if (existingSeller) {
@@ -249,26 +248,32 @@ class AuthControllers {
         email: email.toLowerCase().trim(),
         password: hashedPassword,
         method: 'manually',
-        shopInfo: {},
+        shopInfo: {}
       }) as SellerDocument;
 
       await sellerCustomerModel.create({
-        myId: seller.id,
+        myId: seller.id
       });
 
       const tokenPayload: TokenPayload = {
         id: seller.id,
-        role: seller.role,
+        role: seller.role
       };
 
       const token = await createToken(tokenPayload);
 
-      const cookieOptions = getCookieOptions();
+      const cookieOptions: CookieOptions = {
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      };
+
       res.cookie('accessToken', token, cookieOptions);
 
       const response: AuthResponse = {
         token,
-        message: 'Registration successful',
+        message: 'Registration successful'
       };
 
       responseReturn(res, 201, response);
@@ -276,10 +281,10 @@ class AuthControllers {
       console.error('Seller registration error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Internal server error during registration' });
     }
-  };
+  }
 
   getUser = async (req: Request, res: Response): Promise<void> => {
-    const { id, role } = req as any; // presupunem că middleware-ul de auth atașează aceste câmpuri
+    const { id, role } = req;
 
     if (!id || !role) {
       responseReturn(res, 401, { error: 'Unauthorized: User information not found' });
@@ -304,7 +309,7 @@ class AuthControllers {
       }
 
       const response: UserInfoResponse = {
-        userInfo,
+        userInfo
       };
 
       responseReturn(res, 200, response);
@@ -312,20 +317,20 @@ class AuthControllers {
       console.error('Get user error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Internal server error' });
     }
-  };
+  }
 
   profile_image_upload = async (req: Request, res: Response): Promise<void> => {
-    const { id } = req as any;
+    const { id } = req;
 
     if (!id) {
       responseReturn(res, 401, { error: 'Unauthorized: User ID not found' });
       return;
     }
 
-    const form = new formidable.IncomingForm({
-      multiples: false,
+    const form = new formidable.IncomingForm({ 
+      multiples: false, 
       keepExtensions: true,
-      maxFileSize: 10 * 1024 * 1024, // 10MB limit
+      maxFileSize: 10 * 1024 * 1024 // 10MB limit
     });
 
     form.parse(req, async (err: any, fields: any, files: any) => {
@@ -339,7 +344,7 @@ class AuthControllers {
         cloud_name: process.env.cloud_name as string,
         api_key: process.env.api_key as string,
         api_secret: process.env.api_secret as string,
-        secure: true,
+        secure: true
       });
 
       const { image } = files;
@@ -360,19 +365,19 @@ class AuthControllers {
       // Validate file type
       const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
       if (!allowedTypes.includes(imageFile.mimetype || '')) {
-        responseReturn(res, 400, {
-          error: 'Invalid file type. Only JPEG, PNG, and WebP are allowed',
+        responseReturn(res, 400, { 
+          error: 'Invalid file type. Only JPEG, PNG, and WebP are allowed' 
         });
         return;
       }
 
       try {
-        const result = await cloudinary.uploader.upload(imagePath, {
+        const result = await cloudinary.uploader.upload(imagePath, { 
           folder: 'profile',
           transformation: [
             { width: 400, height: 400, crop: 'fill' },
-            { quality: 'auto' },
-          ],
+            { quality: 'auto' }
+          ]
         });
 
         if (!result || !result.url) {
@@ -381,7 +386,7 @@ class AuthControllers {
         }
 
         await sellerModel.findByIdAndUpdate(id, {
-          image: result.url,
+          image: result.url
         });
 
         const userInfo = await sellerModel.findById(id) as SellerDocument | null;
@@ -391,20 +396,20 @@ class AuthControllers {
           return;
         }
 
-        responseReturn(res, 200, {
+        responseReturn(res, 200, { 
           message: 'Profile image uploaded successfully',
-          userInfo,
+          userInfo
         });
       } catch (error) {
         console.error('Error uploading image to Cloudinary:', (error as Error).message);
         responseReturn(res, 500, { error: 'Failed to upload image' });
       }
     });
-  };
+  }
 
   profile_info_add = async (req: Request, res: Response): Promise<void> => {
     const { division, district, shopName, sub_district } = req.body as ProfileInfoBody;
-    const { id } = req as any;
+    const { id } = req;
 
     if (!id) {
       responseReturn(res, 401, { error: 'Unauthorized: User ID not found' });
@@ -428,8 +433,8 @@ class AuthControllers {
           shopName: shopName.trim(),
           division: division.trim(),
           district: district.trim(),
-          sub_district: sub_district.trim(),
-        },
+          sub_district: sub_district.trim()
+        }
       });
 
       const userInfo = await sellerModel.findById(id) as SellerDocument | null;
@@ -439,15 +444,15 @@ class AuthControllers {
         return;
       }
 
-      responseReturn(res, 200, {
+      responseReturn(res, 200, { 
         message: 'Profile information added successfully',
-        userInfo,
+        userInfo
       });
     } catch (error) {
       console.error('Profile info add error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Failed to update profile information' });
     }
-  };
+  }
 
   logout = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -455,7 +460,7 @@ class AuthControllers {
         expires: new Date(Date.now()),
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        sameSite: 'strict'
       };
 
       res.cookie('accessToken', '', cookieOptions);
@@ -465,7 +470,7 @@ class AuthControllers {
       console.error('Logout error:', (error as Error).message);
       responseReturn(res, 500, { error: 'Internal server error during logout' });
     }
-  };
+  }
 }
 
 export default new AuthControllers();
