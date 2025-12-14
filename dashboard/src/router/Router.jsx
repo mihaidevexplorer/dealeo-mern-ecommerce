@@ -1,11 +1,20 @@
 //src/router/Router.jsx
-import { useRoutes } from 'react-router-dom';
 
-const Router = ({allRoutes}) => {
+import { useMemo } from "react";
+import { useRoutes } from "react-router-dom";
 
-    const routes = useRoutes([...allRoutes])
-    return routes;
-     
+const Router = ({ allRoutes }) => {
+  const routesWithFallback = useMemo(() => {
+    const hasWildcard = allRoutes?.some(r => r?.path === "*");
+    if (hasWildcard) return allRoutes;
+
+ 
+    return [
+      ...allRoutes,
+      { path: "*", element: null } // sau un <div />
+  }, [allRoutes]);
+
+  return useRoutes(routesWithFallback);
 };
 
 export default Router;
