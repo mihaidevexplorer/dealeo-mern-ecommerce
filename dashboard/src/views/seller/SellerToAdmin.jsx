@@ -25,7 +25,7 @@ const SellerToAdmin = () => {
     useEffect(() => {
         dispatch(get_seller_message())
         dispatch(get_sellers());
-        dispatch(get_admin_message());
+        //dispatch(get_admin_message());
     },[dispatch])
 
     const send = (e) => {
