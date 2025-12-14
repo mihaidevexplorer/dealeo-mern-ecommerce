@@ -1,4 +1,5 @@
 // src\controllers\authControllers.ts
+
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import formidable from 'formidable';
@@ -125,8 +126,8 @@ class AuthControllers {
       const cookieOptions: CookieOptions = {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         httpOnly: true,
-        secure: true,
-        sameSite: 'none'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
       };
 
       res.cookie('accessToken', token, cookieOptions);
@@ -185,8 +186,8 @@ class AuthControllers {
       const cookieOptions: CookieOptions = {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         httpOnly: true,
-        secure: true,
-        sameSite: 'none'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
       };
 
       res.cookie('accessToken', token, cookieOptions);
@@ -264,8 +265,8 @@ class AuthControllers {
       const cookieOptions: CookieOptions = {
         expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
         httpOnly: true,
-        secure: true',
-        sameSite: 'none'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
       };
 
       res.cookie('accessToken', token, cookieOptions);
@@ -458,8 +459,8 @@ class AuthControllers {
       const cookieOptions: CookieOptions = {
         expires: new Date(Date.now()),
         httpOnly: true,
-        secure: true,
-        sameSite: 'none'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
       };
 
       res.cookie('accessToken', '', cookieOptions);
