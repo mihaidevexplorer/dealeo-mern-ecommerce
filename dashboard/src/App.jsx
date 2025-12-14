@@ -1,5 +1,4 @@
 //src/App.jsx
-//src/App.jsx
 import { useEffect, useState } from "react";
 import Router from "./router/Router";
 import publicRoutes from "./router/routes/publicRoutes";
