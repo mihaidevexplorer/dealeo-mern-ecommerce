@@ -1,5 +1,4 @@
 // src\controllers\authControllers.ts
-
 import { Request, Response } from 'express';
 import * as bcrypt from 'bcrypt';
 import formidable from 'formidable';
