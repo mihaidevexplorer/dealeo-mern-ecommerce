@@ -9,15 +9,12 @@ export const admin_login = createAsyncThunk(
         try {
             const {data} = await api.post('/admin-login',info,{withCredentials: true})
             localStorage.setItem('accessToken',data.token)
-            // console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
 )
-
 
 export const seller_login = createAsyncThunk(
     'auth/seller_login',
@@ -29,7 +26,6 @@ export const seller_login = createAsyncThunk(
             localStorage.setItem('accessToken',data.token) 
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
@@ -38,34 +34,26 @@ export const seller_login = createAsyncThunk(
 export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_ ,{rejectWithValue, fulfillWithValue}) => {
-          
         try {
             const {data} = await api.get('/get-user',{withCredentials: true})
-            // console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
 )
-
 
 export const profile_image_upload = createAsyncThunk(
     'auth/profile_image_upload',
     async(image ,{rejectWithValue, fulfillWithValue}) => {
-          
         try {
             const {data} = await api.post('/profile-image-upload',image,{withCredentials: true})
-            // console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
 )
-// end method 
 
 export const seller_register = createAsyncThunk(
     'auth/seller_register',
@@ -74,16 +62,12 @@ export const seller_register = createAsyncThunk(
             console.log(info)
             const {data} = await api.post('/seller-register',info,{withCredentials: true})
             localStorage.setItem('accessToken',data.token)
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
 )
-
-// end method 
 
 export const profile_info_add = createAsyncThunk(
     'auth/profile_info_add',
@@ -92,73 +76,70 @@ export const profile_info_add = createAsyncThunk(
             const {data} = await api.post('/profile-info-add',info,{withCredentials: true}) 
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
             return rejectWithValue(error.response.data)
         }
     }
 )
-// end method 
 
+const returnRole = (token) => {
+    if (token) {
+       const decodeToken = jwtDecode(token)
+       const expireTime = new Date(decodeToken.exp * 1000)
+       if (new Date() > expireTime) {
+         localStorage.removeItem('accessToken')
+         return ''
+       } else {
+            return decodeToken.role
+       }
+    } else {
+        return ''
+    }
+}
 
-
-    const returnRole = (token) => {
-        if (token) {
-           const decodeToken = jwtDecode(token)
-           const expireTime = new Date(decodeToken.exp * 1000)
-           if (new Date() > expireTime) {
-             localStorage.removeItem('accessToken')
-             return ''
-           } else {
-                return decodeToken.role
-           }
+// ✅ Logout thunk - versiune îmbunătățită
+export const logout = createAsyncThunk(
+    'auth/logout',
+    async({navigate, role}, {rejectWithValue, fulfillWithValue}) => {
+        try {
+            const {data} = await api.get('/logout', {withCredentials: true}) 
+            localStorage.removeItem('accessToken')
             
-        } else {
-            return ''
+            // Navighează după ce logout-ul este complet
+            if (role === 'admin') {
+                navigate('/admin/login', { replace: true })
+            } else {
+                navigate('/login', { replace: true })
+            }
+            
+            return fulfillWithValue(data)
+        } catch (error) {
+            // Chiar dacă API eșuează, curăță local storage și navighează
+            localStorage.removeItem('accessToken')
+            if (role === 'admin') {
+                navigate('/admin/login', { replace: true })
+            } else {
+                navigate('/login', { replace: true })
+            }
+            return rejectWithValue(error.response.data)
         }
     }
+)
 
-    // end Method 
-
-    export const logout = createAsyncThunk(
-        'auth/logout',
-        async({navigate,role},{rejectWithValue, fulfillWithValue}) => {
-             
-            try {
-                const {data} = await api.get('/logout', {withCredentials: true}) 
-                localStorage.removeItem('accessToken') 
-                if (role === 'admin') {
-                    navigate('/admin/login')
-                } else {
-                    navigate('/login')
-                }
-                return fulfillWithValue(data)
-            } catch (error) {
-                // console.log(error.response.data)
-                return rejectWithValue(error.response.data)
-            }
-        }
-    )
-
-        // end Method 
-
- 
 export const authReducer = createSlice({
     name: 'auth',
     initialState:{
-        successMessage :  '',
-        errorMessage : '',
+        successMessage: '',
+        errorMessage: '',
         loader: false,
-        userInfo : '',
+        userInfo: '',
         role: returnRole(localStorage.getItem('accessToken')),
         token: localStorage.getItem('accessToken')
     },
-    reducers : {
-
-        messageClear : (state,_) => {
+    reducers: {
+        messageClear: (state, _) => {
             state.errorMessage = ""
             console.log(_)
         }
-
     },
     extraReducers: (builder) => {
         builder
@@ -232,8 +213,29 @@ export const authReducer = createSlice({
             state.successMessage = payload.message
         })
 
+        // ✅ ADAUGĂ ACEASTA - Handlere pentru LOGOUT
+        .addCase(logout.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(logout.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message || 'Logout successful';
+            // ✅ Resetează COMPLET state-ul
+            state.userInfo = '';
+            state.role = '';
+            state.token = '';
+            state.errorMessage = '';
+        })
+        .addCase(logout.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || 'Logout failed';
+            // ✅ Chiar dacă eșuează, resetează state-ul local
+            state.userInfo = '';
+            state.role = '';
+            state.token = '';
+        })
     }
-
 })
+
 export const {messageClear} = authReducer.actions
 export default authReducer.reducer
