@@ -230,9 +230,9 @@ export const authReducer = createSlice({
             state.loader = false;
             state.errorMessage = payload?.error || 'Logout failed';
             // ✅ Chiar dacă eșuează, resetează state-ul local
-            state.userInfo = '';
-            state.role = '';
-            state.token = '';
+            state.userInfo = 'null';
+            state.role = 'null';
+            state.token = 'null';
         })
     }
 })
