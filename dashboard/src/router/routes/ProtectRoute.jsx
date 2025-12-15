@@ -1,11 +1,17 @@
 //src/router/routes/ProtectRoute.js
+//src/router/routes/ProtectRoute.js
 import { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const ProtectRoute = ({route,children}) => {
-    const {role, userInfo} = useSelector(state => state.auth)
+    const {token, role, userInfo} = useSelector(state => state.auth)
+    
+    // FIX: autentificarea se bazează pe token
+    if (!token) {
+        return <Navigate to='/login' replace />
+    }
 
     if (role) {
         if (route.role) {
@@ -48,8 +54,6 @@ const ProtectRoute = ({route,children}) => {
                 return <Suspense fallback={null} >{children}</Suspense>
             } 
         } 
-    }else {
-        return <Navigate to='/login' replace />
     }
  
 
