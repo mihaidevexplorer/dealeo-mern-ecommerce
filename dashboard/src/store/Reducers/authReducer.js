@@ -221,10 +221,10 @@ export const authReducer = createSlice({
             state.loader = false;
             state.successMessage = payload.message || 'Logout successful';
             // ✅ Resetează COMPLET state-ul
-            state.userInfo = '';
-            state.role = '';
-            state.token = '';
-            state.errorMessage = '';
+            state.userInfo = 'null';
+            state.role = 'null';
+            state.token = 'null';
+            state.errorMessage = 'null';
         })
         .addCase(logout.rejected, (state, { payload }) => {
             state.loader = false;
