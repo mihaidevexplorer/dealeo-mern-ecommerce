@@ -1,5 +1,4 @@
 //src/router/routes/ProtectRoute.js
-//src/router/routes/ProtectRoute.js
 import { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
