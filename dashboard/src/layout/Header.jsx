@@ -28,23 +28,30 @@ const Header = ({ showSidebar, setShowSidebar }) => {
         </div>
 
         {/* User Info */}
-        <div className="flex items-center gap-6">
-          <div className="text-right">
-            <h2 className="text-lg font-semibold text-gray-800">{userInfo.name}</h2>
-            <span className="text-sm text-gray-500">{userInfo.role}</span>
-          </div>
-          <div className="w-[50px] h-[50px]">
-            <img
-              className="w-full h-full rounded-full object-cover border-2 border-indigo-500 shadow-md"
-              src={
-                userInfo.role === "admin"
-                  ? "/images/admin.jpg"
-                  : userInfo.image
-              }
-              alt="User Avatar"
-            />
-          </div>
-        </div>
+        {/* User Info */}
+<div className="flex items-center gap-6">
+  <div className="text-right">
+    <h2 className="text-lg font-semibold text-gray-800">
+      {userInfo?.name ?? "Guest"}
+    </h2>
+    <span className="text-sm text-gray-500">
+      {userInfo?.role ?? ""}
+    </span>
+  </div>
+
+  <div className="w-[50px] h-[50px]">
+    <img
+      className="w-full h-full rounded-full object-cover border-2 border-indigo-500 shadow-md"
+      src={
+        userInfo?.role === "admin"
+          ? "/images/admin.jpg"
+          : (userInfo?.image ?? "/images/admin.jpg")
+      }
+      alt="User Avatar"
+    />
+  </div>
+</div>
+
       </div>
     </div>
   );
