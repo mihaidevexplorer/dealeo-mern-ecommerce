@@ -5,6 +5,10 @@ import { admin_login, messageClear } from '../../store/Reducers/authReducer';
 import { PropagateLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../images/logo.png';
+
+
+
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -54,7 +58,7 @@ const AdminLogin = () => {
                 <div className="flex justify-center mb-6">
                     <img
                         className="w-32 h-auto"
-                        src="images/logo.png"
+                        <img src={logo} alt="logo" />
                         alt="Admin Logo"
                     />
                 </div>
