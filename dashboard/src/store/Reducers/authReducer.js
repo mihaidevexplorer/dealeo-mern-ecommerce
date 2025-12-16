@@ -97,32 +97,21 @@ const returnRole = (token) => {
 }
 
 export const logout = createAsyncThunk(
-    'auth/logout',
-    async({navigate, role}, {rejectWithValue, fulfillWithValue}) => {
-        try {
-            const {data} = await api.get('/logout', {withCredentials: true}) 
-            localStorage.removeItem('accessToken')
-            
-            // Navighează după ce logout-ul este complet
-            if (role === 'admin') {
-                navigate('/admin/login', { replace: true })
-            } else {
-                navigate('/login', { replace: true })
-            }
-            
-            return fulfillWithValue(data)
-        } catch (error) {
-
-            localStorage.removeItem('accessToken')
-            if (role === 'admin') {
-                navigate('/admin/login', { replace: true })
-            } else {
-                navigate('/login', { replace: true })
-            }
-            return rejectWithValue(error.response.data)
-        }
+  'auth/logout',
+  async(_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get('/logout', { withCredentials: true });
+      localStorage.removeItem('accessToken');
+      return fulfillWithValue(data);
+    } catch (error) {
+      localStorage.removeItem('accessToken');
+      return rejectWithValue(
+        error.response?.data || { error: 'Logout failed' }
+      );
     }
-)
+  }
+);
+
 
 export const authReducer = createSlice({
     name: 'auth',
