@@ -1,18 +1,17 @@
-//src/router/routes/index.js
+// src/router/routes/index.jsx
 import { privateRoutes } from './privateRoutes';
 import MainLayout from './../../layout/MainLayout';
 import ProtectRoute from './ProtectRoute';
 
 export const getRoutes = () => {
+  privateRoutes.forEach((r) => {
+    r.element = <ProtectRoute route={r}>{r.element}</ProtectRoute>;
+  });
 
-    privateRoutes.map(r => {
-        
-       r.element = <ProtectRoute route={r} >{r.element}</ProtectRoute>
-    })
+  return {
+    path: '/',
+    element: <MainLayout />,
+    children: privateRoutes,
+  };
+};
 
-
-    return {
-        path : '/',
-        element : <MainLayout />,
-        children : privateRoutes
-    }
