@@ -12,7 +12,8 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const dispatch = useDispatch(logout();
+    const dispatch = useDispatch();
+
     const { loader, errorMessage, successMessage } = useSelector(state => state.auth);
 
     const [state, setState] = useState({ 
