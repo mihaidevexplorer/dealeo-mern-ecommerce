@@ -1,4 +1,4 @@
-//src/router/routes/privateRoutes.js
+/src/router/routes/privateRoutes.js
 import { adminRoutes } from "./adminRoutes";
 import  { sellerRoutes } from './sellerRoutes';
 
