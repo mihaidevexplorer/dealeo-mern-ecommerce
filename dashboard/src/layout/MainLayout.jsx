@@ -1,46 +1,58 @@
-//src/layout/MainLayout.jsx
+// src/layout/MainLayout.jsx
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './Header'; 
+import Header from './Header';
 import Sidebar from './Sidebar';
-import { socket } from '../utils/utils'
+import { socket } from '../utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomer, updateSellers } from '../store/Reducers/chatReducer';
 
 const MainLayout = () => {
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector(state => state.auth);
 
-    const dispatch = useDispatch()
-    const {userInfo } = useSelector(state => state.auth)
+  const [showSidebar, setShowSidebar] = useState(false);
 
-    useEffect(() => {
-        if (userInfo && userInfo.role === 'seller') {
-            socket.emit('add_seller', userInfo._id,userInfo)
-        } else {
-            socket.emit('add_admin', userInfo)
-        }
-    },[userInfo])
+  // ✅ SAFE socket emit
+  useEffect(() => {
+    if (!userInfo) return;
 
-    useEffect(() => {
-        socket.on('activeCustomer',(customers)=>{
-            dispatch(updateCustomer(customers))
-        })
-        socket.on('activeSeller',(sellers)=>{
-            dispatch(updateSellers(sellers))
-        })
-    })
+    if (userInfo.role === 'seller') {
+      socket.emit('add_seller', userInfo._id, userInfo);
+    } else {
+      socket.emit('add_admin', userInfo);
+    }
+  }, [userInfo]);
 
-    const [showSidebar, setShowSidebar] = useState(false)
+  // ✅ SAFE socket listeners
+  useEffect(() => {
+    const handleCustomers = (customers) => {
+      dispatch(updateCustomer(customers));
+    };
 
-    return ( 
-        <div className='bg-[#FFF] w-full min-h-screen'>
-            <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-            <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+    const handleSellers = (sellers) => {
+      dispatch(updateSellers(sellers));
+    };
 
-           <div className='ml-0 lg:ml-[260px] pt-[95px] transition-all'>
-           <Outlet/>
-           </div>
-        </div>
-    );
+    socket.on('activeCustomer', handleCustomers);
+    socket.on('activeSeller', handleSellers);
+
+    return () => {
+      socket.off('activeCustomer', handleCustomers);
+      socket.off('activeSeller', handleSellers);
+    };
+  }, [dispatch]);
+
+  return (
+    <div className="bg-[#FFF] w-full min-h-screen">
+      <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+
+      <div className="ml-0 lg:ml-[260px] pt-[95px] transition-all">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default MainLayout;
