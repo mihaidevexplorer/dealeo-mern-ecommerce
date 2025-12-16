@@ -96,7 +96,6 @@ const returnRole = (token) => {
     }
 }
 
-// ✅ Logout thunk - versiune îmbunătățită
 export const logout = createAsyncThunk(
     'auth/logout',
     async({navigate, role}, {rejectWithValue, fulfillWithValue}) => {
@@ -113,7 +112,7 @@ export const logout = createAsyncThunk(
             
             return fulfillWithValue(data)
         } catch (error) {
-            // Chiar dacă API eșuează, curăță local storage și navighează
+
             localStorage.removeItem('accessToken')
             if (role === 'admin') {
                 navigate('/admin/login', { replace: true })
@@ -136,9 +135,9 @@ export const authReducer = createSlice({
         token: localStorage.getItem('accessToken')
     },
     reducers: {
-        messageClear: (state, _) => {
+        messageClear: (state) => {
             state.errorMessage = ""
-            console.log(_)
+            
         }
     },
     extraReducers: (builder) => {
@@ -213,14 +212,13 @@ export const authReducer = createSlice({
             state.successMessage = payload.message
         })
 
-        // ✅ ADAUGĂ ACEASTA - Handlere pentru LOGOUT
         .addCase(logout.pending, (state) => {
             state.loader = true;
         })
         .addCase(logout.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message || 'Logout successful';
-            // ✅ Resetează COMPLET state-ul
+         
             state.userInfo = null;
             state.role = null;
             state.token = null;
@@ -229,7 +227,7 @@ export const authReducer = createSlice({
         .addCase(logout.rejected, (state, { payload }) => {
             state.loader = false;
             state.errorMessage = payload?.error || 'Logout failed';
-            // ✅ Chiar dacă eșuează, resetează state-ul local
+          
             state.userInfo = null;
             state.role = null;
             state.token = null;
