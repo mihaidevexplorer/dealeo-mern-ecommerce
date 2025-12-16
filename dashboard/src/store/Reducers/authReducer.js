@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 export const admin_login = createAsyncThunk(
     'auth/admin_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
-         console.log(info)
+        
         try {
             const {data} = await api.post('/admin-login',info,{withCredentials: true})
             localStorage.setItem('accessToken',data.token)
@@ -19,7 +19,7 @@ export const admin_login = createAsyncThunk(
 export const seller_login = createAsyncThunk(
     'auth/seller_login',
     async(info,{rejectWithValue, fulfillWithValue}) => {
-         console.log(info)
+         
         try {
             const {data} = await api.post('/seller-login',info,{withCredentials: true})
             console.log(data)
@@ -59,7 +59,7 @@ export const seller_register = createAsyncThunk(
     'auth/seller_register',
     async(info,{rejectWithValue, fulfillWithValue}) => { 
         try {
-            console.log(info)
+           
             const {data} = await api.post('/seller-register',info,{withCredentials: true})
             localStorage.setItem('accessToken',data.token)
             return fulfillWithValue(data)
@@ -130,13 +130,14 @@ export const authReducer = createSlice({
         successMessage: '',
         errorMessage: '',
         loader: false,
-        userInfo: '',
+        userInfo: null,
         role: returnRole(localStorage.getItem('accessToken')),
         token: localStorage.getItem('accessToken')
     },
     reducers: {
         messageClear: (state) => {
             state.errorMessage = ""
+            state.successMessage = ""
             
         }
     },
