@@ -14,7 +14,8 @@ const Login = () => {
 
     const dispatch = useDispatch();
 
-    const { loader, errorMessage, successMessage } = useSelector(state => state.auth);
+   const { loader, token, role, errorMessage } = useSelector(state => state.auth);
+
 
     const [state, setState] = useState({ 
         email: "",
@@ -33,19 +34,17 @@ const Login = () => {
         dispatch(seller_login(state));
     };
 
-    useEffect(() => {
+useEffect(() => {
+  if (token && role === "seller") {
+    toast.success("Login successful");
+    navigate("/seller/dashboard", { replace: true });
+  }
 
-        if (successMessage) {
-            toast.success(successMessage);
-            dispatch(messageClear()); 
-            navigate('/'); 
-        }
-        if (errorMessage) {
-            toast.error(errorMessage);
-            dispatch(messageClear());
-        }
-
-    }, [successMessage, errorMessage]);
+  if (errorMessage) {
+    toast.error(errorMessage);
+    dispatch(messageClear());
+  }
+}, [token, role, errorMessage, dispatch, navigate]);
 
 
     return (
