@@ -36,8 +36,8 @@ const Login = () => {
 
 useEffect(() => {
   if (token && role === "seller") {
-    toast.success("Login successful");
-    navigate("/seller/dashboard", { replace: true });
+    toast.success("Login successful", { id: "login-success" });
+navigate("/seller/dashboard", { replace: true });
   }
 
   if (errorMessage) {
