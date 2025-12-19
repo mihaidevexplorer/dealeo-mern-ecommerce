@@ -49,64 +49,12 @@ Manual test cases for authentication and protected routes are available here:
 
 ## 📌 Getting Started
 
-### 1️⃣ Clone the repository
+## 🚀 Live Demo (Vercel)
 
-```bash
-git clone https://github.com/mihaidevexplorer/dealeo-mern-ecommerce.git
-2️⃣ Install dependencies
-Frontend:
+This project is deployed and configured specifically for Vercel.
 
-bash
-Copy
-Edit
-cd frontend
-npm install
-Backend:
+- Seller Login / Dashboard  
+  https://dealeo-dashboard.vercel.app/login
 
-bash
-Copy
-Edit
-cd ../backend
-npm install
-Dashboard:
-
-bash
-Copiază
-Editează
-cd ../dashboard
-npm install
-3️⃣ Set up environment variables (.env) for backend and Stripe integration
-Create a .env file in the backend folder with the following variables:
-
-env
-Copy
-Edit
-PORT=5000
-DB_URL=Your MongoDB URL
-SECRET=ariyan
-cloud_name=Your Cloudinary name
-api_key=Your Cloudinary key
-api_secret=Your Cloudinary secret key
-4️⃣ Run the applications
-Frontend:
-
-bash
-Copy
-Edit
-cd frontend
-npm run dev
-Backend:
-
-bash
-Copy
-Edit
-cd ../backend
-npm run dev
-Dashboard:
-
-bash
-Copy
-Edit
-cd ../dashboard
-npm run dev
-
+- Admin Login / Dashboard  
+  https://dealeo-dashboard.vercel.app/admin/login
