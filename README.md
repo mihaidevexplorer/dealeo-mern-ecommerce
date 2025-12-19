@@ -44,13 +44,30 @@ Manual test cases for authentication and protected routes are available here:
 ---
 ## 🚀 Live Demo (Vercel)
 
-This project is deployed and configured specifically for Vercel.
+The application is deployed on Vercel and can be tested using the links below.
 
+### Seller Application
 - Seller Login / Dashboard  
   https://dealeo-dashboard.vercel.app/login
 
-- Admin Login / Dashboard  
+### Admin Application
+- Admin Login  
   https://dealeo-dashboard.vercel.app/admin/login
+
+### Public Frontend (Customer)
+- Storefront  
+  https://dealeo-frontend.vercel.app/
+---
+
+  ## ⚠️ Local Development
+
+Local setup is not currently supported.
+
+The project has been configured specifically for cloud deployment on Vercel
+(environment variables, routing, and API configuration).
+
+For review and testing purposes, please use the live demo links above.
+
 
 
 # Screenshots
