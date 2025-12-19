@@ -25,7 +25,14 @@
 - 📊 Admin dashboard for managing products, orders, and users  
 - 💬 **Real-time chat** between customers and sellers (in the dashboard)  
 - 🔍 Product search and filtering  
-- 📦 Order management & stock control  
+- 📦 Order management & stock control
+
+  ## Manual Testing
+
+Manual test cases for authentication and protected routes are available here:
+
+- [Authentication Test Cases](./TESTCASES/Authentication_Test_Cases.md)
+
 
 ---
 
