@@ -1,5 +1,5 @@
 //src\views\auth\Login.jsx
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { PropagateLoader } from 'react-spinners';
@@ -14,7 +14,8 @@ const Login = () => {
 
     const dispatch = useDispatch();
 
-   const { loader, token, role, errorMessage } = useSelector(state => state.auth);
+  const { loader } = useSelector(state => state.auth)
+
 
 
     const [state, setState] = useState({ 
@@ -29,22 +30,18 @@ const Login = () => {
         });
     };
 
-    const submit = (e) => {
-        e.preventDefault();
-        dispatch(seller_login(state));
-    };
+   const submit = async (e) => {
+  e.preventDefault();
 
-useEffect(() => {
-  if (token && role === "seller") {
-    toast.success("Login successful", { id: "login-success" });
-navigate("/seller/dashboard", { replace: true });
-  }
-
-  if (errorMessage) {
-    toast.error(errorMessage);
+  try {
+    const data = await dispatch(seller_login(state)).unwrap();
+    toast.success(data.message || "Login successful", { id: "login-success" });
+    navigate("/seller/dashboard", { replace: true });
+  } catch (err) {
+    toast.error(err?.error || "Login failed", { id: "login-error" });
     dispatch(messageClear());
   }
-}, [token, role, errorMessage, dispatch, navigate]);
+};
 
 
     return (
@@ -82,11 +79,22 @@ navigate("/seller/dashboard", { replace: true });
                         />
                     </div>
 
-                    <button 
-                        disabled={loader} 
-                        className={`w-full py-2 rounded-md text-white font-medium ${loader ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} transition-colors`}>
-                        {loader ? <PropagateLoader color='#fff' cssOverride={overrideStyle} /> : 'Sign In'}
-                    </button>
+                        <button
+                          type="submit"
+                          disabled={loader}
+                          className={`w-full py-2 rounded-md text-white font-medium ${
+                            loader ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
+                          } transition-colors`}
+                        >
+                          {loader ? (
+                            <PropagateLoader color="#fff" cssOverride={overrideStyle} />
+                          ) : (
+                            "Sign In"
+                          )}
+                        </button>
+
+
+
 
                     <p className='text-sm text-center text-gray-600 mt-4'>
                     Don&#39;t have an account? <Link to="/register" className='text-blue-500 font-medium hover:underline'>Sign Up</Link>
