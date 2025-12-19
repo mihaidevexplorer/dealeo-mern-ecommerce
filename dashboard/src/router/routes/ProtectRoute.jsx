@@ -5,36 +5,48 @@ import { Navigate } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const ProtectRoute = ({ route, children }) => {
-  const { role, userInfo } = useSelector(state => state.auth);
+  const { token, role, userInfo } = useSelector((state) => state.auth);
 
-  if (!role || !userInfo) {
+
+  if (!token || !role) {
     return <Navigate to="/login" replace />;
   }
 
-  if (route.role && userInfo.role !== route.role) {
+
+  if (!userInfo) {
+    return (
+      <div style={{ padding: 16 }}>
+        Loading...
+      </div>
+    );
+  }
+
+ 
+  const effectiveRole = userInfo?.role || role;
+
+  if (route.role && effectiveRole !== route.role) {
     return <Navigate to="/unauthorized" replace />;
   }
 
+
   if (route.status && route.status !== userInfo.status) {
-    return userInfo.status === "pending"
-      ? <Navigate to="/seller/account-pending" replace />
-      : <Navigate to="/seller/account-deactive" replace />;
+    return userInfo.status === "pending" ? (
+      <Navigate to="/seller/account-pending" replace />
+    ) : (
+      <Navigate to="/seller/account-deactive" replace />
+    );
   }
 
   if (route.visibility && !route.visibility.includes(userInfo.status)) {
     return <Navigate to="/seller/account-pending" replace />;
   }
 
-  return (
-    <Suspense fallback={<div />}>
-      {children}
-    </Suspense>
-  );
+  return <Suspense fallback={<div />}>{children}</Suspense>;
 };
 
 ProtectRoute.propTypes = {
   route: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 export default ProtectRoute;
