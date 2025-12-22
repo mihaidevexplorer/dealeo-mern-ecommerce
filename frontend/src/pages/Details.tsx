@@ -1,5 +1,4 @@
 // src/pages/Details.tsx
-// src/pages/Details.tsx
 import { useState, useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
