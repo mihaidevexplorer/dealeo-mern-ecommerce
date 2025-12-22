@@ -1,4 +1,3 @@
-//src/pages/SearchProducts.tsx
 // src/pages/SearchProducts.tsx
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
