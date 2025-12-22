@@ -1,4 +1,5 @@
 //src/pages/SearchProducts.tsx
+// src/pages/SearchProducts.tsx
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
@@ -119,11 +120,11 @@ const SearchProducts: React.FC = () => {
         </span>
       );
     }
-    
+
     return (
-      <div 
+      <div
         onClick={onClick}
-        className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors'
+        className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors select-none'
       >
         {stars}
       </div>
@@ -133,127 +134,135 @@ const SearchProducts: React.FC = () => {
   return (
     <div>
       <Header />
-      
+
       {/* Hero Section */}
       <section className='bg-[url("/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
-          <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
-            <div className='flex flex-col justify-center gap-1 items-center h-full w-full text-white'>
-              <h2 className='text-3xl font-bold'>
+          <div className='w-full max-w-7xl px-4 lg:px-6 mx-auto h-full'>
+            <div className='flex flex-col justify-center gap-1 items-center h-full w-full text-white text-center'>
+              <h2 className='text-3xl sm:text-2xl 2xs:text-xl font-bold break-words'>
                 {category ? `${category} Products` : searchValue ? `Search: "${searchValue}"` : 'All Products'}
               </h2>
-              <div className='flex justify-center items-center gap-2 text-2xl w-full'>
+              <div className='flex justify-center items-center gap-2 text-2xl sm:text-lg 2xs:text-base w-full flex-wrap'>
                 <Link to='/' className='hover:underline'>Home</Link>
                 <span className='pt-1'>
-                  <IoIosArrowForward className='h-10 w-10'/>
+                  <IoIosArrowForward className='h-10 w-10 sm:h-7 sm:w-7 2xs:h-6 2xs:w-6' />
                 </span>
                 <span>Products</span>
               </div>
-            </div> 
-          </div> 
-        </div> 
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Main Content */}
-      <section className='py-16'>
-        <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
-          
+      <section className='py-16 sm:py-10'>
+        <div className='w-full max-w-7xl px-4 lg:px-6 mx-auto'>
+
           {/* Mobile Filter Toggle */}
           <div className={`md:block hidden ${!filter ? 'mb-6' : 'mb-0'}`}>
-            <button 
-              onClick={toggleFilter} 
-              className='text-center w-full py-2 px-3 bg-orange-500 text-white hover:bg-orange-600 transition-colors rounded'
+            <button
+              onClick={toggleFilter}
+              className='text-center w-full py-2.5 px-3 bg-orange-500 text-white hover:bg-orange-600 transition-colors rounded font-semibold'
             >
               {filter ? 'Show Filters' : 'Hide Filters'}
-            </button> 
+            </button>
           </div>
 
-          <div className='w-full flex flex-wrap'>
-            
+          <div className='w-full flex flex-wrap gap-8 md:gap-6'>
+
             {/* Sidebar Filters */}
-            <div className={`w-3/12 md-lg:w-4/12 md:w-full pr-8 ${filter ? 'md:h-0 md:overflow-hidden md:mb-6' : 'md:h-auto md:overflow-auto md:mb-0'}`}>
-              
-              {/* Price Range Filter */}
-              <div className='py-2 flex flex-col gap-5'>
-                <h2 className='text-3xl font-bold mb-3 text-gray-900'>Price</h2>
-                
-                <Range
-                  step={5}
-                  min={priceRange.low}
-                  max={priceRange.high}
-                  values={state.values}
-                  onChange={handlePriceRangeChange}
-                  renderTrack={({ props, children }) => (
-                    <div 
-                      {...props} 
-                      className='w-full h-[6px] bg-gray-300 rounded-full cursor-pointer'
+            <div
+              className={`w-3/12 md-lg:w-4/12 md:w-full pr-8 md:pr-0 ${
+                filter ? 'md:h-0 md:overflow-hidden md:mb-6' : 'md:h-auto md:overflow-visible md:mb-0'
+              }`}
+            >
+              <div className='bg-white rounded-lg border border-gray-100 shadow-sm p-4 sm:p-3'>
+                {/* Price Range Filter */}
+                <div className='py-2 flex flex-col gap-5'>
+                  <h2 className='text-3xl sm:text-2xl 2xs:text-xl font-bold mb-1 text-gray-900'>Price</h2>
+
+                  <Range
+                    step={5}
+                    min={priceRange.low}
+                    max={priceRange.high}
+                    values={state.values}
+                    onChange={handlePriceRangeChange}
+                    renderTrack={({ props, children }) => (
+                      <div
+                        {...props}
+                        className='w-full h-[6px] bg-gray-300 rounded-full cursor-pointer'
+                      >
+                        {children}
+                      </div>
+                    )}
+                    renderThumb={({ props }) => (
+                      <div
+                        className='w-[15px] h-[15px] bg-[#ff7f50] rounded-full cursor-pointer hover:bg-[#ff6347] transition-colors'
+                        {...props}
+                      />
+                    )}
+                  />
+
+                  <div>
+                    <span className='text-slate-800 font-bold text-lg sm:text-base'>
+                      ${Math.floor(state.values[0])} - ${Math.floor(state.values[1])}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Rating Filter */}
+                <div className='py-3 flex flex-col gap-4'>
+                  <h2 className='text-3xl sm:text-2xl 2xs:text-xl font-bold mb-1 text-gray-900'>Rating</h2>
+                  <div className='flex flex-col gap-3'>
+                    {[5, 4, 3, 2, 1].map((ratingValue) => (
+                      <div key={ratingValue}>
+                        {renderStarRating(ratingValue, () =>
+                          handleRatingSelect(ratingValue.toString() as RatingFilter)
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Reset Rating Option */}
+                    <div
+                      onClick={resetRating}
+                      className='text-orange-500 flex justify-start items-center gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors select-none flex-wrap'
                     >
-                      {children}
+                      <span><CiStar /></span>
+                      <span><CiStar /></span>
+                      <span><CiStar /></span>
+                      <span><CiStar /></span>
+                      <span><CiStar /></span>
+                      <span className='ml-2 text-sm text-gray-600'>Clear Rating</span>
                     </div>
-                  )}
-                  renderThumb={({ props }) => (
-                    <div 
-                      className='w-[15px] h-[15px] bg-[#ff7f50] rounded-full cursor-pointer hover:bg-[#ff6347] transition-colors' 
-                      {...props} 
-                    />
-                  )} 
-                />  
-                
-                <div>
-                  <span className='text-slate-800 font-bold text-lg'>
-                    ${Math.floor(state.values[0])} - ${Math.floor(state.values[1])}
-                  </span>  
+                  </div>
                 </div>
               </div>
 
-              {/* Rating Filter */}
-              <div className='py-3 flex flex-col gap-4'>
-                <h2 className='text-3xl font-bold mb-3 text-gray-900'>Rating</h2>
-                <div className='flex flex-col gap-3'>
-                  {[5, 4, 3, 2, 1].map((ratingValue) => (
-                    <div key={ratingValue}>
-                      {renderStarRating(ratingValue, () => handleRatingSelect(ratingValue.toString() as RatingFilter))}
-                    </div>
-                  ))}
-                  
-                  {/* Reset Rating Option */}
-                  <div 
-                    onClick={resetRating}
-                    className='text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer hover:text-orange-600 transition-colors'
-                  >
-                    <span><CiStar /></span>
-                    <span><CiStar /></span>
-                    <span><CiStar /></span>
-                    <span><CiStar /></span>
-                    <span><CiStar /></span>
-                    <span className='ml-2 text-sm text-gray-600'>Clear Rating</span>
-                  </div> 
-                </div> 
-              </div>
-            
               {/* Latest Products - Hidden on Mobile */}
               <div className='py-5 flex flex-col gap-4 md:hidden'>
                 <Products title='Latest Products' products={[latestProducts]} />
-              </div> 
+              </div>
             </div>
 
             {/* Main Content Area */}
             <div className='w-9/12 md-lg:w-8/12 md:w-full'>
               <div className='pl-8 md:pl-0'>
-                
+
                 {/* Products Header */}
-                <div className='py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border shadow-sm'>
-                  <h2 className='text-lg font-medium text-gray-900'>
+                <div className='py-4 bg-white mb-10 px-4 sm:px-3 rounded-md flex justify-between items-start md:flex-col md:gap-4 border shadow-sm'>
+                  <h2 className='text-lg sm:text-base font-medium text-gray-900 break-words'>
                     ({totalProduct}) Products
                     {isLoading && <span className='ml-2 text-sm text-gray-500'>Loading...</span>}
                   </h2>
-                  
-                  <div className='flex justify-center items-center gap-3'>
+
+                  <div className='flex justify-center items-center gap-3 md:w-full md:justify-between flex-wrap'>
+
                     {/* Sort Dropdown */}
-                    <select 
+                    <select
                       onChange={handleSortChange}
                       value={sortPrice}
-                      className='p-1 border outline-0 text-gray-600 font-semibold rounded focus:border-green-500'
+                      className='p-2 border outline-0 text-gray-600 font-semibold rounded focus:border-green-500 md:w-full'
                       name="sort"
                       id="sort"
                     >
@@ -261,46 +270,47 @@ const SearchProducts: React.FC = () => {
                       <option value="low-to-high">Low to High Price</option>
                       <option value="high-to-low">High to Low Price</option>
                     </select>
-                    
+
                     {/* View Style Toggle */}
-                    <div className='flex justify-center items-start gap-4 md-lg:hidden'>
-                      <div 
-                        onClick={() => handleStyleChange('grid')} 
+                    <div className='flex justify-center items-start gap-3 md-lg:hidden md:w-full md:justify-end'>
+                      <div
+                        onClick={() => handleStyleChange('grid')}
                         className={`p-2 ${styles === 'grid' ? 'bg-slate-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
                       >
-                        <BsFillGridFill />  
+                        <BsFillGridFill />
                       </div>
-                      <div 
-                        onClick={() => handleStyleChange('list')} 
+                      <div
+                        onClick={() => handleStyleChange('list')}
                         className={`p-2 ${styles === 'list' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-slate-300 cursor-pointer rounded-sm transition-colors`}
                       >
-                        <FaThList />  
-                      </div> 
-                    </div> 
-                  </div> 
-                </div> 
+                        <FaThList />
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Products Grid/List */}
                 <div className='pb-8'>
-                  <ShopProducts products={products} styles={styles} />  
+                  <ShopProducts products={products} styles={styles} />
                 </div>
 
                 {/* Pagination */}
                 <div>
                   {totalProduct > parPage && (
-                    <Pagination 
-                      pageNumber={pageNumber} 
-                      setPageNumber={handlePageChange} 
-                      totalItem={totalProduct} 
-                      parPage={parPage} 
-                      showItem={Math.floor(totalProduct / parPage)} 
+                    <Pagination
+                      pageNumber={pageNumber}
+                      setPageNumber={handlePageChange}
+                      totalItem={totalProduct}
+                      parPage={parPage}
+                      showItem={Math.floor(totalProduct / parPage)}
                     />
                   )}
                 </div>
-              </div> 
-            </div>  
+              </div>
+            </div>
+
           </div>
-        </div> 
+        </div>
       </section>
 
       <Footer />
