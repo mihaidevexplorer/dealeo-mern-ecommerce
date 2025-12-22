@@ -1,15 +1,12 @@
 // src/components/Header.tsx
 import React, { useState } from 'react';
-import { EnvelopeIcon } from "@heroicons/react/24/outline";
-import { PhoneIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, PhoneIcon, HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { FaFacebookF, FaList, FaLock, FaUser } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { HeartIcon } from "@heroicons/react/24/outline";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useGetCartProducts, useGetWishlistProducts, useCartState } from '../hooks/useCard';
@@ -26,17 +23,12 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  // Auth state
   const { userInfo } = useAuthState();
-
-  // Cart state
   const { cartProductCount, wishlistCount } = useCartState();
 
-  // Categories
   const { data: categoriesData } = useGetCategories();
   const categories: Category[] = categoriesData?.categorys || [];
 
-  // Cart and wishlist data fetching
   useGetCartProducts(userInfo?.id || '');
   useGetWishlistProducts(userInfo?.id || '');
 
@@ -50,11 +42,8 @@ const Header: React.FC = () => {
   };
 
   const redirect_card_page = (): void => {
-    if (userInfo) {
-      navigate('/card');
-    } else {
-      navigate('/login');
-    }
+    if (userInfo) navigate('/card');
+    else navigate('/login');
   };
 
   return (
@@ -68,50 +57,46 @@ const Header: React.FC = () => {
                 <EnvelopeIcon className="w-5 h-5" />
                 <span>support@gmail.com</span>
               </li>
-
               <li className='flex relative justify-center items-center gap-2'>
                 <PhoneIcon className="w-5 h-5" />
                 <span>+(123) 3243 343</span>
               </li>
             </ul>
 
-            <div>
-              <div className='flex justify-center items-center gap-10'>
-                <div className='flex justify-center items-center gap-4'>
-                  <a href="#" className="hover:scale-110 transition-transform"><FaFacebookF className="text-white w-4 h-4" /></a>
-                  <a href="#" className="hover:scale-110 transition-transform"><FaTwitter className="text-white w-4 h-4" /></a>
-                  <a href="#" className="hover:scale-110 transition-transform"><FaLinkedin className="text-white w-4 h-4" /></a>
-                  <a href="#" className="hover:scale-110 transition-transform"><FaGithub className="text-white w-4 h-4" /></a>
-                </div>
-
-                <div className='flex group cursor-pointer text-white text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-white/30 after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-white/30 before:w-[1px] before:-left-[20px]'>
-                  {/* FARA localhost: pune imagini in /public/images/... */}
-                  <img src="/images/english-uk.png" alt="" className="w-5 h-5 rounded-sm" />
-                  <span><IoMdArrowDropdown /></span>
-                  <ul className='absolute invisible transition-all top-12 rounded-md duration-200 text-white p-2 w-[120px] flex flex-col gap-2 group-hover:visible group-hover:top-8 bg-gray-800 shadow-lg z-10'>
-                    <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                      <img src="/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
-                      Română
-                    </li>
-                    <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
-                      <img src="/images/english-uk.png" alt="English" className="w-5 h-5 rounded-sm" />
-                      English
-                    </li>
-                  </ul>
-                </div>
-
-                {userInfo ? (
-                  <Link className='flex cursor-pointer justify-center items-center gap-2 text-sm text-white hover:text-gray-200' to='/dashboard'>
-                    <FaUser className="w-4 h-4" />
-                    <span>{userInfo.name}</span>
-                  </Link>
-                ) : (
-                  <Link to='/login' className='flex cursor-pointer justify-center items-center gap-2 text-sm text-white hover:text-gray-200'>
-                    <FaLock className="w-4 h-4" />
-                    <span>Login</span>
-                  </Link>
-                )}
+            <div className='flex justify-center items-center gap-10'>
+              <div className='flex justify-center items-center gap-4'>
+                <a href="#" className="hover:scale-110 transition-transform"><FaFacebookF className="text-white w-4 h-4" /></a>
+                <a href="#" className="hover:scale-110 transition-transform"><FaTwitter className="text-white w-4 h-4" /></a>
+                <a href="#" className="hover:scale-110 transition-transform"><FaLinkedin className="text-white w-4 h-4" /></a>
+                <a href="#" className="hover:scale-110 transition-transform"><FaGithub className="text-white w-4 h-4" /></a>
               </div>
+
+              <div className='flex group cursor-pointer text-white text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-white/30 after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-white/30 before:w-[1px] before:-left-[20px]'>
+                <img src="/images/english-uk.png" alt="" className="w-5 h-5 rounded-sm" />
+                <span><IoMdArrowDropdown /></span>
+                <ul className='absolute invisible transition-all top-12 rounded-md duration-200 text-white p-2 w-[120px] flex flex-col gap-2 group-hover:visible group-hover:top-8 bg-gray-800 shadow-lg z-10'>
+                  <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
+                    <img src="/images/roman-md.png" alt="Română" className="w-5 h-5 rounded-sm" />
+                    Română
+                  </li>
+                  <li className="flex items-center gap-2 hover:bg-gray-700 p-1 rounded">
+                    <img src="/images/english-uk.png" alt="English" className="w-5 h-5 rounded-sm" />
+                    English
+                  </li>
+                </ul>
+              </div>
+
+              {userInfo ? (
+                <Link className='flex cursor-pointer justify-center items-center gap-2 text-sm text-white hover:text-gray-200' to='/dashboard'>
+                  <FaUser className="w-4 h-4" />
+                  <span>{userInfo.name}</span>
+                </Link>
+              ) : (
+                <Link to='/login' className='flex cursor-pointer justify-center items-center gap-2 text-sm text-white hover:text-gray-200'>
+                  <FaLock className="w-4 h-4" />
+                  <span>Login</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -120,11 +105,10 @@ const Header: React.FC = () => {
       {/* Main nav */}
       <div className='bg-white shadow-sm'>
         <div className='w-full max-w-7xl px-4 lg:px-6 mx-auto'>
-          <div className='h-[80px] md-lg:h-[110px] flex justify-between items-center flex-wrap'>
+          <div className='h-[80px] md-lg:h-[110px] flex justify-between items-center flex-wrap md-lg:gap-4'>
             <div className='md-lg:w-full w-3/12 md-lg:pt-4'>
               <div className='flex items-center justify-between'>
                 <Link to='/' className='block'>
-                  {/* FARA localhost */}
                   <img src="/images/logo.png" alt="Logo" className="h-12 w-auto object-contain" />
                 </Link>
 
@@ -137,7 +121,7 @@ const Header: React.FC = () => {
               </div>
             </div>
 
-            <div className='md:lg:w-full w-9/12'>
+            <div className='md-lg:w-full w-9/12'>
               <div className='flex justify-between md-lg:justify-center items-center flex-wrap pl-8 md-lg:pl-0'>
                 <ul className='flex justify-start items-start gap-8 text-sm font-semibold md-lg:hidden'>
                   <li>
@@ -184,6 +168,7 @@ const Header: React.FC = () => {
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -195,14 +180,11 @@ const Header: React.FC = () => {
       <div className='hidden md-lg:block'>
         <div
           onClick={() => setShowShidebar(true)}
-          className={`fixed duration-200 transition-all ${showShidebar ? 'invisible' : 'visible'} hidden md-lg:block w-screen h-screen bg-[rgba(0,0,0,0.5)] top-0 left-0 z-20`}
-        >
-        </div>
-
+          className={`fixed duration-200 transition-all ${showShidebar ? 'invisible' : 'visible'} w-screen h-screen bg-[rgba(0,0,0,0.5)] top-0 left-0 z-20`}
+        />
         <div className={`w-[300px] z-[9999] transition-all duration-200 fixed ${showShidebar ? '-left-[300px]' : 'left-0 top-0'} overflow-y-auto bg-white h-screen py-6 px-8 shadow-2xl`}>
           <div className='mb-6'>
             <Link to='/'>
-              {/* FARA localhost */}
               <img src="/images/logo.png" alt="Logo" className="h-10 w-auto object-contain" />
             </Link>
           </div>
@@ -282,7 +264,8 @@ const Header: React.FC = () => {
 
       {/* Categories and Search Section */}
       <div className='w-full max-w-7xl px-4 lg:px-6 mx-auto pb-4'>
-        <div className='flex w-full flex-wrap md-lg:gap-8 gap-6'>
+        {/* IMPORTANT: pe desktop = fara gap (altfel se rupe), pe md-lg = gap + wrap */}
+        <div className='flex w-full flex-nowrap md-lg:flex-wrap gap-0 md-lg:gap-8'>
           <div className='w-3/12 md-lg:w-full'>
             <div className='bg-white relative'>
               <div
@@ -317,11 +300,14 @@ const Header: React.FC = () => {
                   </ul>
                 </div>
               </div>
+
             </div>
           </div>
 
-          <div className='w-9/12 pl-8 md-lg:pl-0 md-lg:w-full'>
-            <div className='flex flex-wrap w-full justify-between items-center md-lg:gap-6 gap-4'>
+          {/* IMPORTANT: padding pe desktop mic, pe md-lg zero */}
+          <div className='w-9/12 md-lg:w-full pl-6 md-lg:pl-0'>
+            {/* IMPORTANT: pe desktop = nowrap (Search + Support pe aceeasi linie) */}
+            <div className='flex w-full items-center justify-between flex-nowrap md-lg:flex-wrap gap-4 md-lg:gap-6'>
               <div className='w-8/12 md-lg:w-full'>
                 <div className='flex bg-gray-50 rounded-lg h-[50px] items-center shadow-md overflow-hidden border border-gray-200 focus-within:border-orange-400 transition-colors'>
                   <div className='relative flex items-center shrink-0'>
@@ -356,8 +342,9 @@ const Header: React.FC = () => {
                 </div>
               </div>
 
-              <div className='w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0'>
-                <div className='w-full flex justify-end md-lg:justify-start gap-3 items-center'>
+              {/* Support (desktop only) */}
+              <div className='w-4/12 md-lg:hidden pl-2'>
+                <div className='w-full flex justify-end gap-3 items-center'>
                   <div className='w-[48px] h-[48px] rounded-full flex bg-orange-100 justify-center items-center'>
                     <FaPhoneAlt className="text-orange-500" />
                   </div>
