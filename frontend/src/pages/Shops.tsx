@@ -15,7 +15,6 @@ import Pagination from '../components/Pagination';
 import { usePriceRangeProducts, useQueryProducts, useGetCategories, useHomeState } from '../hooks/useHome';
 import type { Category } from '../types';
 
-// Type definitions
 type ViewStyle = 'grid' | 'list';
 type SortOption = '' | 'low-to-high' | 'high-to-low';
 type RatingFilter = '' | '1' | '2' | '3' | '4' | '5';
@@ -58,9 +57,7 @@ const Shops: React.FC = () => {
 
   useEffect(() => {
     if (priceRange.low !== undefined && priceRange.high !== undefined) {
-      setState({
-        values: [priceRange.low, priceRange.high]
-      });
+      setState({ values: [priceRange.low, priceRange.high] });
     }
   }, [priceRange]);
 
@@ -73,11 +70,7 @@ const Shops: React.FC = () => {
   };
 
   const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>, categoryName: string): void => {
-    if (e.target.checked) {
-      setCategory(categoryName);
-    } else {
-      setCategory('');
-    }
+    setCategory(e.target.checked ? categoryName : '');
   };
 
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>): void => {
@@ -107,11 +100,7 @@ const Shops: React.FC = () => {
   const renderStarRating = (ratingValue: number, onClick: () => void): JSX.Element => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span key={i}>
-          {i <= ratingValue ? <AiFillStar /> : <CiStar />}
-        </span>
-      );
+      stars.push(<span key={i}>{i <= ratingValue ? <AiFillStar /> : <CiStar />}</span>);
     }
 
     return (
@@ -131,16 +120,14 @@ const Shops: React.FC = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-[url('/images/banner/shop.png')] h-[260px] xl:h-[240px] md:h-[200px] sm:h-[180px] mt-6 bg-cover bg-no-repeat relative bg-left">
+      <section className="bg-[url('/images/banner/shop.png')] h-[260px] xl:h-[240px] md-lg:h-[210px] md:h-[200px] sm:h-[180px] mt-6 bg-cover bg-no-repeat relative bg-left">
         <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
-          <div className='mx-auto w-[90%] max-w-[1200px] h-full'>
-            <div className='flex flex-col justify-center gap-2 sm:gap-1 items-center h-full w-full text-white text-center px-2'>
+          <div className='max-w-7xl mx-auto h-full px-10 xl:px-8 lg:px-6 md-lg:px-5 md:px-4 sm:px-3 xs:px-2'>
+            <div className='flex flex-col justify-center gap-2 sm:gap-1 items-center h-full w-full text-white text-center'>
               <h2 className='text-4xl xl:text-3xl md:text-2xl sm:text-xl font-bold'>Shop Page</h2>
               <div className='flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-2xl md:text-xl sm:text-base w-full'>
                 <Link to='/' className='hover:underline'>Home</Link>
-                <span className='pt-1'>
-                  <IoIosArrowForward />
-                </span>
+                <span className='pt-1'><IoIosArrowForward /></span>
                 <span>Shop</span>
               </div>
             </div>
@@ -149,11 +136,11 @@ const Shops: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <section className='py-16 md:py-10 sm:py-8'>
-        <div className='mx-auto w-[90%] max-w-[1200px] h-full'>
+      <section className='py-16 md-lg:py-12 md:py-10 sm:py-8'>
+        <div className='max-w-7xl mx-auto px-10 xl:px-8 lg:px-6 md-lg:px-5 md:px-4 sm:px-3 xs:px-2'>
 
-          {/* Mobile Filter Toggle */}
-          <div className={`md:block hidden ${!filter ? 'mb-6' : 'mb-0'}`}>
+          {/* Filter Toggle (<=991px) */}
+          <div className={`md-lg:block hidden ${!filter ? 'mb-6' : 'mb-0'}`}>
             <button
               onClick={toggleFilter}
               className='text-center w-full py-2.5 px-4 bg-orange-500 text-white hover:bg-orange-600 transition-colors rounded-md shadow-sm'
@@ -162,15 +149,15 @@ const Shops: React.FC = () => {
             </button>
           </div>
 
-          {/* IMPORTANT: no flex-wrap here; use gap for spacing */}
-          <div className='w-full flex gap-8 lg:gap-6 md:gap-6 md:flex-col'>
+          {/* Layout: desktop row, <=991 stack */}
+          <div className='w-full flex gap-8 xl:gap-6 lg:gap-6 md-lg:flex-col'>
 
-            {/* Sidebar Filters */}
-            <div
-              className={`w-3/12 md-lg:w-4/12 md:w-full transition-all duration-300 ${
+            {/* Sidebar */}
+            <aside
+              className={`shrink-0 w-[320px] xl:w-[300px] lg:w-[280px] md-lg:w-full transition-all duration-300 ${
                 filter
-                  ? 'md:h-0 md:overflow-hidden md:mb-6 md:p-0 md:border-0'
-                  : 'md:h-auto md:overflow-auto md:max-h-[70vh] md:mb-0 md:p-4 md:border md:rounded-lg md:bg-white md:shadow-sm'
+                  ? 'md-lg:h-0 md-lg:overflow-hidden md-lg:mb-6 md-lg:p-0 md-lg:border-0'
+                  : 'md-lg:h-auto md-lg:overflow-auto md-lg:max-h-[70vh] md-lg:mb-0 md-lg:p-4 md-lg:border md-lg:rounded-lg md-lg:bg-white md-lg:shadow-sm'
               }`}
             >
               {/* Category Filter */}
@@ -212,11 +199,7 @@ const Shops: React.FC = () => {
                   values={state.values}
                   onChange={handlePriceRangeChange}
                   renderTrack={({ props, children }) => (
-                    <div
-                      {...props}
-                      key="track"
-                      className="w-full h-[6px] bg-gray-300 rounded-full cursor-pointer"
-                    >
+                    <div {...props} key="track" className="w-full h-[6px] bg-gray-300 rounded-full cursor-pointer">
                       {children}
                     </div>
                   )}
@@ -260,86 +243,82 @@ const Shops: React.FC = () => {
                 </div>
               </div>
 
-              {/* Latest Products - Hidden on Mobile */}
+              {/* Latest Products - hidden on <=768 */}
               <div className='py-5 flex flex-col gap-4 md:hidden'>
                 <Products title='Latest Products' products={[latestProducts]} />
               </div>
-            </div>
+            </aside>
 
-            {/* Main Content Area */}
-            <div className='w-9/12 md-lg:w-8/12 md:w-full'>
-              {/* removed pl-8; spacing is handled by parent gap */}
-              <div className='w-full'>
+            {/* Main */}
+            <main className='flex-1 min-w-0'>
+              {/* Header */}
+              <div className='py-4 bg-white mb-10 md:mb-6 px-4 sm:px-3 rounded-md flex justify-between md:flex-col md:items-stretch md:gap-3 items-start border shadow-sm'>
+                <h2 className='text-lg sm:text-base font-medium text-blue-900'>
+                  ({totalProduct}) Products
+                  {isLoading && <span className='ml-2 text-sm text-gray-500'>Loading...</span>}
+                </h2>
 
-                {/* Products Header */}
-                <div className='py-4 bg-white mb-10 md:mb-6 px-4 sm:px-3 rounded-md flex justify-between md:flex-col md:items-stretch md:gap-3 items-start border shadow-sm'>
-                  <h2 className='text-lg sm:text-base font-medium text-blue-900'>
-                    ({totalProduct}) Products
-                    {isLoading && <span className='ml-2 text-sm text-gray-500'>Loading...</span>}
-                  </h2>
+                <div className='flex justify-center items-center gap-3 md:flex-col md:items-stretch md:gap-2'>
+                  <select
+                    onChange={handleSortChange}
+                    value={sortPrice}
+                    className='p-2 md:p-2.5 border outline-0 text-gray-900 font-semibold rounded focus:border-blue-500 transition-colors md:w-full'
+                    name="sort"
+                    id="sort"
+                  >
+                    <option value="">Sort By</option>
+                    <option value="low-to-high">Low to High Price</option>
+                    <option value="high-to-low">High to Low Price</option>
+                  </select>
 
-                  <div className='flex justify-center items-center gap-3 md:flex-col md:items-stretch md:gap-2'>
-                    <select
-                      onChange={handleSortChange}
-                      value={sortPrice}
-                      className='p-2 md:p-2.5 border outline-0 text-gray-900 font-semibold rounded focus:border-blue-500 transition-colors md:w-full'
-                      name="sort"
-                      id="sort"
+                  <div className='flex justify-center items-start gap-4 md-lg:hidden md:justify-start'>
+                    <div
+                      onClick={() => handleStyleChange('grid')}
+                      className={`p-2 ${styles === 'grid' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
+                      title="Grid view"
                     >
-                      <option value="">Sort By</option>
-                      <option value="low-to-high">Low to High Price</option>
-                      <option value="high-to-low">High to Low Price</option>
-                    </select>
-
-                    <div className='flex justify-center items-start gap-4 md-lg:hidden md:justify-start'>
-                      <div
-                        onClick={() => handleStyleChange('grid')}
-                        className={`p-2 ${styles === 'grid' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
-                        title="Grid view"
-                      >
-                        <BsFillGridFill />
-                      </div>
-                      <div
-                        onClick={() => handleStyleChange('list')}
-                        className={`p-2 ${styles === 'list' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
-                        title="List view"
-                      >
-                        <FaThList />
-                      </div>
+                      <BsFillGridFill />
+                    </div>
+                    <div
+                      onClick={() => handleStyleChange('list')}
+                      className={`p-2 ${styles === 'list' ? 'bg-gray-300' : ''} text-gray-600 hover:bg-gray-300 cursor-pointer rounded-sm transition-colors`}
+                      title="List view"
+                    >
+                      <FaThList />
                     </div>
                   </div>
                 </div>
-
-                {/* Products Grid/List */}
-                <div className='pb-8 md:pb-6'>
-                  {isLoading ? (
-                    <div className='flex justify-center items-center py-20 md:py-14 sm:py-10'>
-                      <div className='text-lg sm:text-base text-gray-600'>Loading products...</div>
-                    </div>
-                  ) : products.length > 0 ? (
-                    <ShopProducts products={products} styles={styles} />
-                  ) : (
-                    <div className='flex flex-col items-center justify-center py-20 md:py-14 sm:py-10 text-gray-500 text-center px-2'>
-                      <h3 className='text-xl sm:text-lg font-semibold mb-2'>No Products Found</h3>
-                      <p className='sm:text-sm'>Try adjusting your filters to see more products.</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Pagination */}
-                <div className='flex justify-center'>
-                  {totalProduct > parPage && !isLoading && (
-                    <Pagination
-                      pageNumber={pageNumber}
-                      setPageNumber={handlePageChange}
-                      totalItem={totalProduct}
-                      parPage={parPage}
-                      showItem={Math.floor(totalProduct / parPage)}
-                    />
-                  )}
-                </div>
               </div>
-            </div>
+
+              {/* Products */}
+              <div className='pb-8 md:pb-6'>
+                {isLoading ? (
+                  <div className='flex justify-center items-center py-20 md:py-14 sm:py-10'>
+                    <div className='text-lg sm:text-base text-gray-600'>Loading products...</div>
+                  </div>
+                ) : products.length > 0 ? (
+                  <ShopProducts products={products} styles={styles} />
+                ) : (
+                  <div className='flex flex-col items-center justify-center py-20 md:py-14 sm:py-10 text-gray-500 text-center px-2'>
+                    <h3 className='text-xl sm:text-lg font-semibold mb-2'>No Products Found</h3>
+                    <p className='sm:text-sm'>Try adjusting your filters to see more products.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Pagination */}
+              <div className='flex justify-center'>
+                {totalProduct > parPage && !isLoading && (
+                  <Pagination
+                    pageNumber={pageNumber}
+                    setPageNumber={handlePageChange}
+                    totalItem={totalProduct}
+                    parPage={parPage}
+                    showItem={Math.floor(totalProduct / parPage)}
+                  />
+                )}
+              </div>
+            </main>
 
           </div>
         </div>
