@@ -222,7 +222,7 @@ const Shops: React.FC = () => {
                     <span><CiStar /></span>
                     <span><CiStar /></span>
                     <span><CiStar /></span>
-                    <span className='ml-2 text-sm xs:text-xs text-gray-600'>Clear Rating</span>
+                    <span className='ml-2 text-sm xs:text-xs text-gray-600'></span>
                   </div>
                 </div>
               </div>
