@@ -65,9 +65,7 @@ const Shops: React.FC = () => {
     setPageNumber(1);
   }, [state.values, category, rating, sortPrice]);
 
-  const handlePriceRangeChange = (values: number[]): void => {
-    setState({ values });
-  };
+  const handlePriceRangeChange = (values: number[]): void => setState({ values });
 
   const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>, categoryName: string): void => {
     setCategory(e.target.checked ? categoryName : '');
@@ -77,25 +75,11 @@ const Shops: React.FC = () => {
     setSortPrice(e.target.value as SortOption);
   };
 
-  const handleRatingSelect = (ratingValue: RatingFilter): void => {
-    setRating(ratingValue);
-  };
-
-  const resetRating = (): void => {
-    setRating('');
-  };
-
-  const handleStyleChange = (style: ViewStyle): void => {
-    setStyles(style);
-  };
-
-  const handlePageChange = (page: number): void => {
-    setPageNumber(page);
-  };
-
-  const toggleFilter = (): void => {
-    setFilter(!filter);
-  };
+  const handleRatingSelect = (ratingValue: RatingFilter): void => setRating(ratingValue);
+  const resetRating = (): void => setRating('');
+  const handleStyleChange = (style: ViewStyle): void => setStyles(style);
+  const handlePageChange = (page: number): void => setPageNumber(page);
+  const toggleFilter = (): void => setFilter(!filter);
 
   const renderStarRating = (ratingValue: number, onClick: () => void): JSX.Element => {
     const stars = [];
@@ -122,8 +106,8 @@ const Shops: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-[url('/images/banner/shop.png')] h-[260px] xl:h-[240px] md-lg:h-[210px] md:h-[200px] sm:h-[180px] mt-6 bg-cover bg-no-repeat relative bg-left">
         <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
-          <div className='max-w-7xl mx-auto h-full px-10 xl:px-8 lg:px-6 md-lg:px-5 md:px-4 sm:px-3 xs:px-2'>
-            <div className='flex flex-col justify-center gap-2 sm:gap-1 items-center h-full w-full text-white text-center'>
+          <div className='mx-auto w-[90%] max-w-[1200px] h-full'>
+            <div className='flex flex-col justify-center gap-2 sm:gap-1 items-center h-full w-full text-white text-center px-2'>
               <h2 className='text-4xl xl:text-3xl md:text-2xl sm:text-xl font-bold'>Shop Page</h2>
               <div className='flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-2xl md:text-xl sm:text-base w-full'>
                 <Link to='/' className='hover:underline'>Home</Link>
@@ -137,9 +121,9 @@ const Shops: React.FC = () => {
 
       {/* Main Content */}
       <section className='py-16 md-lg:py-12 md:py-10 sm:py-8'>
-        <div className='max-w-7xl mx-auto px-10 xl:px-8 lg:px-6 md-lg:px-5 md:px-4 sm:px-3 xs:px-2'>
+        <div className='mx-auto w-[90%] max-w-[1200px]'>
 
-          {/* Filter Toggle (<=991px) */}
+          {/* Filter Toggle (<= 991px) */}
           <div className={`md-lg:block hidden ${!filter ? 'mb-6' : 'mb-0'}`}>
             <button
               onClick={toggleFilter}
@@ -149,12 +133,12 @@ const Shops: React.FC = () => {
             </button>
           </div>
 
-          {/* Layout: desktop row, <=991 stack */}
-          <div className='w-full flex gap-8 xl:gap-6 lg:gap-6 md-lg:flex-col'>
+          {/* IMPORTANT: GRID (fix pentru problema din screenshot) */}
+          <div className='grid grid-cols-[320px_minmax(0,1fr)] gap-8 xl:gap-6 lg:gap-6 md-lg:grid-cols-1'>
 
-            {/* Sidebar */}
+            {/* Sidebar Filters */}
             <aside
-              className={`shrink-0 w-[320px] xl:w-[300px] lg:w-[280px] md-lg:w-full transition-all duration-300 ${
+              className={`w-full transition-all duration-300 ${
                 filter
                   ? 'md-lg:h-0 md-lg:overflow-hidden md-lg:mb-6 md-lg:p-0 md-lg:border-0'
                   : 'md-lg:h-auto md-lg:overflow-auto md-lg:max-h-[70vh] md-lg:mb-0 md-lg:p-4 md-lg:border md-lg:rounded-lg md-lg:bg-white md-lg:shadow-sm'
@@ -243,26 +227,26 @@ const Shops: React.FC = () => {
                 </div>
               </div>
 
-              {/* Latest Products - hidden on <=768 */}
+              {/* Latest Products - Hidden on <=768 */}
               <div className='py-5 flex flex-col gap-4 md:hidden'>
                 <Products title='Latest Products' products={[latestProducts]} />
               </div>
             </aside>
 
-            {/* Main */}
-            <main className='flex-1 min-w-0'>
-              {/* Header */}
-              <div className='py-4 bg-white mb-10 md:mb-6 px-4 sm:px-3 rounded-md flex justify-between md:flex-col md:items-stretch md:gap-3 items-start border shadow-sm'>
+            {/* Main Content Area */}
+            <main className='min-w-0 w-full'>
+              {/* Products Header */}
+              <div className='py-4 bg-white mb-10 md:mb-6 px-4 sm:px-3 rounded-md flex justify-between md-lg:flex-col md-lg:items-stretch md-lg:gap-3 items-start border shadow-sm'>
                 <h2 className='text-lg sm:text-base font-medium text-blue-900'>
                   ({totalProduct}) Products
                   {isLoading && <span className='ml-2 text-sm text-gray-500'>Loading...</span>}
                 </h2>
 
-                <div className='flex justify-center items-center gap-3 md:flex-col md:items-stretch md:gap-2'>
+                <div className='flex justify-center items-center gap-3 md-lg:flex-col md-lg:items-stretch md-lg:gap-2'>
                   <select
                     onChange={handleSortChange}
                     value={sortPrice}
-                    className='p-2 md:p-2.5 border outline-0 text-gray-900 font-semibold rounded focus:border-blue-500 transition-colors md:w-full'
+                    className='p-2 border outline-0 text-gray-900 font-semibold rounded focus:border-blue-500 transition-colors md-lg:w-full'
                     name="sort"
                     id="sort"
                   >
@@ -290,7 +274,7 @@ const Shops: React.FC = () => {
                 </div>
               </div>
 
-              {/* Products */}
+              {/* Products Grid/List */}
               <div className='pb-8 md:pb-6'>
                 {isLoading ? (
                   <div className='flex justify-center items-center py-20 md:py-14 sm:py-10'>
