@@ -63,7 +63,8 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
         </div>
 
         {/* Products Grid (conform breakpoints MAX din config) */}
-        <div className="grid grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
+        <div className="<div className="grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
+">
           {products.map((p) => (
             <div
               key={p._id}
