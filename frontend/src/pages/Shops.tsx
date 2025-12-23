@@ -1,4 +1,3 @@
-//src\pages\Shops.tsx
 // src/pages/Shops.tsx
 import { useState, useEffect, type ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
@@ -26,7 +25,6 @@ interface PriceRangeState {
 }
 
 const Shops: React.FC = () => {
-  // Zustand store state
   const {
     products,
     categories,
@@ -37,7 +35,6 @@ const Shops: React.FC = () => {
     loader
   } = useHomeState();
 
-  // Local state
   const [filter, setFilter] = useState<boolean>(true);
   const [state, setState] = useState<PriceRangeState>({
     values: [priceRange.low, priceRange.high]
@@ -48,7 +45,6 @@ const Shops: React.FC = () => {
   const [sortPrice, setSortPrice] = useState<SortOption>('');
   const [category, setCategory] = useState<string>('');
 
-  // React Query hooks
   const { isLoading: categoriesLoading } = useGetCategories();
   usePriceRangeProducts();
   const { isLoading: productsLoading } = useQueryProducts({
@@ -60,7 +56,6 @@ const Shops: React.FC = () => {
     pageNumber
   });
 
-  // Update price range when data loads
   useEffect(() => {
     if (priceRange.low !== undefined && priceRange.high !== undefined) {
       setState({
@@ -69,17 +64,14 @@ const Shops: React.FC = () => {
     }
   }, [priceRange]);
 
-  // Reset page number when filters change
   useEffect(() => {
     setPageNumber(1);
   }, [state.values, category, rating, sortPrice]);
 
-  // Handle price range change
   const handlePriceRangeChange = (values: number[]): void => {
     setState({ values });
   };
 
-  // Handle category filter
   const handleCategoryChange = (e: ChangeEvent<HTMLInputElement>, categoryName: string): void => {
     if (e.target.checked) {
       setCategory(categoryName);
@@ -88,37 +80,30 @@ const Shops: React.FC = () => {
     }
   };
 
-  // Handle sort change
   const handleSortChange = (e: ChangeEvent<HTMLSelectElement>): void => {
     setSortPrice(e.target.value as SortOption);
   };
 
-  // Handle rating selection
   const handleRatingSelect = (ratingValue: RatingFilter): void => {
     setRating(ratingValue);
   };
 
-  // Reset rating filter
   const resetRating = (): void => {
     setRating('');
   };
 
-  // Handle view style change
   const handleStyleChange = (style: ViewStyle): void => {
     setStyles(style);
   };
 
-  // Handle pagination
   const handlePageChange = (page: number): void => {
     setPageNumber(page);
   };
 
-  // Toggle filter visibility on mobile
   const toggleFilter = (): void => {
     setFilter(!filter);
   };
 
-  // Render star rating component
   const renderStarRating = (ratingValue: number, onClick: () => void): JSX.Element => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -139,7 +124,6 @@ const Shops: React.FC = () => {
     );
   };
 
-  // Loading state for initial data
   const isLoading = categoriesLoading || productsLoading || loader;
 
   return (
@@ -178,17 +162,17 @@ const Shops: React.FC = () => {
             </button>
           </div>
 
-          <div className='w-full flex flex-wrap gap-y-8'>
+          {/* IMPORTANT: no flex-wrap here; use gap for spacing */}
+          <div className='w-full flex gap-8 lg:gap-6 md:gap-6 md:flex-col'>
 
             {/* Sidebar Filters */}
             <div
-              className={`w-3/12 md-lg:w-4/12 md:w-full pr-8 md-lg:pr-4 md:pr-0 transition-all duration-300 ${
+              className={`w-3/12 md-lg:w-4/12 md:w-full transition-all duration-300 ${
                 filter
                   ? 'md:h-0 md:overflow-hidden md:mb-6 md:p-0 md:border-0'
                   : 'md:h-auto md:overflow-auto md:max-h-[70vh] md:mb-0 md:p-4 md:border md:rounded-lg md:bg-white md:shadow-sm'
               }`}
             >
-
               {/* Category Filter */}
               <div className='mb-6'>
                 <h2 className='text-3xl md:text-2xl sm:text-xl font-bold mb-3 text-gray-900'>Category</h2>
@@ -262,7 +246,6 @@ const Shops: React.FC = () => {
                     </div>
                   ))}
 
-                  {/* Reset Rating Option */}
                   <div
                     onClick={resetRating}
                     className='text-orange-500 flex flex-wrap justify-start items-center gap-2 text-xl sm:text-lg xs:text-base cursor-pointer hover:text-orange-600 transition-colors'
@@ -285,7 +268,8 @@ const Shops: React.FC = () => {
 
             {/* Main Content Area */}
             <div className='w-9/12 md-lg:w-8/12 md:w-full'>
-              <div className='pl-8 md:pl-0'>
+              {/* removed pl-8; spacing is handled by parent gap */}
+              <div className='w-full'>
 
                 {/* Products Header */}
                 <div className='py-4 bg-white mb-10 md:mb-6 px-4 sm:px-3 rounded-md flex justify-between md:flex-col md:items-stretch md:gap-3 items-start border shadow-sm'>
@@ -295,7 +279,6 @@ const Shops: React.FC = () => {
                   </h2>
 
                   <div className='flex justify-center items-center gap-3 md:flex-col md:items-stretch md:gap-2'>
-                    {/* Sort Dropdown */}
                     <select
                       onChange={handleSortChange}
                       value={sortPrice}
@@ -308,7 +291,6 @@ const Shops: React.FC = () => {
                       <option value="high-to-low">High to Low Price</option>
                     </select>
 
-                    {/* View Style Toggle */}
                     <div className='flex justify-center items-start gap-4 md-lg:hidden md:justify-start'>
                       <div
                         onClick={() => handleStyleChange('grid')}
@@ -358,6 +340,7 @@ const Shops: React.FC = () => {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
