@@ -1,5 +1,4 @@
 // src/components/products/FeatureProducts.tsx
-// src/components/products/FeatureProducts.tsx
 import { FaEye, FaRegHeart,} from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { AiFillStar } from "react-icons/ai";
