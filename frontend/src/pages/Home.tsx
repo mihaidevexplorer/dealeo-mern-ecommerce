@@ -1,4 +1,4 @@
-// src/pages/Home.tsx
+//src/pages/Home.tsx
 import React, { useMemo } from "react";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
@@ -17,21 +17,9 @@ const Home: React.FC = () => {
 
   const { products, latestProducts, topRatedProducts, discountProducts } = useHomeStore();
 
-  const isValidProduct = (p: any): p is Product => {
-    return (
-      !!p &&
-      typeof p.slug === "string" &&
-      p.slug.length > 0 &&
-      Array.isArray(p.images) &&
-      typeof p.images?.[0] === "string" &&
-      p.images[0].length > 0 &&
-      typeof p.name === "string" &&
-      p.name.length > 0 &&
-      typeof p.price === "number"
-    );
-  };
+  const safeArr = (arr: any): Product[] => (Array.isArray(arr) ? arr : []);
 
-  const formatProductsForComponent = (list: Product[] = []): Product[][] => {
+  const formatProductsForComponent = (list: Product[]): Product[][] => {
     const chunkSize = 3;
     const chunks: Product[][] = [];
     for (let i = 0; i < list.length; i += chunkSize) {
@@ -40,45 +28,30 @@ const Home: React.FC = () => {
     return chunks;
   };
 
-  // fallback-uri calculate din products (dacă store-ul nu le populează)
-  const safeProducts = useMemo(() => (Array.isArray(products) ? products.filter(isValidProduct) : []), [products]);
+  const base = useMemo(() => safeArr(products), [products]);
 
-  const latestLocal = useMemo(() => {
-    const list = [...safeProducts];
+  // Fallback-uri din products (dacă cele din store sunt goale)
+  const latestFallback = useMemo(() => base.slice(0, 9), [base]);
 
-    // dacă ai createdAt în model:
-    if (list.length && (list[0] as any).createdAt) {
-      list.sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      return list.slice(0, 9);
-    }
+  const topRatedFallback = useMemo(() => {
+    return [...base]
+      .sort((a: any, b: any) => (Number(b.rating) || 0) - (Number(a.rating) || 0))
+      .slice(0, 9);
+  }, [base]);
 
-    // fallback: Mongo _id (aproximativ newest-first)
-    if (list.length && (list[0] as any)._id) {
-      list.sort((a: any, b: any) => String(b._id).localeCompare(String(a._id)));
-      return list.slice(0, 9);
-    }
+  const discountFallback = useMemo(() => {
+    const discounted = base.filter((p: any) => Number(p.discount) > 0);
+    return (discounted.length ? discounted : base).slice(0, 9);
+  }, [base]);
 
-    return list.slice(0, 9);
-  }, [safeProducts]);
+  const latestFinal =
+    safeArr(latestProducts).length > 0 ? safeArr(latestProducts) : latestFallback;
 
-  const topRatedLocal = useMemo(() => {
-    const list = safeProducts
-      .filter((p: any) => typeof p.rating === "number")
-      .sort((a: any, b: any) => (b.rating ?? 0) - (a.rating ?? 0));
-    return list.slice(0, 9);
-  }, [safeProducts]);
+  const topRatedFinal =
+    safeArr(topRatedProducts).length > 0 ? safeArr(topRatedProducts) : topRatedFallback;
 
-  const discountLocal = useMemo(() => {
-    const list = safeProducts
-      .filter((p: any) => typeof p.discount === "number" && p.discount > 0)
-      .sort((a: any, b: any) => (b.discount ?? 0) - (a.discount ?? 0));
-    return list.slice(0, 9);
-  }, [safeProducts]);
-
-  // Folosim store dacă are date; altfel fallback calculat
-  const latestFinal = (Array.isArray(latestProducts) && latestProducts.length > 0 ? latestProducts : latestLocal).filter(isValidProduct);
-  const topRatedFinal = (Array.isArray(topRatedProducts) && topRatedProducts.length > 0 ? topRatedProducts : topRatedLocal).filter(isValidProduct);
-  const discountFinal = (Array.isArray(discountProducts) && discountProducts.length > 0 ? discountProducts : discountLocal).filter(isValidProduct);
+  const discountFinal =
+    safeArr(discountProducts).length > 0 ? safeArr(discountProducts) : discountFallback;
 
   return (
     <div className="w-full">
@@ -87,7 +60,7 @@ const Home: React.FC = () => {
       <Categorys />
 
       <div className="py-[45px]">
-        <FeatureProducts products={safeProducts} />
+        <FeatureProducts products={base} />
       </div>
 
       <div className="py-10">
