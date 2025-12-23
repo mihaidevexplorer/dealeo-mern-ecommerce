@@ -302,18 +302,19 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
     </div>
   );
 
-  return (
-    <div className={`w-full ${
+ return (
+  <div
+    className={`w-full ${
       styles === "grid"
-        ? ""grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-6 lg:gap-5 md:gap-4 sm:gap-3"
-"
+        ? "grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-6 lg:gap-5 md:gap-4 sm:gap-3"
         : "flex flex-col gap-4 sm:gap-3"
-    }`}>
-      {products.map((p, i) => (
-        styles === "grid" ? <GridView key={i} p={p} i={i} /> : <ListView key={i} p={p} i={i} />
-      ))}
-    </div>
-  );
-};
+    }`}
+  >
+    {products.map((p, i) =>
+      styles === "grid" ? <GridView key={i} p={p} i={i} /> : <ListView key={i} p={p} i={i} />
+    )}
+  </div>
+);
+
 
 export default ShopProducts;
