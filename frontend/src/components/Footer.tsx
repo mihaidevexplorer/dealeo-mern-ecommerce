@@ -1,133 +1,224 @@
 // src/components/Footer.tsx
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaFacebookF } from "react-icons/fa";
+// src/components/Footer.tsx
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaFacebookF, FaLinkedin, FaGithub } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa6";
-import { FaCartShopping } from "react-icons/fa6";
-import { useAuthState } from '../hooks/useAuth';
-import { useCartState } from '../hooks/useCard';
+import { FaHeart, FaCartShopping } from "react-icons/fa6";
+import { useAuthState } from "../hooks/useAuth";
+import { useCartState } from "../hooks/useCard";
 
 const Footer: React.FC = () => {
-    const navigate = useNavigate();
-    const { userInfo } = useAuthState();
-    const { cartProductCount, wishlistCount } = useCartState();
+  const navigate = useNavigate();
+  const { userInfo } = useAuthState();
+  const { cartProductCount, wishlistCount } = useCartState();
 
-    return (
-        <footer className='bg-[FFF]'>
-            <div className='w-[85%] flex flex-wrap mx-auto border-b py-16 md-lg:pb-10 sm:pb-6'>
-                <div className='w-3/12 lg:w-4/12 sm:w-full'>
-                    <div className='flex flex-col gap-3'>
-                        <img className='w-[190px] h-[70px]' src="/images/logo.png" alt="logo" />
-                        <ul className='flex flex-col gap-2 text-gray-600'>
-                            <li>Address :  2504 Ivins Avenue, Egg Harbor Township, NJ 08234,</li>
-                            <li>Phone : 4343434344</li>
-                            <li>Email : support@dealeo.com</li>
-                        </ul> 
-                    </div> 
-                </div>
+  return (
+    <footer className="bg-white border-t border-gray-100">
+      {/* Main */}
+      <div className="max-w-7xl mx-auto px-4 lg:px-6 py-14">
+        <div className="grid grid-cols-12 gap-10">
+          {/* Brand */}
+          <div className="col-span-12 lg:col-span-4">
+            <div className="flex flex-col gap-4">
+              <img
+                className="w-[180px] h-auto"
+                src="/images/logo.png"
+                alt="DealEO logo"
+                loading="lazy"
+              />
 
-                <div className='w-5/12 lg:w-8/12 sm:w-full'>
-                    <div className='flex justify-center sm:justify-start sm:mt-6 w-full'>
-                        <div>
-                            <h2 className='font-bold text-lg mb-2'>Usefull Links </h2>
-                            <div className='flex justify-between gap-[80px] lg:gap-[40px]'>
-                                <ul className='flex flex-col gap-2 text-gray-600 text-sm font-semibold'>
-                                    <li>
-                                        <Link  to="/about">About Us </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/shops">About Our Shop </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/delivery">Delivery Information </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/privacy">Privacy Policy </Link>
-                                    </li>
-                                    <li>
-                                        <Link  to="/blog">Blogs  </Link>
-                                    </li>
-                                </ul>
+              <ul className="text-sm text-gray-600 space-y-2">
+                <li>
+                  <span className="font-semibold text-gray-800">Address:</span>{" "}
+                  2504 Ivins Avenue, Egg Harbor Township, NJ 08234
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-800">Phone:</span>{" "}
+                  4343434344
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-800">Email:</span>{" "}
+                  support@dealeo.com
+                </li>
+              </ul>
 
-                                <ul className='flex flex-col gap-2 text-gray-600 text-sm font-semibold'>
-                                    <li>
-                                        <Link to="#">Our Service </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#">Company Profile</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#">Delivery Information </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#">Privacy Policy </Link>
-                                    </li>
-                                    <li>
-                                        <Link to="#">Blogs  </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> 
-                    </div> 
-                </div>
+              {/* Socials */}
+              <ul className="flex items-center gap-3 pt-2">
+                <li>
+                  <a
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-[#ff7f50] hover:text-white hover:border-[#ff7f50] transition-colors"
+                    href="#"
+                    aria-label="Facebook"
+                  >
+                    <FaFacebookF className="w-4 h-4" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-[#ff7f50] hover:text-white hover:border-[#ff7f50] transition-colors"
+                    href="#"
+                    aria-label="Twitter"
+                  >
+                    <FaTwitter className="w-4 h-4" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-[#ff7f50] hover:text-white hover:border-[#ff7f50] transition-colors"
+                    href="#"
+                    aria-label="LinkedIn"
+                  >
+                    <FaLinkedin className="w-4 h-4" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-[#ff7f50] hover:text-white hover:border-[#ff7f50] transition-colors"
+                    href="#"
+                    aria-label="GitHub"
+                  >
+                    <FaGithub className="w-4 h-4" />
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
 
-                <div className='w-4/12 lg:w-full lg:mt-6'>
-                    <div className='w-full flex flex-col justify-start gap-5'>
-                        <h2 className='font-bold text-lg mb-2'>Join Our Shop</h2>
-                        <span>Get Email updates about tour latest and shop specials offers</span>
-                        <div className='flex items-center h-[50px] w-full bg-white border border-gray-300 rounded-md'>
-                            <input className='h-full flex-grow bg-transparent px-3 outline-0 text-sm rounded-l-md' type="text" placeholder="Enter your email" />
-                            <button className='h-full bg-[#ff7f50] text-white uppercase px-6 font-bold text-sm rounded-r-md shadow-md transition-all duration-300 hover:bg-[#ff6347] hover:shadow-lg hover:scale-105'>Subscribe</button>  
-                        </div> 
-                        <ul className='flex justify-start items-center gap-3'>
-                            <li>
-                                <a className='w-[38px] h-[38px] hover:bg-[#ff7f50] hover:text-white flex justify-center items-center bg-white rounded-full' href="#"><FaFacebookF className="text-blue-500 w-5 h-5"/> </a>
-                            </li>
+          {/* Links */}
+          <div className="col-span-12 lg:col-span-4">
+            <h3 className="text-base font-bold text-gray-900 mb-4">Useful Links</h3>
 
-                            <li>
-                                <a className='w-[38px] h-[38px] hover:bg-[#ff7f50] hover:text-white flex justify-center items-center bg-white rounded-full' href="#"><FaTwitter className="text-blue-500 w-5 h-5"/> </a>
-                            </li>
-                            <li>
-                                <a className='w-[38px] h-[38px] hover:bg-[#ff7f50] hover:text-white flex justify-center items-center bg-white rounded-full' href="#"><FaLinkedin className="text-blue-500 w-5 h-5"/> </a>
-                            </li>
-                            <li>
-                                <a className='w-[38px] h-[38px] hover:bg-[#ff7f50] hover:text-white flex justify-center items-center bg-white rounded-full' href="#"><FaGithub className="text-blue-500 w-5 h-5"/> </a>
-                            </li>
-                        </ul>
-                    </div> 
-                </div> 
+            <div className="grid grid-cols-2 gap-8">
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/about">
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/shops">
+                    About Our Shop
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/delivery">
+                    Delivery Information
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/privacy">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/blog">
+                    Blogs
+                  </Link>
+                </li>
+              </ul>
+
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
+                    Our Service
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
+                    Company Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
+                    Delivery Information
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
+                    Blogs
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Newsletter */}
+          <div className="col-span-12 lg:col-span-4">
+            <h3 className="text-base font-bold text-gray-900 mb-4">Join Our Shop</h3>
+            <p className="text-sm text-gray-600 mb-4">
+              Get email updates about our latest products and special offers.
+            </p>
+
+            <div className="flex items-center w-full h-12 rounded-lg border border-gray-200 bg-white overflow-hidden">
+              <input
+                className="h-full w-full px-4 text-sm outline-none"
+                type="email"
+                placeholder="Enter your email"
+              />
+              <button
+                type="button"
+                className="h-full px-5 bg-[#ff7f50] text-white text-sm font-bold uppercase hover:bg-[#ff6347] transition-colors"
+              >
+                Subscribe
+              </button>
             </div>
 
-            <div className='w-[90%] flex flex-wrap justify-center items-center text-slate-600 mx-auto py-5 text-center'>
-                <span>Copiright @ 2024 All Rights Reserved </span>
-            </div>
+            <p className="text-xs text-gray-500 mt-3">
+              By subscribing, you agree to receive marketing emails.
+            </p>
+          </div>
+        </div>
+      </div>
 
-            <div className='hidden fixed md-lg:block w-[50px] h-[110px] bottom-3 right-2 bg-white rounded-full p-2'>
-                <div className='w-full h-full flex gap-3 flex-col justify-center items-center'>
-                    <div onClick={() => navigate(userInfo ? '/card' : '/login')}  className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'>
-                        <span className='text-xl text-gray-800'><FaCartShopping className="w-8 h-8"/></span>
-                        {cartProductCount !== 0 && (
-                            <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                                {cartProductCount}
-                            </div>
-                        )}
-                    </div>
+      {/* Bottom bar */}
+      <div className="border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 py-5 text-center text-sm text-gray-500">
+          Copyright © {new Date().getFullYear()} DealEO. All rights reserved.
+        </div>
+      </div>
 
-                    <div onClick={() => navigate(userInfo ? '/dashboard/my-wishlist' : '/login')} className='relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]'>
-                        <span className='text-xl text-gray-800'><FaHeart className="w-8 h-8"/></span>
-                        {wishlistCount !== 0 && (
-                            <div className='w-[20px] h-[20px] absolute bg-red-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]'>
-                                {wishlistCount}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </footer>
-    );
+      {/* Mobile floating actions */}
+      <div className="hidden md-lg:block fixed bottom-3 right-3 z-50">
+        <div className="bg-white border border-gray-200 shadow-lg rounded-full p-2 w-[56px]">
+          <div className="flex flex-col gap-3 items-center">
+            <button
+              type="button"
+              onClick={() => navigate(userInfo ? "/card" : "/login")}
+              className="relative w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center"
+              aria-label="Cart"
+            >
+              <FaCartShopping className="w-5 h-5 text-gray-800" />
+              {cartProductCount !== 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+                  {cartProductCount}
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate(userInfo ? "/dashboard/my-wishlist" : "/login")}
+              className="relative w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center"
+              aria-label="Wishlist"
+            >
+              <FaHeart className="w-5 h-5 text-gray-800" />
+              {wishlistCount !== 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 };
 
-export default Footer; // modificat
+export default Footer;
