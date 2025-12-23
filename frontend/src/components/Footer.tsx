@@ -15,19 +15,19 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-white border-t border-gray-100">
       {/* Main */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-4 sm:px-3 xs:px-2 py-14 lg:py-10 md:py-9 sm:py-8 xs:py-7 2xs:py-6">
-        <div className="grid grid-cols-12 gap-10 lg:gap-8 md:gap-7 sm:gap-6 xs:gap-5 2xs:gap-4">
+      <div className="max-w-7xl mx-auto px-6 xl:px-5 lg:px-4 md:px-4 sm:px-3 xs:px-2 py-14 xl:py-12 lg:py-10 md:py-9 sm:py-8 xs:py-7 2xs:py-6">
+        <div className="grid grid-cols-12 gap-10 xl:gap-9 lg:gap-8 md:gap-7 sm:gap-6 xs:gap-5 2xs:gap-4">
           {/* Brand */}
-          <div className="col-span-4 lg:col-span-12">
-            <div className="flex flex-col gap-4 lg:items-center lg:text-center">
+          <div className="col-span-4 xl:col-span-4 lg:col-span-6 md:col-span-12">
+            <div className="flex flex-col gap-4 lg:items-start md:items-center md:text-center">
               <img
-                className="w-[180px] sm:w-[160px] xs:w-[150px] 2xs:w-[140px] h-auto lg:mx-auto"
+                className="w-[180px] sm:w-[160px] xs:w-[150px] 2xs:w-[140px] h-auto md:mx-auto"
                 src="/images/logo.png"
                 alt="DealEO logo"
                 loading="lazy"
               />
 
-              <ul className="text-sm xs:text-xs text-gray-600 space-y-2 leading-relaxed lg:text-center">
+              <ul className="text-sm xs:text-xs text-gray-600 space-y-2 leading-relaxed md:text-center">
                 <li>
                   <span className="font-semibold text-gray-800">Address:</span>{" "}
                   2504 Ivins Avenue, Egg Harbor Township, NJ 08234
@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
               </ul>
 
               {/* Socials */}
-              <ul className="flex items-center gap-3 xs:gap-2 pt-2 lg:justify-center flex-wrap">
+              <ul className="flex items-center gap-3 xs:gap-2 pt-2 flex-wrap md:justify-center">
                 <li>
                   <a
                     className="w-10 h-10 xs:w-9 xs:h-9 2xs:w-8 2xs:h-8 flex items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 hover:bg-[#ff7f50] hover:text-white hover:border-[#ff7f50] transition-colors"
@@ -85,13 +85,13 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Links */}
-          <div className="col-span-4 lg:col-span-12">
-            <h3 className="text-base font-bold text-gray-900 mb-4 xs:mb-3 lg:text-center">
+          <div className="col-span-4 xl:col-span-4 lg:col-span-6 md:col-span-12">
+            <h3 className="text-base font-bold text-gray-900 mb-4 xs:mb-3 md:text-center">
               Useful Links
             </h3>
 
-            <div className="grid grid-cols-2 gap-8 sm:grid-cols-1 sm:gap-5 xs:gap-4 sm:justify-items-center">
-              <ul className="space-y-2 text-sm xs:text-xs sm:text-center">
+            <div className="grid grid-cols-2 gap-8 lg:gap-7 sm:grid-cols-1 sm:gap-5 xs:gap-4 md:justify-items-center">
+              <ul className="space-y-2 text-sm xs:text-xs md:text-center">
                 <li>
                   <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="/about">
                     About Us
@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
                 </li>
               </ul>
 
-              <ul className="space-y-2 text-sm xs:text-xs sm:text-center">
+              <ul className="space-y-2 text-sm xs:text-xs md:text-center">
                 <li>
                   <Link className="text-gray-600 hover:text-gray-900 transition-colors" to="#">
                     Our Service
@@ -150,11 +150,11 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Newsletter */}
-          <div className="col-span-4 lg:col-span-12">
-            <h3 className="text-base font-bold text-gray-900 mb-4 xs:mb-3 lg:text-center">
+          <div className="col-span-4 xl:col-span-4 lg:col-span-12 md:col-span-12">
+            <h3 className="text-base font-bold text-gray-900 mb-4 xs:mb-3 md:text-center">
               Join Our Shop
             </h3>
-            <p className="text-sm xs:text-xs text-gray-600 mb-4 xs:mb-3 lg:text-center">
+            <p className="text-sm xs:text-xs text-gray-600 mb-4 xs:mb-3 md:text-center">
               Get email updates about our latest products and special offers.
             </p>
 
@@ -172,7 +172,7 @@ const Footer: React.FC = () => {
               </button>
             </div>
 
-            <p className="text-xs 2xs:text-[11px] text-gray-500 mt-3 lg:text-center">
+            <p className="text-xs 2xs:text-[11px] text-gray-500 mt-3 md:text-center">
               By subscribing, you agree to receive marketing emails.
             </p>
           </div>
@@ -181,7 +181,7 @@ const Footer: React.FC = () => {
 
       {/* Bottom bar */}
       <div className="border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-4 sm:px-3 xs:px-2 py-5 sm:py-4 xs:py-3 text-center text-sm xs:text-xs text-gray-500">
+        <div className="max-w-7xl mx-auto px-6 xl:px-5 lg:px-4 sm:px-3 xs:px-2 py-5 sm:py-4 xs:py-3 text-center text-sm xs:text-xs text-gray-500">
           Copyright © {new Date().getFullYear()} DealEO. All rights reserved.
         </div>
       </div>
