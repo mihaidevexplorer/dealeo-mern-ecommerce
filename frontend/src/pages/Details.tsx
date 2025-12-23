@@ -261,7 +261,7 @@ const Details = () => {
       <Header />
 
       {/* Banner */}
-      <section className='bg-[url("http://localhost:3001/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section className='bg-[url("/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className='absolute left-0 top-0 w-full h-full bg-[#242222d0]'>
           <div className='w-full max-w-7xl px-4 lg:px-6 mx-auto h-full'>
             <div className='flex flex-col justify-center gap-1 items-center h-full w-full text-white text-center'>
