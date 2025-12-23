@@ -45,12 +45,13 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
 
   return (
     <div className="w-full mx-auto px-8 xl:px-6 lg:px-5 md-lg:px-4 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 xl:py-9 lg:py-9 md:py-8 sm:py-8 xs:py-7 2xs:py-6">
-      <div className="mx-auto w-full max-w-screen-2xl">
+      <div className="mx-auto w-full max-w-7xl">
         {/* Header */}
         <div className="text-center mb-10 xl:mb-9 md:mb-8 sm:mb-7 xs:mb-6 2xs:mb-6 px-2">
           <h2 className="text-4xl xl:text-3xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
             Featured Products
           </h2>
+
           <p className="text-gray-500 mt-2 text-base xl:text-sm md:text-sm sm:text-[13px] xs:text-[12px] 2xs:text-[11px]">
             Discover our handpicked selection
           </p>
@@ -62,9 +63,8 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
           </div>
         </div>
 
-        {/* Products Grid (conform breakpoints MAX din config) */}
-        <div className="<div className="grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
-">
+        {/* Products Grid: 4 / 4 / 3 / 3 / 2 / 2 / 1 / 1 */}
+        <div className="grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
           {products.map((p) => (
             <div
               key={p._id}
