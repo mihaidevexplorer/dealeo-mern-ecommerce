@@ -1,5 +1,4 @@
 // src/components/products/Products.tsx
-// src/components/products/Products.tsx
 import React, { useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
