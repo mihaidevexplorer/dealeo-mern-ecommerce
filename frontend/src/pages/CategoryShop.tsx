@@ -1,4 +1,3 @@
-//src/pages/CategoryShop.tsx
 // src/pages/CategoryShop.tsx
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
