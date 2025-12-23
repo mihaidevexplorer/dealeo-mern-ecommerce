@@ -44,26 +44,26 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
   };
 
   return (
-    <div className="w-full mx-auto px-8 lg:px-6 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 sm:py-9 xs:py-8 2xs:py-7">
-      <div className="mx-auto w-full max-w-screen-2xl 2xl:max-w-[1700px]">
+    <div className="w-full mx-auto px-8 xl:px-6 lg:px-5 md-lg:px-4 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 xl:py-9 lg:py-9 md:py-8 sm:py-8 xs:py-7 2xs:py-6">
+      <div className="mx-auto w-full max-w-screen-2xl">
         {/* Header */}
-        <div className="text-center mb-10 sm:mb-9 xs:mb-8 2xs:mb-7 px-2">
-          <h2 className="text-3xl lg:text-[34px] md:text-3xl sm:text-2xl xs:text-[22px] 2xs:text-[20px] 2xl:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+        <div className="text-center mb-10 xl:mb-9 md:mb-8 sm:mb-7 xs:mb-6 2xs:mb-6 px-2">
+          <h2 className="text-4xl xl:text-3xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
             Featured Products
           </h2>
-          <p className="text-gray-500 mt-2 text-sm sm:text-[13px] xs:text-[12px] 2xs:text-[11px]">
+          <p className="text-gray-500 mt-2 text-base xl:text-sm md:text-sm sm:text-[13px] xs:text-[12px] 2xs:text-[11px]">
             Discover our handpicked selection
           </p>
 
           <div className="flex items-center justify-center gap-2 mt-4 sm:mt-3 xs:mt-3">
-            <div className="w-14 sm:w-12 xs:w-10 2xs:w-8 h-1 bg-gradient-to-r from-transparent to-blue-500" />
+            <div className="w-16 xl:w-14 sm:w-12 xs:w-10 2xs:w-8 h-1 bg-gradient-to-r from-transparent to-blue-500" />
             <AiFillStar className="text-blue-500 text-sm xs:text-[12px] 2xs:text-[11px]" />
-            <div className="w-14 sm:w-12 xs:w-10 2xs:w-8 h-1 bg-gradient-to-l from-transparent to-blue-500" />
+            <div className="w-16 xl:w-14 sm:w-12 xs:w-10 2xs:w-8 h-1 bg-gradient-to-l from-transparent to-blue-500" />
           </div>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 2xs:grid-cols-1 gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
+        {/* Products Grid (conform breakpoints MAX din config) */}
+        <div className="grid grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
           {products.map((p) => (
             <div
               key={p._id}
@@ -74,7 +74,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                 {/* Discount Badge */}
                 {p.discount > 0 && (
                   <div className="absolute top-2 left-2 xs:top-1.5 xs:left-1.5 z-10">
-                    <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs xs:text-[10px] 2xs:text-[10px] font-bold px-2 py-1 xs:px-1.5 xs:py-0.5 rounded-full shadow-md">
+                    <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs xs:text-[10px] font-bold px-2 py-1 xs:px-1.5 xs:py-0.5 rounded-full shadow-md">
                       -{p.discount}%
                     </div>
                   </div>
@@ -97,7 +97,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                   <img
                     src={p.images?.[0]}
                     alt={p.name}
-                    className="w-full h-full object-contain p-4 lg:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3 2xl:p-5 group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain p-5 xl:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3 group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
                 </Link>
@@ -129,7 +129,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                 {/* Out of Stock Overlay */}
                 {p.stock === 0 && (
                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-2">
-                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm xs:text-[13px] 2xs:text-[13px] font-semibold text-gray-800 text-center">
+                    <span className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm xs:text-[13px] font-semibold text-gray-800 text-center">
                       Out of Stock
                     </span>
                   </div>
@@ -137,32 +137,30 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
               </div>
 
               {/* Product Details */}
-              <div className="p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3 2xl:p-5">
+              <div className="p-5 xl:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3">
                 <Link to={`/product/details/${p.slug}`} className="block mb-2">
-                  <h3 className="text-sm sm:text-[14px] xs:text-[13px] 2xs:text-[13px] 2xl:text-[15px] font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition-colors min-h-[2.5rem] sm:min-h-[2.4rem] xs:min-h-[2.2rem] 2xs:min-h-0">
+                  <h3 className="text-[15px] xl:text-sm md:text-[13px] xs:text-[13px] 2xs:text-[13px] font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition-colors min-h-[2.5rem] sm:min-h-[2.3rem] xs:min-h-[2.2rem] 2xs:min-h-0">
                     {p.name}
                   </h3>
                 </Link>
 
                 <div className="flex items-center gap-1 mb-2">
                   <Rating ratings={p.rating} />
-                  <span className="text-xs xs:text-[11px] 2xs:text-[11px] text-gray-500">
-                    ({p.rating})
-                  </span>
+                  <span className="text-xs xs:text-[11px] text-gray-500">({p.rating})</span>
                 </div>
 
                 <div className="flex items-baseline gap-2 flex-wrap">
                   {p.discount > 0 ? (
                     <>
-                      <span className="text-base xs:text-[15px] 2xs:text-[15px] 2xl:text-lg font-bold text-gray-900">
+                      <span className="text-lg xl:text-base xs:text-[15px] font-bold text-gray-900">
                         ${(p.price * (1 - p.discount / 100)).toFixed(2)}
                       </span>
-                      <span className="text-xs xs:text-[11px] 2xs:text-[11px] text-gray-400 line-through">
+                      <span className="text-xs xs:text-[11px] text-gray-400 line-through">
                         ${p.price.toFixed(2)}
                       </span>
                     </>
                   ) : (
-                    <span className="text-base xs:text-[15px] 2xs:text-[15px] 2xl:text-lg font-bold text-gray-900">
+                    <span className="text-lg xl:text-base xs:text-[15px] font-bold text-gray-900">
                       ${p.price.toFixed(2)}
                     </span>
                   )}
@@ -174,24 +172,20 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                       p.stock < 10 ? (
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 bg-orange-500 rounded-full animate-pulse" />
-                          <span className="text-xs xs:text-[11px] 2xs:text-[11px] text-orange-600 font-medium">
+                          <span className="text-xs xs:text-[11px] text-orange-600 font-medium">
                             Only {p.stock} left
                           </span>
                         </div>
                       ) : (
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 bg-green-500 rounded-full" />
-                          <span className="text-xs xs:text-[11px] 2xs:text-[11px] text-green-600">
-                            In Stock
-                          </span>
+                          <span className="text-xs xs:text-[11px] text-green-600">In Stock</span>
                         </div>
                       )
                     ) : (
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 bg-red-500 rounded-full" />
-                        <span className="text-xs xs:text-[11px] 2xs:text-[11px] text-red-600 font-medium">
-                          Out of Stock
-                        </span>
+                        <span className="text-xs xs:text-[11px] text-red-600 font-medium">Out of Stock</span>
                       </div>
                     )}
                   </div>
@@ -200,7 +194,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                 <button
                   onClick={() => handleAddToCart(p._id)}
                   disabled={addToCartMutation.isPending || loader || p.stock === 0}
-                  className="mt-4 sm:mt-3 xs:mt-3 w-full px-3 py-2 xs:px-2.5 xs:py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm xs:text-[13px] 2xs:text-[13px] 2xl:text-[15px] font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 hover:shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
+                  className="mt-4 sm:mt-3 xs:mt-3 w-full px-3 py-2 xs:px-2.5 xs:py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm xs:text-[13px] font-medium rounded-lg hover:from-blue-700 hover:to-blue-800 hover:shadow-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   {addToCartMutation.isPending ? (
                     <>
