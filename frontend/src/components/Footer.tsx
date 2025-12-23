@@ -1,5 +1,4 @@
 // src/components/Footer.tsx
-// src/components/Footer.tsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaLinkedin, FaGithub } from "react-icons/fa";
