@@ -1,4 +1,3 @@
-
 //src/pages/Dashboard.tsx
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
@@ -28,11 +27,11 @@ interface ApiError {
 const Dashboard: React.FC = () => {
   const [filterShow, setFilterShow] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+
   // Access stores directly
   const authStore = useAuthStore();
   const cartStore = useCartStore();
-  
+
   // Logout mutation
   const logoutMutation = useMutation({
     mutationFn: async () => {
@@ -51,8 +50,8 @@ const Dashboard: React.FC = () => {
     try {
       await logoutMutation.mutateAsync();
       localStorage.removeItem('customerToken');
-      authStore.logout(); // This resets the auth state
-      cartStore.resetCount(); // This resets cart counts
+      authStore.logout();
+      cartStore.resetCount();
       navigate('/login');
     } catch (error) {
       console.log((error as ApiError)?.response?.data);
@@ -62,54 +61,129 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <Header />
+
       <div className='bg-slate-200 mt-5'>
-        <div className='w-[90%] mx-auto md-lg:block hidden'>
-          <div>
-            <button 
-              onClick={() => setFilterShow(!filterShow)} 
-              className='text-center py-3 px-3 bg-green-500 text-white'
+        {/* Container */}
+        <div className='w-full max-w-7xl mx-auto px-4 lg:px-6'>
+          {/* Mobile toggle */}
+          <div className='md-lg:block hidden pt-4'>
+            <button
+              onClick={() => setFilterShow(!filterShow)}
+              className='inline-flex items-center justify-center w-11 h-11 rounded-lg bg-green-500 hover:bg-green-600 transition-colors text-white shadow'
+              aria-label="Toggle dashboard menu"
             >
               <FaList />
             </button>
           </div>
-        </div>
 
-        <div className='h-full mx-auto'>
-          <div className='py-5 flex md-lg:w-[90%] mx-auto relative'>
-            <div className={`rounded-md z-50 md-lg:absolute ${filterShow ? '-left-4' : '-left-[360px]'} w-[270px] ml-4 bg-white`}>
-              <ul className='py-2 text-slate-600 px-4'>
-                <li className='flex justify-start items-center gap-2 py-2'>
-                  <span className='text-xl'><IoIosHome /></span>
-                  <Link to='/dashboard' className='block'>Dashboard</Link>
+          {/* Layout */}
+          <div className='py-6 relative flex md-lg:flex-col gap-6'>
+            {/* Backdrop for mobile drawer */}
+            <div
+              onClick={() => setFilterShow(false)}
+              className={`md-lg:block hidden fixed inset-0 bg-black/40 z-40 transition-opacity duration-200 ${
+                filterShow ? 'opacity-100 visible' : 'opacity-0 invisible'
+              }`}
+            />
+
+            {/* Sidebar */}
+            <aside
+              className={`
+                z-50 bg-white rounded-2xl shadow-xl border border-white/60
+                w-[270px] md-lg:w-[300px]
+                md-lg:fixed md-lg:top-0 md-lg:h-screen md-lg:overflow-y-auto
+                transition-all duration-300
+                ${filterShow ? 'md-lg:left-0' : 'md-lg:-left-[320px]'}
+              `}
+            >
+              {/* Sidebar header (mobile) */}
+              <div className='md-lg:flex hidden items-center justify-between px-5 py-4 border-b'>
+                <h2 className='font-bold text-gray-800'>Dashboard</h2>
+                <button
+                  onClick={() => setFilterShow(false)}
+                  className='text-sm px-3 py-1 rounded-md bg-slate-100 hover:bg-slate-200 transition-colors text-slate-700'
+                >
+                  Close
+                </button>
+              </div>
+
+              <ul className='py-4 text-slate-700 px-5 space-y-1'>
+                <li>
+                  <Link
+                    to='/dashboard'
+                    className='flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors'
+                    onClick={() => setFilterShow(false)}
+                  >
+                    <span className='text-lg'><IoIosHome /></span>
+                    <span className='font-medium'>Dashboard</span>
+                  </Link>
                 </li>
-                <li className='flex justify-start items-center gap-2 py-2'>
-                  <span className='text-xl'><FaBorderAll /></span>
-                  <Link to='/dashboard/my-orders' className='block'>My Orders</Link>
+
+                <li>
+                  <Link
+                    to='/dashboard/my-orders'
+                    className='flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors'
+                    onClick={() => setFilterShow(false)}
+                  >
+                    <span className='text-lg'><FaBorderAll /></span>
+                    <span className='font-medium'>My Orders</span>
+                  </Link>
                 </li>
-                <li className='flex justify-start items-center gap-2 py-2'>
-                  <span className='text-xl'><FaHeart /></span>
-                  <Link to='/dashboard/my-wishlist' className='block'>Wishlist</Link>
+
+                <li>
+                  <Link
+                    to='/dashboard/my-wishlist'
+                    className='flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors'
+                    onClick={() => setFilterShow(false)}
+                  >
+                    <span className='text-lg'><FaHeart /></span>
+                    <span className='font-medium'>Wishlist</span>
+                  </Link>
                 </li>
-                <li className='flex justify-start items-center gap-2 py-2'>
-                  <span className='text-xl'><IoChatbubbleEllipsesSharp /></span>
-                  <Link to='/dashboard/chat' className='block'>Chat</Link>
+
+                <li>
+                  <Link
+                    to='/dashboard/chat'
+                    className='flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors'
+                    onClick={() => setFilterShow(false)}
+                  >
+                    <span className='text-lg'><IoChatbubbleEllipsesSharp /></span>
+                    <span className='font-medium'>Chat</span>
+                  </Link>
                 </li>
-                <li className='flex justify-start items-center gap-2 py-2'>
-                  <span className='text-xl'><RiLockPasswordLine /></span>
-                  <Link to='/dashboard/change-password' className='block'>Change Password</Link>
+
+                <li>
+                  <Link
+                    to='/dashboard/change-password'
+                    className='flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors'
+                    onClick={() => setFilterShow(false)}
+                  >
+                    <span className='text-lg'><RiLockPasswordLine /></span>
+                    <span className='font-medium'>Change Password</span>
+                  </Link>
                 </li>
-                <li onClick={logout} className='flex justify-start items-center gap-2 py-2 cursor-pointer'>
-                  <span className='text-xl'><IoMdLogOut /></span>
-                  <div className='block'>Logout</div>
+
+                <li className='pt-2'>
+                  <button
+                    onClick={logout}
+                    className='w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-red-50 transition-colors text-left'
+                    disabled={logoutMutation.isPending}
+                  >
+                    <span className='text-lg text-red-600'><IoMdLogOut /></span>
+                    <span className='font-medium text-red-700'>
+                      {logoutMutation.isPending ? 'Logging out...' : 'Logout'}
+                    </span>
+                  </button>
                 </li>
               </ul>
-            </div>
+            </aside>
 
-            <div className='w-[calc(100%-270px)] md-lg:w-full'>
-              <div className='mx-4 md-lg:mx-0'>
+            {/* Content */}
+            <main className='flex-1 md-lg:w-full'>
+              <div className='bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-white/60 p-4 sm:p-3'>
                 <Outlet />
               </div>
-            </div>
+            </main>
           </div>
         </div>
       </div>
@@ -119,4 +193,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;//modificat
+export default Dashboard;
