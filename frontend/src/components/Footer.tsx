@@ -182,7 +182,7 @@ const Footer: React.FC = () => {
       {/* Bottom bar */}
       <div className="border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6 xl:px-5 lg:px-4 sm:px-3 xs:px-2 py-5 sm:py-4 xs:py-3 text-center text-sm xs:text-xs text-gray-500">
-          Copyright © {new Date().getFullYear()} DealEO. All rights reserved.
+          <span>Copiright @ 2024 All Rights Reserved </span>
         </div>
       </div>
 
