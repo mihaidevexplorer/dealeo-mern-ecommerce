@@ -19,30 +19,30 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
   const navigate = useNavigate();
   const { userInfo } = useAuthState();
   const { loader } = useCartState();
-  
+
   // Mutations
   const addToCartMutation = useAddToCart();
   const addToWishlistMutation = useAddToWishlist();
 
-  // Add to cart - exact same function name as JSX
+  // Add to cart
   const add_card = (id: string): void => {
     if (userInfo) {
       addToCartMutation.mutate({
         userId: userInfo.id,
         quantity: 1,
-        productId: id
+        productId: id,
       });
     } else {
       navigate("/login");
     }
   };
 
-  // Handle add to wishlist - matching JSX structure
+  // Add to wishlist
   const handleAddToWishlist = (product: Product): void => {
     if (userInfo) {
       addToWishlistMutation.mutate({
         userId: userInfo.id,
-        productId: product._id
+        productId: product._id,
       });
     } else {
       navigate("/login");
@@ -50,11 +50,8 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
   };
 
   // Grid View Component
-  const GridView = ({ p, i }: { p: Product; i: number }) => (
-    <div
-      key={i}
-      className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-    >
+  const GridView = ({ p }: { p: Product }) => (
+    <div className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Discount Badge */}
@@ -66,14 +63,17 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
           </div>
         )}
 
-        {/* Wishlist Button - Always Visible */}
+        {/* Wishlist Button */}
         <button
           onClick={() => handleAddToWishlist(p)}
           disabled={addToWishlistMutation.isPending}
           className="absolute top-2 right-2 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white hover:shadow-lg transition-all duration-300 group/wishlist"
           title="Add to wishlist"
         >
-          <FaRegHeart className="text-gray-600 group-hover/wishlist:text-red-500 transition-colors" size={16} />
+          <FaRegHeart
+            className="text-gray-600 group-hover/wishlist:text-red-500 transition-colors"
+            size={16}
+          />
         </button>
 
         {/* Product Image */}
@@ -138,9 +138,7 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
               <span className="text-base font-bold text-gray-900">
                 ${(p.price * (1 - p.discount / 100)).toFixed(2)}
               </span>
-              <span className="text-xs text-gray-400 line-through">
-                ${p.price.toFixed(2)}
-              </span>
+              <span className="text-xs text-gray-400 line-through">${p.price.toFixed(2)}</span>
             </>
           ) : (
             <span className="text-base font-bold text-gray-900">${p.price.toFixed(2)}</span>
@@ -175,14 +173,10 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
   );
 
   // List View Component
-  const ListView = ({ p, i }: { p: Product; i: number }) => (
-    <div
-      key={i}
-      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row"
-    >
+  const ListView = ({ p }: { p: Product }) => (
+    <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col sm:flex-row">
       {/* Product Image */}
       <div className="relative sm:w-48 aspect-square sm:aspect-auto overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-        {/* Discount Badge */}
         {p.discount > 0 && (
           <div className="absolute top-2 left-2 z-10">
             <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-md">
@@ -192,12 +186,7 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
         )}
 
         <Link to={`/product/details/${p.slug}`}>
-          <img
-            className="w-full h-full object-contain p-4"
-            src={p.images[0]}
-            alt={p.name}
-            loading="lazy"
-          />
+          <img className="w-full h-full object-contain p-4" src={p.images[0]} alt={p.name} loading="lazy" />
         </Link>
       </div>
 
@@ -215,16 +204,13 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
             <span className="text-sm text-gray-500">({p.rating} reviews)</span>
           </div>
 
-          {/* Price */}
           <div className="flex items-baseline gap-2 mb-3">
             {p.discount > 0 ? (
               <>
                 <span className="text-2xl font-bold text-gray-900">
                   ${(p.price * (1 - p.discount / 100)).toFixed(2)}
                 </span>
-                <span className="text-base text-gray-400 line-through">
-                  ${p.price.toFixed(2)}
-                </span>
+                <span className="text-base text-gray-400 line-through">${p.price.toFixed(2)}</span>
                 <span className="text-sm text-green-600 font-medium">
                   Save ${(p.price * p.discount / 100).toFixed(2)}
                 </span>
@@ -234,16 +220,13 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
             )}
           </div>
 
-          {/* Stock Status */}
           {p.stock !== undefined && (
             <div className="mb-4">
               {p.stock > 0 ? (
                 p.stock < 10 ? (
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-orange-600 font-medium">
-                      Only {p.stock} left in stock
-                    </span>
+                    <span className="text-sm text-orange-600 font-medium">Only {p.stock} left in stock</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
@@ -261,7 +244,6 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
           )}
         </div>
 
-        {/* Action Buttons */}
         <div className="flex gap-3">
           <button
             onClick={() => add_card(p._id)}
@@ -276,11 +258,11 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
             ) : (
               <>
                 <RiShoppingCartLine className="text-lg" />
-                <span>{p.stock === 0 ? 'Out of Stock' : 'Add to Cart'}</span>
+                <span>{p.stock === 0 ? "Out of Stock" : "Add to Cart"}</span>
               </>
             )}
           </button>
-          
+
           <button
             onClick={() => handleAddToWishlist(p)}
             disabled={addToWishlistMutation.isPending}
@@ -289,7 +271,7 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
           >
             <FaRegHeart className="text-lg text-gray-600 group-hover/wishlist:text-red-500 transition-colors" />
           </button>
-          
+
           <Link
             to={`/product/details/${p.slug}`}
             className="p-2.5 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -302,19 +284,20 @@ const ShopProducts: React.FC<ShopProductsProps> = ({ styles, products }) => {
     </div>
   );
 
- return (
-  <div
-    className={`w-full ${
-      styles === "grid"
-        ? "grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 gap-6 lg:gap-5 md:gap-4 sm:gap-3"
-        : "flex flex-col gap-4 sm:gap-3"
-    }`}
-  >
-    {products.map((p, i) =>
-      styles === "grid" ? <GridView key={i} p={p} i={i} /> : <ListView key={i} p={p} i={i} />
-    )}
-  </div>
-);
-
+  return (
+    <div
+      className={`w-full ${
+        styles === "grid"
+          ? // max-width breakpoints: default = desktop (largest)
+            "grid grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 xs:grid-cols-1 gap-6 lg:gap-5 md:gap-4 sm:gap-3"
+          : "flex flex-col gap-4 sm:gap-3"
+      }`}
+    >
+      {products.map((p, i) =>
+        styles === "grid" ? <GridView key={p._id ?? i} p={p} /> : <ListView key={p._id ?? i} p={p} />
+      )}
+    </div>
+  );
+};
 
 export default ShopProducts;
