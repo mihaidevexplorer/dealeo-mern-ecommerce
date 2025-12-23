@@ -11,59 +11,63 @@ import { useHomeStore } from '../store/useHomeStore';
 import type { Product } from '../types';
 
 const Home: React.FC = () => {
-    // Apelează hook-urile la nivelul componentului - asta este echivalentul cu dispatch(get_products())
-    useGetProducts();
-    useGetCategories();
-    useGetBanners();
+  useGetProducts();
+  useGetCategories();
+  useGetBanners();
 
-    // Obține datele din store (hook-urile de mai sus actualizează automat store-ul)
-    const {
-        products,
-        latestProducts,
-        topRatedProducts,
-        discountProducts
-    } = useHomeStore();
+  const {
+    products,
+    latestProducts,
+    topRatedProducts,
+    discountProducts
+  } = useHomeStore();
 
-    // Helper function pentru a transforma Product[] în Product[][] dacă este necesar
-    const formatProductsForComponent = (products: Product[]): Product[][] => {
-        // Dacă componenta Products așteaptă array de array-uri, împarte produsele în grupuri
-        const chunkSize = 3; // sau alt număr în funcție de design
-        const chunks: Product[][] = [];
-        for (let i = 0; i < products.length; i += chunkSize) {
-            chunks.push(products.slice(i, i + chunkSize));
-        }
-        return chunks;
-    };
+  const formatProductsForComponent = (productsList: Product[]): Product[][] => {
+    const chunkSize = 3;
+    const chunks: Product[][] = [];
+    for (let i = 0; i < productsList.length; i += chunkSize) {
+      chunks.push(productsList.slice(i, i + chunkSize));
+    }
+    return chunks;
+  };
 
-    return (
-        <div className='w-full'>
-            <Header />
-            <Banner />
-            <Categorys />
-            <div className='py-[45px]'>
-                <FeatureProducts products={products} />
+  return (
+    <div className='w-full'>
+      <Header />
+      <Banner />
+      <Categorys />
+
+      <div className='py-[45px]'>
+        <FeatureProducts products={products} />
+      </div>
+
+      <section className='py-10'>
+        <div className='w-full max-w-7xl mx-auto px-4 lg:px-6'>
+          <div className='grid grid-cols-3 md-lg:grid-cols-2 md:grid-cols-1 gap-7'>
+            <div className='overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100'>
+              <div className='p-4'>
+                <Products title='Latest Product' products={formatProductsForComponent(latestProducts)} />
+              </div>
             </div>
-           
-            <div className='py-10'>
-                <div className='w-[85%] flex flex-wrap mx-auto'>
-                    <div className='grid w-full grid-cols-3 md-lg:grid-cols-2 md:grid-cols-1 gap-7'>
-                        <div className='overflow-hidden'>
-                            <Products title='Latest Product' products={formatProductsForComponent(latestProducts)} />
-                        </div>
-                        
-                        <div className='overflow-hidden'>
-                            <Products title='Top Rated Product' products={formatProductsForComponent(topRatedProducts)} />
-                        </div>
 
-                        <div className='overflow-hidden'>
-                            <Products title='Discount Product' products={formatProductsForComponent(discountProducts)} />
-                        </div>
-                    </div> 
-                </div> 
+            <div className='overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100'>
+              <div className='p-4'>
+                <Products title='Top Rated Product' products={formatProductsForComponent(topRatedProducts)} />
+              </div>
             </div>
-            <Footer />
+
+            <div className='overflow-hidden rounded-xl bg-white shadow-sm border border-gray-100'>
+              <div className='p-4'>
+                <Products title='Discount Product' products={formatProductsForComponent(discountProducts)} />
+              </div>
+            </div>
+          </div>
         </div>
-    );
+      </section>
+
+      <Footer />
+    </div>
+  );
 };
 
-export default Home;//Modificat
+export default Home;
