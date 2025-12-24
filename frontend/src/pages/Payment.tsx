@@ -5,7 +5,7 @@ import Footer from './../components/Footer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Stripe from '../components/Stripe';
 
-// Define the interface for location state
+
 interface PaymentLocationState {
   price: number;
   items: number;
