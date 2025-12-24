@@ -63,10 +63,32 @@ const CategoryShop: React.FC = () => {
     setRating('');
   };
 
+  // Funcție pentru a afișa steluțele de rating în sidebar
+  const renderRatingFilter = (stars: number, label: string, value: string) => {
+    return (
+      <div 
+        onClick={() => setRating(value)} 
+        className={`flex justify-start items-center gap-1 cursor-pointer p-2 rounded ${
+          rating === value ? 'bg-orange-50' : 'hover:bg-gray-50'
+        }`}
+      >
+        <span className='text-orange-500 flex'>
+          {[...Array(5)].map((_, idx) => (
+            idx < stars ? (
+              <AiFillStar key={idx} size={18} className="mr-0.5" />
+            ) : (
+              <CiStar key={idx} size={18} className="text-gray-400 mr-0.5" />
+            )
+          ))}
+        </span>
+        <span className='text-gray-700 text-sm ml-2 whitespace-nowrap'>{label}</span>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Header />
-      {/* Modificat: Înlocuit localhost cu cale relativă */}
       <section className='bg-[url("/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className='absolute left-0 top-0 w-full h-full bg-[#2422228a]'>
           <div className='w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto'>
@@ -132,49 +154,23 @@ const CategoryShop: React.FC = () => {
               {/* Rating Filter */}
               <div className='py-3 flex flex-col gap-4 mt-6'>
                 <h2 className='text-2xl font-bold mb-3 text-gray-900'>Customer Rating</h2>
-                <div className='flex flex-col gap-3'>
-                  <div onClick={() => setRating('5')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '5' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-500 flex'>
-                      <AiFillStar /><AiFillStar /><AiFillStar /><AiFillStar /><AiFillStar />
-                    </span>
-                    <span className='text-gray-700 text-sm ml-2'>5 Stars</span>
-                  </div>
-
-                  <div onClick={() => setRating('4')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '4' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-500 flex'>
-                      <AiFillStar /><AiFillStar /><AiFillStar /><AiFillStar />
-                    </span>
-                    <span className='text-gray-400 ml-2'><CiStar /></span>
-                    <span className='text-gray-700 text-sm ml-2'>4 Stars & up</span>
-                  </div>
-
-                  <div onClick={() => setRating('3')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '3' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-500 flex'>
-                      <AiFillStar /><AiFillStar /><AiFillStar />
-                    </span>
-                    <span className='text-gray-400 ml-2'><CiStar /><CiStar /></span>
-                    <span className='text-gray-700 text-sm ml-2'>3 Stars & up</span>
-                  </div>
-
-                  <div onClick={() => setRating('2')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '2' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-500 flex'>
-                      <AiFillStar /><AiFillStar />
-                    </span>
-                    <span className='text-gray-400 ml-2'><CiStar /><CiStar /><CiStar /></span>
-                    <span className='text-gray-700 text-sm ml-2'>2 Stars & up</span>
-                  </div>
-
-                  <div onClick={() => setRating('1')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '1' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-500 flex'>
-                      <AiFillStar />
-                    </span>
-                    <span className='text-gray-400 ml-2'><CiStar /><CiStar /><CiStar /><CiStar /></span>
-                    <span className='text-gray-700 text-sm ml-2'>1 Star & up</span>
-                  </div>
-
-                  <div onClick={resetRating} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${!rating ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
+                <div className='flex flex-col gap-2'>
+                  {renderRatingFilter(5, '5 Stars', '5')}
+                  {renderRatingFilter(4, '4 Stars & up', '4')}
+                  {renderRatingFilter(3, '3 Stars & up', '3')}
+                  {renderRatingFilter(2, '2 Stars & up', '2')}
+                  {renderRatingFilter(1, '1 Star & up', '1')}
+                  
+                  <div 
+                    onClick={resetRating} 
+                    className={`flex justify-start items-center gap-1 cursor-pointer p-2 rounded ${
+                      !rating ? 'bg-orange-50' : 'hover:bg-gray-50'
+                    }`}
+                  >
                     <span className='text-gray-400 flex'>
-                      <CiStar /><CiStar /><CiStar /><CiStar /><CiStar />
+                      {[...Array(5)].map((_, idx) => (
+                        <CiStar key={idx} size={18} className="mr-0.5" />
+                      ))}
                     </span>
                     <span className='text-gray-700 text-sm ml-2'>Show all ratings</span>
                   </div>
@@ -238,13 +234,13 @@ const CategoryShop: React.FC = () => {
                                     {[...Array(5)].map((_, idx) => (
                                       <span 
                                         key={idx} 
-                                        className={`text-xs ${idx < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                                        className={`text-[10px] ${idx < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}
                                       >
                                         ★
                                       </span>
                                     ))}
                                   </div>
-                                  <span className='text-xs text-gray-500'>({product.rating})</span>
+                                  <span className='text-[10px] text-gray-500 ml-1'>({product.rating})</span>
                                 </div>
                               )}
                               
