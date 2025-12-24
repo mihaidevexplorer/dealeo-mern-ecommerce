@@ -36,10 +36,8 @@ const CategoryShop: React.FC = () => {
     parPage
   } = useHomeState();
 
-
-  const getCategories = useGetCategories();
-  const getPriceRange = usePriceRangeProducts();
-  const queryProducts = useQueryProducts();
+  const categoriesQuery = useGetCategories();
+  const priceRangeQuery = usePriceRangeProducts();
 
   const [filterOpen, setFilterOpen] = useState<boolean>(true);
   const [rating, setRating] = useState<string>('');
@@ -51,31 +49,22 @@ const CategoryShop: React.FC = () => {
     values: [priceRange.low, priceRange.high]
   });
 
-  // 1) Fetch initial (o singură dată)
-  useEffect(() => {
-    // dacă hook-urile tale sunt "fire-and-forget"
-    // și returnează void, e OK să le apelezi aici
-    getCategories?.();
-    getPriceRange?.();
- 
-  }, []);
+
+  const queryProductsParams = {
+    low: rangeState.values[0] ?? undefined,
+    high: rangeState.values[1] ?? undefined,
+    category: category || undefined,
+    rating: rating || undefined,
+    sortPrice: sortPrice || undefined,
+    pageNumber
+  };
+
+  const queryProductsResult = useQueryProducts(queryProductsParams);
 
   // 2) Când se schimbă priceRange (după fetch), sincronizăm slider-ul
   useEffect(() => {
     setRangeState({ values: [priceRange.low, priceRange.high] });
   }, [priceRange.low, priceRange.high]);
-
-  // 3) Query products când se schimbă filtrele/pagina/categoria
-  useEffect(() => {
-    queryProducts?.({
-      low: rangeState.values[0] ?? undefined,
-      high: rangeState.values[1] ?? undefined,
-      category: category || undefined,
-      rating: rating || undefined,
-      sortPrice: sortPrice || undefined,
-      pageNumber
-    });
-  }, [category, pageNumber, queryProducts, rangeState.values, rating, sortPrice]);
 
   const resetRating = (): void => setRating('');
 
