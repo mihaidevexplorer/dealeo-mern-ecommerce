@@ -26,7 +26,6 @@ const CategoryShop: React.FC = () => {
   
   const {
     products,
-    categories: categorys,
     priceRange,
     latestProducts,
     totalProduct,
@@ -158,7 +157,7 @@ const CategoryShop: React.FC = () => {
                   </div>
 
                   <div onClick={() => setRating('2')} className={`flex justify-start items-center gap-2 text-xl cursor-pointer p-2 rounded ${rating === '2' ? 'bg-orange-50' : 'hover:bg-gray-50'}`}>
-                    <span className='text-orange-50 flex'>
+                    <span className='text-orange-500 flex'>
                       <AiFillStar /><AiFillStar />
                     </span>
                     <span className='text-gray-400 ml-2'><CiStar /><CiStar /><CiStar /></span>
