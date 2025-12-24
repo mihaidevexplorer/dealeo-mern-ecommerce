@@ -36,7 +36,7 @@ const CategoryShop: React.FC = () => {
     parPage
   } = useHomeState();
 
-  // Custom hooks (presupunem că declanșează fetch / dispatch)
+
   const getCategories = useGetCategories();
   const getPriceRange = usePriceRangeProducts();
   const queryProducts = useQueryProducts();
@@ -57,7 +57,7 @@ const CategoryShop: React.FC = () => {
     // și returnează void, e OK să le apelezi aici
     getCategories?.();
     getPriceRange?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, []);
 
   // 2) Când se schimbă priceRange (după fetch), sincronizăm slider-ul
