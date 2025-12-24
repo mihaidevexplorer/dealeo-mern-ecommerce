@@ -10,7 +10,7 @@ import type { Swiper as SwiperType } from 'swiper';
 
 interface ProductsProps {
   title: string;
-  products: Product[] | Product[][]; // Acceptă ambele tipuri
+  products: Product[] | Product[][];
   showHotBadge?: boolean;
   isSlider?: boolean;
 }
