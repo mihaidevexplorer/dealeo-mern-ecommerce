@@ -1,4 +1,3 @@
-// src/components/products/Products.tsx
 //src\components\products\Products.tsx
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
