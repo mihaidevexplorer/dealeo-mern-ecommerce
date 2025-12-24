@@ -1,4 +1,5 @@
 //src/pages/Home.tsx
+// src/pages/Home.tsx
 import React, { useMemo } from "react";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
@@ -28,17 +29,51 @@ const Home: React.FC = () => {
     return chunks;
   };
 
+  // Baza (dacă store-ul e încă loading, base devine [])
   const base = useMemo(() => safe(products), [products]);
 
-  const latestFinal = safe(latestProducts).length ? safe(latestProducts) : base.slice(0, 9);
+  // Fallback-uri calculate din base (ca să nu fie goale cele 3 secțiuni)
+  const latestFallback = useMemo(() => {
+    const list = [...base];
 
-  const topRatedFinal = safe(topRatedProducts).length
-    ? safe(topRatedProducts)
-    : [...base].sort((a: any, b: any) => (Number(b.rating) || 0) - (Number(a.rating) || 0)).slice(0, 9);
+    if (list.length && (list[0] as any)?.createdAt) {
+      list.sort(
+        (a: any, b: any) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      return list.slice(0, 9);
+    }
 
-  const discountFinal = safe(discountProducts).length
-    ? safe(discountProducts)
-    : (base.filter((p: any) => Number(p.discount) > 0).slice(0, 9) || base.slice(0, 9));
+    if (list.length && (list[0] as any)?._id) {
+      // Mongo _id sort (aprox newest-first)
+      list.sort((a: any, b: any) => String(b._id).localeCompare(String(a._id)));
+      return list.slice(0, 9);
+    }
+
+    return list.slice(0, 9);
+  }, [base]);
+
+  const topRatedFallback = useMemo(() => {
+    return [...base]
+      .sort((a: any, b: any) => (Number(b.rating) || 0) - (Number(a.rating) || 0))
+      .slice(0, 9);
+  }, [base]);
+
+  const discountFallback = useMemo(() => {
+    const discounted = base.filter((p: any) => Number(p.discount) > 0).slice(0, 9);
+    return discounted.length > 0 ? discounted : base.slice(0, 9);
+  }, [base]);
+
+  // Dacă store-ul îți dă listele, le folosim; dacă nu, folosim fallback
+  const latestFinal = safe(latestProducts).length > 0 ? safe(latestProducts) : latestFallback;
+  const topRatedFinal = safe(topRatedProducts).length > 0 ? safe(topRatedProducts) : topRatedFallback;
+  const discountFinal = safe(discountProducts).length > 0 ? safe(discountProducts) : discountFallback;
+
+  // Pentru FeaturedProducts (grid mare) e util să treacă produse “decent” complete
+  const featuredFinal = useMemo(() => {
+    const withImage = base.filter((p: any) => Array.isArray(p.images) && p.images[0]);
+    return withImage.length > 0 ? withImage : base;
+  }, [base]);
 
   return (
     <div className="w-full">
@@ -47,7 +82,7 @@ const Home: React.FC = () => {
       <Categorys />
 
       <div className="py-[45px]">
-        <FeatureProducts products={base} />
+        <FeatureProducts products={featuredFinal} />
       </div>
 
       <div className="py-10">
