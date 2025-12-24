@@ -10,12 +10,12 @@ import { useGetProducts, useGetCategories, useGetBanners } from '../hooks/useHom
 import { useHomeStore } from '../store/useHomeStore';
 
 const Home: React.FC = () => {
-    // Apelează hook-urile la nivelul componentului
+   
     useGetProducts();
     useGetCategories();
     useGetBanners();
 
-    // Obține datele din store
+    
     const {
         products,
         latestProducts,
