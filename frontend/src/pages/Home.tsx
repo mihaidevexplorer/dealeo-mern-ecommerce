@@ -1,4 +1,3 @@
-//src/pages/Home.tsx
 // src/pages/Home.tsx
 import React, { useMemo } from "react";
 import Header from "../components/Header";
