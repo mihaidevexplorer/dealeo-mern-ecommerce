@@ -287,7 +287,7 @@ class ProductController {
           fetch_format: 'auto'
         });
 
-        if (!result || !result.url) {
+        if (!result ||  !result.secure_url) {
           responseReturn(res, 500, { error: 'Image upload failed' });
           return;
         }
@@ -306,7 +306,7 @@ class ProductController {
           return;
         }
         
-        images[imageIndex] = result.url;
+        images[imageIndex] = result.secure_url;
         await productModel.findByIdAndUpdate(productId, { images });
 
         const updatedProduct = await productModel.findById(productId) as any;
