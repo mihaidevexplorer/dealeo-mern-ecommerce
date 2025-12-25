@@ -379,13 +379,13 @@ class AuthControllers {
           ]
         });
 
-        if (!result || !result.url) {
+        if (!result || !result.secure_url) {
           responseReturn(res, 500, { error: 'Image upload failed' });
           return;
         }
 
         await sellerModel.findByIdAndUpdate(id, {
-          image: result.url
+          image: result.secure_url
         });
 
         const userInfo = await sellerModel.findById(id) as SellerDocument | null;
