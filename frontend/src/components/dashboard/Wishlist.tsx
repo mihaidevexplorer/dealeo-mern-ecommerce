@@ -227,7 +227,9 @@ const Wishlist: React.FC = () => {
 
                 {/* Rating */}
                 <div className='flex items-center gap-1 md:gap-0.5 sm:gap-0.5 mb-2 md:mb-1.5 sm:mb-1'>
-                  <Rating ratings={product.rating} size="sm" />
+                  <div className='scale-90 md:scale-75 sm:scale-75 xs:scale-[0.7] origin-left'>
+                    <Rating ratings={product.rating} />
+                  </div>
                   <span className='text-xs md:text-[10px] sm:text-[10px] xs:text-[9px] text-gray-500'>({product.rating})</span>
                 </div>
 
