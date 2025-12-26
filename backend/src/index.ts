@@ -53,6 +53,12 @@ app.use(
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+// Health check (pentru Render keep-alive)
+app.get('/health', (req: Request, res: Response): void => {
+    res.status(200).send('OK');
+});
+
+
 // Configurare Socket.IO
 const io = new SocketIOServer(server, {
   cors: {
