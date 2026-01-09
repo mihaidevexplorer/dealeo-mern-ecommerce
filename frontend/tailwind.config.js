@@ -12,7 +12,7 @@ export default {
         roboto: ['Roboto', 'sans-serif'],
     },},
     screens: {
-      'xl': {'max': '1200px'},
+      'xl': {'max': '2160px'},
       'lg': {'max': '1080px'},
       'md-lg': {'max': '991px'},
       'md': {'max': '768px'},
