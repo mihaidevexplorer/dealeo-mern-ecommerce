@@ -59,17 +59,6 @@ The application is deployed on Vercel and can be tested using the links below.
   https://dealeo-frontend.vercel.app/
 ---
 
-  ## ⚠️ Local Development
-
-Local setup is not currently supported.
-
-The project has been configured specifically for cloud deployment on Vercel
-(environment variables, routing, and API configuration).
-
-For review and testing purposes, please use the live demo links above.
-
-
-
 # Screenshots
 
 <div align="center"> <table> <tr> <td><img src="https://i.ibb.co/R4vGjKD0/image.png" width="300"/></td> <td><img src="https://i.ibb.co/KcC5n3J8/image.png" width="300"/></td> <td><img src="https://i.ibb.co/jZsRZ5My/image.png" width="300"/></td> </tr> <tr> <td><img src="https://i.ibb.co/9m7VGkcN/image.png" width="300"/></td> <td><img src="https://i.ibb.co/v4Vx1FdB/image.png" width="300"/></td> <td><img src="https://i.ibb.co/Lz03YdbD/image.png" width="300"/></td> </tr> <tr> <td colspan="3" align="center"><img src="https://i.ibb.co/bgxFDDPr/image.png" width="300"/></td> </tr> </table> </div>
