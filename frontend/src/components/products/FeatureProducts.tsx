@@ -1,4 +1,5 @@
 // src/components/products/FeatureProducts.tsx
+import React from "react";
 import { FaEye, FaRegHeart } from "react-icons/fa";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { AiFillStar } from "react-icons/ai";
@@ -45,10 +46,13 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
 
   return (
     <div className="w-full mx-auto px-8 xl:px-6 lg:px-5 md-lg:px-4 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 xl:py-9 lg:py-9 md:py-8 sm:py-8 xs:py-7 2xs:py-6">
-      <div className="mx-auto w-full max-w-7xl">
+      {/* IMPORTANT for your max-width breakpoints:
+          - Base (no prefix) = very large screens (4K)
+          - xl/lg/... apply to smaller screens */}
+      <div className="mx-auto w-full max-w-[1600px] xl:max-w-7xl">
         {/* Header */}
         <div className="text-center mb-10 xl:mb-9 md:mb-8 sm:mb-7 xs:mb-6 2xs:mb-6 px-2">
-          <h2 className="text-4xl xl:text-3xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl xl:text-4xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
             Featured Products
           </h2>
 
@@ -63,8 +67,8 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
           </div>
         </div>
 
-        {/* Products Grid: 4 / 4 / 3 / 3 / 2 / 2 / 1 / 1 */}
-        <div className="grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
+    
+        <div className="grid grid-cols-6 xl:grid-cols-4 lg:grid-cols-3 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-5 xl:gap-6 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
           {products.map((p) => (
             <div
               key={p._id}
@@ -85,7 +89,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                 <button
                   onClick={() => handleAddToWishlist(p._id)}
                   disabled={addToWishlistMutation.isPending}
-                  className="absolute top-2 right-2 xs:top-1.5 xs:right-1.5 z-10 p-2 xs:p-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white hover:shadow-lg transition-all duration-300 group/wishlist"
+                  className="absolute top-2 right-2 xs:top-1.5 xs:right-1.5 z-10 p-2 xs:p-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white hover:shadow-lg transition-all duration-300 group/wishlist disabled:opacity-60"
                   title="Add to wishlist"
                 >
                   <FaRegHeart
@@ -98,7 +102,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                   <img
                     src={p.images?.[0]}
                     alt={p.name}
-                    className="w-full h-full object-contain p-5 xl:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3 group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-contain p-4 xl:p-5 md:p-3 sm:p-3 xs:p-3 2xs:p-3 group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
                 </Link>
@@ -138,7 +142,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
               </div>
 
               {/* Product Details */}
-              <div className="p-5 xl:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3">
+              <div className="p-4 xl:p-5 md:p-3 sm:p-3 xs:p-3 2xs:p-3">
                 <Link to={`/product/details/${p.slug}`} className="block mb-2">
                   <h3 className="text-[15px] xl:text-sm md:text-[13px] xs:text-[13px] 2xs:text-[13px] font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition-colors min-h-[2.5rem] sm:min-h-[2.3rem] xs:min-h-[2.2rem] 2xs:min-h-0">
                     {p.name}
@@ -186,7 +190,9 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                     ) : (
                       <div className="flex items-center gap-1">
                         <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 bg-red-500 rounded-full" />
-                        <span className="text-xs xs:text-[11px] text-red-600 font-medium">Out of Stock</span>
+                        <span className="text-xs xs:text-[11px] text-red-600 font-medium">
+                          Out of Stock
+                        </span>
                       </div>
                     )}
                   </div>
