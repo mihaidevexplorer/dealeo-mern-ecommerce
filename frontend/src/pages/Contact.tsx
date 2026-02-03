@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa";
+import React, { useMemo, useState } from "react";
 import { EnvelopeIcon, PhoneIcon, MapPinIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaGithub } from "react-icons/fa";
 
 type FormState = {
   name: string;
@@ -20,20 +20,36 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  const onChange = (key: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setForm((p) => ({ ...p, [key]: e.target.value }));
-    setStatus("idle");
-  };
+  const mapSrc = useMemo(
+    () => "https://www.google.com/maps?q=Chisinau%20Moldova&output=embed",
+    []
+  );
+
+  const onChange =
+    (key: keyof FormState) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm((p) => ({ ...p, [key]: e.target.value }));
+      setStatus("idle");
+    };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // TODO: leagă-l de backend (ex: POST /api/contact)
     try {
       setIsSubmitting(true);
       setStatus("idle");
 
-      await new Promise((r) => setTimeout(r, 600)); // mock
+      // If you use Vite proxy -> /api/contact
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
 
       setStatus("success");
       setForm({ name: "", email: "", subject: "", message: "" });
@@ -45,194 +61,167 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-gray-50">
-      {/* Hero */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600">
+    <div className="min-h-screen bg-gray-50">
+      {/* Header / Hero */}
+      <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Contact</h1>
-          <p className="text-white/90 mt-2 max-w-2xl">
-            Trimite-ne un mesaj și revenim cât mai repede. Suport 24/7 pentru comenzi și întrebări.
-          </p>
+          <div className="flex flex-col gap-3">
+            <span className="inline-flex w-fit items-center rounded-full bg-orange-50 text-orange-700 px-3 py-1 text-xs font-semibold">
+              Contact Support
+            </span>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
+              Get in touch
+            </h1>
+            <p className="text-gray-600 max-w-2xl">
+              Have a question about your order or products? Send us a message and we’ll get back to you as soon as possible.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 lg:px-6 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left: info cards */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-semibold text-gray-800">Date de contact</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left: Contact info */}
+          <aside className="lg:col-span-5 space-y-6">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-gray-900">Contact details</h2>
+              <p className="text-sm text-gray-600 mt-2">
+                Reach us anytime — we typically respond within a few hours.
+              </p>
 
-              <div className="mt-5 space-y-4">
-                <div className="flex items-start gap-3">
-                  <EnvelopeIcon className="w-6 h-6 text-orange-500" />
-                  <div>
-                    <p className="text-sm text-gray-500">Email</p>
-                    <p className="text-gray-800 font-medium">support@gmail.com</p>
-                  </div>
-                </div>
+              <div className="mt-6 space-y-4">
+                <InfoRow icon={<EnvelopeIcon className="w-5 h-5" />} label="Email" value="support@gmail.com" />
+                <InfoRow icon={<PhoneIcon className="w-5 h-5" />} label="Phone" value="+ (123) 3243 343" />
+                <InfoRow icon={<MapPinIcon className="w-5 h-5" />} label="Location" value="Chișinău, Moldova" />
+                <InfoRow icon={<ClockIcon className="w-5 h-5" />} label="Hours" value="24/7 Support" />
+              </div>
 
-                <div className="flex items-start gap-3">
-                  <PhoneIcon className="w-6 h-6 text-orange-500" />
-                  <div>
-                    <p className="text-sm text-gray-500">Telefon</p>
-                    <p className="text-gray-800 font-medium">+ (123) 3243 343</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <MapPinIcon className="w-6 h-6 text-orange-500" />
-                  <div>
-                    <p className="text-sm text-gray-500">Adresă</p>
-                    <p className="text-gray-800 font-medium">Chișinău, Moldova</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <ClockIcon className="w-6 h-6 text-orange-500" />
-                  <div>
-                    <p className="text-sm text-gray-500">Program</p>
-                    <p className="text-gray-800 font-medium">24/7 Support</p>
-                  </div>
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <h3 className="text-sm font-semibold text-gray-900">Social</h3>
+                <div className="mt-3 flex items-center gap-3">
+                  <SocialBtn aria="Facebook"><FaFacebookF /></SocialBtn>
+                  <SocialBtn aria="Twitter"><FaTwitter /></SocialBtn>
+                  <SocialBtn aria="LinkedIn"><FaLinkedinIn /></SocialBtn>
+                  <SocialBtn aria="GitHub"><FaGithub /></SocialBtn>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-semibold text-gray-800">Social</h2>
-              <div className="mt-4 flex items-center gap-3">
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 transition-colors"
-                  aria-label="Facebook"
-                >
-                  <FaFacebookF className="text-gray-700" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 transition-colors"
-                  aria-label="Twitter"
-                >
-                  <FaTwitter className="text-gray-700" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <FaLinkedinIn className="text-gray-700" />
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-orange-100 transition-colors"
-                  aria-label="GitHub"
-                >
-                  <FaGithub className="text-gray-700" />
-                </a>
+            {/* Map */}
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                <h2 className="text-lg font-semibold text-gray-900">Find us</h2>
+                <span className="text-xs text-gray-500">Google Maps</span>
               </div>
-            </div>
-
-            {/* Map embed (optional) */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-4 border-b border-gray-100">
-                <h2 className="text-lg font-semibold text-gray-800">Locație</h2>
-              </div>
-              <div className="w-full h-[260px] bg-gray-100">
+              <div className="h-[260px] bg-gray-100">
                 <iframe
                   title="map"
                   className="w-full h-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  src="https://www.google.com/maps?q=Chisinau%20Moldova&output=embed"
+                  src={mapSrc}
                 />
               </div>
             </div>
-          </div>
+          </aside>
 
-          {/* Right: form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8">
-              <h2 className="text-xl font-semibold text-gray-800">Trimite un mesaj</h2>
-              <p className="text-gray-500 mt-2">
-                Completează formularul și te contactăm în cel mai scurt timp.
+          {/* Right: Form */}
+          <section className="lg:col-span-7">
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+              <h2 className="text-xl font-semibold text-gray-900">Send a message</h2>
+              <p className="text-sm text-gray-600 mt-2">
+                Fill in the form below and we’ll contact you shortly.
               </p>
 
-              <form onSubmit={onSubmit} className="mt-6 space-y-5">
+              <form onSubmit={onSubmit} className="mt-8 space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Nume</label>
+                  <Field label="Name">
                     <input
                       value={form.name}
                       onChange={onChange("name")}
                       type="text"
                       required
-                      className="mt-2 w-full h-[46px] px-4 rounded-lg border border-gray-200 bg-gray-50 outline-none focus:border-orange-400 transition-colors"
-                      placeholder="Numele tău"
+                      placeholder="Your name"
+                      className="w-full h-[46px] px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-orange-400 transition"
                     />
-                  </div>
+                  </Field>
 
-                  <div>
-                    <label className="text-sm font-medium text-gray-700">Email</label>
+                  <Field label="Email">
                     <input
                       value={form.email}
                       onChange={onChange("email")}
                       type="email"
                       required
-                      className="mt-2 w-full h-[46px] px-4 rounded-lg border border-gray-200 bg-gray-50 outline-none focus:border-orange-400 transition-colors"
-                      placeholder="email@exemplu.com"
+                      placeholder="email@example.com"
+                      className="w-full h-[46px] px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-orange-400 transition"
                     />
-                  </div>
+                  </Field>
                 </div>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Subiect</label>
+                <Field label="Subject">
                   <input
                     value={form.subject}
                     onChange={onChange("subject")}
                     type="text"
                     required
-                    className="mt-2 w-full h-[46px] px-4 rounded-lg border border-gray-200 bg-gray-50 outline-none focus:border-orange-400 transition-colors"
-                    placeholder="Despre ce este mesajul?"
+                    placeholder="What is this about?"
+                    className="w-full h-[46px] px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-orange-400 transition"
                   />
-                </div>
+                </Field>
 
-                <div>
-                  <label className="text-sm font-medium text-gray-700">Mesaj</label>
+                <Field label="Message">
                   <textarea
                     value={form.message}
                     onChange={onChange("message")}
                     required
                     rows={6}
-                    className="mt-2 w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 outline-none focus:border-orange-400 transition-colors resize-none"
-                    placeholder="Scrie mesajul aici..."
+                    placeholder="Write your message..."
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-orange-400 transition resize-none"
                   />
-                </div>
+                </Field>
 
                 {status !== "idle" && (
                   <div
-                    className={`rounded-lg p-3 text-sm ${
+                    className={`rounded-xl px-4 py-3 text-sm border ${
                       status === "success"
-                        ? "bg-green-50 text-green-700 border border-green-200"
-                        : "bg-red-50 text-red-700 border border-red-200"
+                        ? "bg-green-50 text-green-700 border-green-200"
+                        : "bg-red-50 text-red-700 border-red-200"
                     }`}
                   >
                     {status === "success"
-                      ? "Mesajul a fost trimis cu succes."
-                      : "A apărut o eroare. Încearcă din nou."}
+                      ? "Message sent successfully. We’ll get back to you soon."
+                      : "Something went wrong. Please try again."}
                   </div>
                 )}
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full md:w-auto h-[46px] px-8 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold uppercase text-sm hover:from-orange-600 hover:to-orange-700 transition-all disabled:opacity-60"
-                >
-                  {isSubmitting ? "Sending..." : "Send message"}
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
+                  <p className="text-xs text-gray-500">
+                    By sending this message you agree to be contacted about your request.
+                  </p>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="h-[46px] px-7 rounded-xl font-semibold text-sm text-white
+                               bg-gradient-to-r from-orange-500 to-orange-600
+                               hover:from-orange-600 hover:to-orange-700
+                               shadow-sm hover:shadow-md transition
+                               disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? "Sending..." : "Send message"}
+                  </button>
+                </div>
               </form>
             </div>
-          </div>
+
+            {/* Small helper strip */}
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <MiniCard title="Fast support" desc="Quick answers for orders & shipping." />
+              <MiniCard title="Secure help" desc="We never ask for passwords." />
+              <MiniCard title="Order tracking" desc="Include your order ID if possible." />
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -241,3 +230,57 @@ const Contact: React.FC = () => {
 
 export default Contact;
 
+/* ---------- small UI helpers ---------- */
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-800">{label}</label>
+      <div className="mt-2">{children}</div>
+    </div>
+  );
+}
+
+function InfoRow({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
+        {icon}
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-sm font-semibold text-gray-900 break-words">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function SocialBtn({ children, aria }: { children: React.ReactNode; aria: string }) {
+  return (
+    <a
+      href="#"
+      aria-label={aria}
+      className="w-10 h-10 rounded-xl bg-gray-100 text-gray-700 flex items-center justify-center
+                 hover:bg-orange-50 hover:text-orange-600 transition"
+    >
+      {children}
+    </a>
+  );
+}
+
+function MiniCard({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+      <p className="text-sm font-semibold text-gray-900">{title}</p>
+      <p className="text-sm text-gray-600 mt-1">{desc}</p>
+    </div>
+  );
+}
