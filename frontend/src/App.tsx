@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 const Home = React.lazy(() => import('./pages/Home'));
 const Contact = React.lazy(() => import('./pages/Contact'));
 const About = React.lazy(() => import("./pages/About"));
+const Blog = React.lazy(() => import("./pages/Blog"));
 const Shops = React.lazy(() => import('./pages/Shops'));
 const Card = React.lazy(() => import('./pages/Card'));
 const Shipping = React.lazy(() => import('./pages/Shipping'));
@@ -98,6 +99,7 @@ const AppContent: React.FC = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/contact' element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path='/register' element={<Register />} />
         <Route path='/shops' element={<Shops />} />
         <Route path='/card' element={<Card />} />
