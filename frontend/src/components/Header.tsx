@@ -232,7 +232,7 @@ const Header: React.FC = () => {
               <Link to='#' className={`py-3 block transition-colors ${pathname === '/about' ? 'text-orange-500' : 'text-gray-700 hover:text-orange-500'}`}>ABOUT US</Link>
             </li>
             <li className='w-full'>
-              <Link to='#' className={`py-3 block transition-colors ${pathname === '/contact' ? 'text-orange-500' : 'text-gray-700 hover:text-orange-500'}`}>CONTACT</Link>
+              <Link to='/contact' className={`py-3 block transition-colors ${pathname === '/contact' ? 'text-orange-500' : 'text-gray-700 hover:text-orange-500'}`}>CONTACT</Link>
             </li>
           </ul>
 
