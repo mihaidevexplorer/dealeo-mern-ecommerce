@@ -177,3 +177,123 @@ const Contact: React.FC = () => {
                     required
                     placeholder="What is this about?"
                     className="w-full h-[46px] px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none
+                               focus:bg-white focus:border-orange-400 transition"
+                  />
+                </Field>
+
+                <Field label="Message">
+                  <textarea
+                    value={form.message}
+                    onChange={onChange("message")}
+                    required
+                    rows={6}
+                    placeholder="Write your message..."
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 outline-none
+                               focus:bg-white focus:border-orange-400 transition resize-none"
+                  />
+                </Field>
+
+                {status !== "idle" && (
+                  <div
+                    className={`rounded-xl px-4 py-3 text-sm border ${
+                      status === "success"
+                        ? "bg-green-50 text-green-700 border-green-200"
+                        : "bg-red-50 text-red-700 border-red-200"
+                    }`}
+                  >
+                    {status === "success"
+                      ? "Message sent successfully. We’ll get back to you soon."
+                      : "Something went wrong. Please try again."}
+                  </div>
+                )}
+
+                {/* Desktop: row, small: column */}
+                <div className="flex items-center justify-between gap-4 sm:flex-col sm:items-stretch">
+                  <p className="text-xs text-gray-500 sm:order-2">
+                    By sending this message you agree to be contacted about your request.
+                  </p>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="h-[46px] px-7 rounded-xl font-semibold text-sm text-white
+                               bg-gradient-to-r from-orange-500 to-orange-600
+                               hover:from-orange-600 hover:to-orange-700
+                               shadow-sm hover:shadow-md transition
+                               disabled:opacity-60 disabled:cursor-not-allowed sm:w-full"
+                  >
+                    {isSubmitting ? "Sending..." : "Send message"}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Mini cards: desktop 3, md-lg -> 1 */}
+            <div className="mt-6 grid grid-cols-3 gap-4 md-lg:grid-cols-1">
+              <MiniCard title="Fast support" desc="Quick answers for orders & shipping." />
+              <MiniCard title="Secure help" desc="We never ask for passwords." />
+              <MiniCard title="Order tracking" desc="Include your order ID if possible." />
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Contact;
+
+/* ---------- helpers ---------- */
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-gray-800">{label}</label>
+      <div className="mt-2">{children}</div>
+    </div>
+  );
+}
+
+function InfoRow({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-start gap-3">
+      <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+        {icon}
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs text-gray-500">{label}</p>
+        <p className="text-sm font-semibold text-gray-900 break-words">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function SocialBtn({ children, aria }: { children: React.ReactNode; aria: string }) {
+  return (
+    <a
+      href="#"
+      aria-label={aria}
+      className="w-10 h-10 rounded-xl bg-gray-100 text-gray-700 flex items-center justify-center
+                 hover:bg-orange-50 hover:text-orange-600 transition"
+    >
+      {children}
+    </a>
+  );
+}
+
+function MiniCard({ title, desc }: { title: string; desc: string }) {
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+      <p className="text-sm font-semibold text-gray-900">{title}</p>
+      <p className="text-sm text-gray-600 mt-1">{desc}</p>
+    </div>
+  );
+}
