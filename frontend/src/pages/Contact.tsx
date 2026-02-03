@@ -23,9 +23,9 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
-  // Romania (Bucharest) - change to your city if you want
+ 
   const mapSrc = useMemo(
-    () => "https://www.google.com/maps?q=Bucharest%20Romania&output=embed",
+    () => "https://www.google.com/maps?q=Chicago%20usa&output=embed",
     []
   );
 
@@ -98,7 +98,7 @@ const Contact: React.FC = () => {
               <div className="mt-6 space-y-4">
                 <InfoRow icon={<EnvelopeIcon className="w-5 h-5" />} label="Email" value="support@gmail.com" />
                 <InfoRow icon={<PhoneIcon className="w-5 h-5" />} label="Phone" value="+ (123) 3243 343" />
-                <InfoRow icon={<MapPinIcon className="w-5 h-5" />} label="Location" value="Bucharest, Romania" />
+                <InfoRow icon={<MapPinIcon className="w-5 h-5" />} label="Location" value="Chicago, USA" />
                 <InfoRow icon={<ClockIcon className="w-5 h-5" />} label="Hours" value="24/7 Support" />
               </div>
 
