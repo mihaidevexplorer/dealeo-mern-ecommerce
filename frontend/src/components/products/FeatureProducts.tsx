@@ -14,11 +14,12 @@ interface FeatureProductsProps {
 }
 
 /**
- * TV-safe notes:
- * - Uses auto-fit + minmax to avoid fractional-column issues on WebOS/TV browsers.
- * - Uses min-w-0 and consistent internal sizing to prevent one column "stretching".
- * - Removes padding-driven image sizing; uses centered max-w/max-h so every card aligns.
- * - Avoids too-wide layout with a sensible max container width.
+ * Requirement: on VERY large screens (TV/4K), keep ALWAYS 4 columns.
+ * Fix for TV "column 4 looks wrong":
+ * - Keep grid fixed to 4 columns for large screens (base + xl + lg = 4)
+ * - Constrain container width so cards don't stretch weirdly on huge viewports
+ * - Add w-full + min-w-0 to prevent one column from expanding
+ * - Normalize image box (centered) so image aspect doesn't affect layout
  */
 const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
   const navigate = useNavigate();
@@ -52,14 +53,12 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
   };
 
   return (
-    <section className="w-full mx-auto px-8 xl:px-6 lg:px-5 md-lg:px-4 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 xl:py-9 lg:py-9 md:py-8 sm:py-8 xs:py-7 2xs:py-6">
-      {/* Container:
-          - On very large screens (4K) we allow wider than 7xl, but still bounded (prevents "huge gaps").
-          - On <=2160px it becomes 7xl (your xl is max-width). */}
-      <div className="mx-auto w-full max-w-[1680px] xl:max-w-7xl">
+    <div className="w-full mx-auto px-8 xl:px-6 lg:px-5 md-lg:px-4 md:px-4 sm:px-3 xs:px-2 2xs:px-2 py-10 xl:py-9 lg:py-9 md:py-8 sm:py-8 xs:py-7 2xs:py-6">
+      {/* IMPORTANT: cap width so on TV the 4 columns don't become huge / misaligned */}
+      <div className="mx-auto w-full max-w-[1400px] xl:max-w-[1280px] md-lg:max-w-full">
         {/* Header */}
         <div className="text-center mb-10 xl:mb-9 md:mb-8 sm:mb-7 xs:mb-6 2xs:mb-6 px-2">
-          <h2 className="text-3xl xl:text-4xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl xl:text-3xl lg:text-3xl md-lg:text-2xl md:text-2xl sm:text-xl xs:text-lg 2xs:text-[17px] font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
             Featured Products
           </h2>
 
@@ -74,17 +73,9 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
           </div>
         </div>
 
-        {/* TV-safe grid:
-            auto-fit with minmax prevents the "column 4 stretching" issue on TV browsers.
-            Adjust 260px if you want bigger/smaller cards.
-        */}
-        <div
-          className="
-            grid
-            [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]
-            gap-5 xl:gap-6 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3
-          "
-        >
+        {/* Grid: ALWAYS 4 columns on large screens.
+            Still collapses on smaller screens (md and below) */}
+        <div className="grid grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md-lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 2xs:grid-cols-1 gap-6 xl:gap-5 md:gap-4 sm:gap-4 xs:gap-3 2xs:gap-3">
           {products.map((p) => {
             const hasDiscount = (p.discount ?? 0) > 0;
             const outOfStock = p.stock === 0;
@@ -96,17 +87,10 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
             return (
               <div
                 key={p._id}
-                className="
-                  group w-full min-w-0
-                  bg-white rounded-xl xs:rounded-lg
-                  overflow-hidden
-                  shadow-sm hover:shadow-xl
-                  transition-all duration-300
-                  hover:-translate-y-1 xs:hover:-translate-y-0.5
-                "
+                className="group w-full min-w-0 relative bg-white rounded-xl xs:rounded-lg 2xs:rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 xs:hover:-translate-y-0.5"
               >
-                {/* Image area: consistent sizing */}
-                <div className="relative w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100">
+                {/* Image */}
+                <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                   {/* Discount Badge */}
                   {hasDiscount && (
                     <div className="absolute top-2 left-2 xs:top-1.5 xs:left-1.5 z-10">
@@ -120,22 +104,15 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                   <button
                     onClick={() => handleAddToWishlist(p._id)}
                     disabled={addToWishlistMutation.isPending}
-                    className="
-                      absolute top-2 right-2 xs:top-1.5 xs:right-1.5 z-10
-                      p-2 xs:p-1.5
-                      bg-white/85 backdrop-blur-sm rounded-full
-                      shadow-md hover:bg-white hover:shadow-lg
-                      transition-all duration-300
-                      disabled:opacity-60
-                    "
+                    className="absolute top-2 right-2 xs:top-1.5 xs:right-1.5 z-10 p-2 xs:p-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:bg-white hover:shadow-lg transition-all duration-300 disabled:opacity-60"
                     title="Add to wishlist"
                     aria-label="Add to wishlist"
                   >
                     <FaRegHeart className="text-gray-600 hover:text-red-500 transition-colors" size={16} />
                   </button>
 
-                  {/* Product image - centered, fixed max size */}
                   <Link to={`/product/details/${p.slug}`} className="block w-full h-full">
+                    {/* TV-safe: center image with fixed max size (prevents layout weirdness) */}
                     <div className="w-full h-full flex items-center justify-center">
                       <img
                         src={p.images?.[0]}
@@ -146,8 +123,8 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                     </div>
                   </Link>
 
-                  {/* Quick actions (bottom overlay) */}
-                  <div className="absolute inset-x-0 bottom-0 p-3 xs:p-2 bg-gradient-to-t from-black/60 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 xs:opacity-100 xs:translate-y-0">
+                  {/* Quick Actions */}
+                  <div className="absolute inset-x-0 bottom-0 p-3 xs:p-2 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 2xs:opacity-100 2xs:translate-y-0">
                     <div className="flex justify-center gap-2 xs:gap-1.5 flex-wrap">
                       <Link
                         to={`/product/details/${p.slug}`}
@@ -181,23 +158,22 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                 </div>
 
                 {/* Details */}
-                <div className="p-4 xl:p-5 md:p-3 sm:p-3 xs:p-3 2xs:p-3">
-                  <Link to={`/product/details/${p.slug}`} className="block">
+                <div className="p-5 xl:p-4 md:p-3 sm:p-3 xs:p-3 2xs:p-3">
+                  <Link to={`/product/details/${p.slug}`} className="block mb-2">
                     <h3 className="text-[15px] xl:text-sm md:text-[13px] xs:text-[13px] font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition-colors min-h-[2.5rem] sm:min-h-[2.3rem] xs:min-h-[2.2rem] 2xs:min-h-0">
                       {p.name}
                     </h3>
                   </Link>
 
-                  <div className="flex items-center gap-1 mt-2">
+                  <div className="flex items-center gap-1 mb-2">
                     <Rating ratings={p.rating} />
                     <span className="text-xs xs:text-[11px] text-gray-500">({p.rating})</span>
                   </div>
 
-                  <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+                  <div className="flex items-baseline gap-2 flex-wrap">
                     <span className="text-lg xl:text-base xs:text-[15px] font-bold text-gray-900">
                       ${finalPrice}
                     </span>
-
                     {hasDiscount && (
                       <span className="text-xs xs:text-[11px] text-gray-400 line-through">
                         ${p.price.toFixed(2)}
@@ -225,7 +201,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 xs:w-1.5 xs:h-1.5 bg-red-500 rounded-full" />
                           <span className="text-xs xs:text-[11px] text-red-600 font-medium">
-                            Out of Stock
+                           /flutter Out of Stock
                           </span>
                         </div>
                       )}
@@ -255,7 +231,7 @@ const FeatureProducts: React.FC<FeatureProductsProps> = ({ products }) => {
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
