@@ -1,7 +1,6 @@
 // src\index.ts
 import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { dbConnect } from './utils/db';
 import { Server as SocketIOServer, Socket } from 'socket.io';
@@ -50,7 +49,7 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 
 // Health check (pentru Render keep-alive)
