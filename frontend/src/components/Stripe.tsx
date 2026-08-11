@@ -7,9 +7,7 @@ import api from '../api/api';
 import CheckoutForm from './CheckoutForm';
 
 // Load Stripe
-const stripePromise = loadStripe(
-  'pk_test_51Q8QW6RoWms6BcWGoEL8utd5m6uQsqeyhaB1sIIrwneJiYDsIrCeBVx0cJCQqc5ZEKT2Na7HFFA0yj6UWEUGZfdN00DbPnH5zh'
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 interface StripeProps {
   price: number;

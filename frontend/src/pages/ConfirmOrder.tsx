@@ -10,7 +10,7 @@ import api from '../api/api';
 
 const load = async (): Promise<Stripe | null> => {
   return await loadStripe(
-    'pk_test_51Q8QW6RoWms6BcWGoEL8utd5m6uQsqeyhaB1sIIrwneJiYDsIrCeBVx0cJCQqc5ZEKT2Na7HFFA0yj6UWEUGZfdN00DbPnH5zh'
+    import.meta.env.VITE_STRIPE_PUBLIC_KEY
   );
 };
 
