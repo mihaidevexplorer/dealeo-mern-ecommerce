@@ -1,7 +1,7 @@
 // controllers/dashboard/productController.ts
 import { Request, Response } from 'express';
 import { Types } from 'mongoose';
-import { IncomingForm } from 'formidable'; // Schimbă importul aici
+import { IncomingForm } from 'formidable';
 import { v2 as cloudinary } from 'cloudinary';
 import { responseReturn } from '../../utils/response';
 import productModel from '../../models/productModel';
@@ -57,7 +57,7 @@ class ProductController {
   
   add_product = async (req: ProductRequest, res: Response): Promise<void> => {
     const { id } = req;
-    const form = new IncomingForm({ multiples: true }); // Folosește direct IncomingForm
+    const form = new IncomingForm({ multiples: true });
 
     form.parse(req, async (err: any, fields: any, files: any) => {
       if (err) {

@@ -6,8 +6,6 @@ import categoryModel from '../../models/categoryModel';
 import { responseReturn } from '../../utils/response';
 
 
-
-
 interface CategoryQuery {
   page?: string;
   searchValue?: string;

@@ -61,7 +61,7 @@ app.get('/health', (req: Request, res: Response): void => {
 // Configurare Socket.IO
 const io = new SocketIOServer(server, {
   cors: {
-    origin: allowedOrigins,     // nu mai folosim '*'
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
     credentials: true,
   },

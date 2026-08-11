@@ -11,9 +11,7 @@ import cardModel from '../../models/cardModel';
 import { responseReturn } from '../../utils/response';
 
 // Initialize Stripe
-const stripe = new Stripe('sk_test_51Q8QW6RoWms6BcWGyvIGDtVtb0qzen1X0nX30FJLNKbC5KPCXpC1EdHL0WFJ8dUxwZfDLaQnu0V7c4KLlFDciDmE00jEcajw3O', {
-
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {});
 
 // Interfaces
 interface ShippingInfo {
